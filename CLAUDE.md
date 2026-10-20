@@ -1,6 +1,6 @@
 # Bairrômetro — instruções para o Claude
 
-> **v1.0 — aprovada por Caio em 2026-10-20** (D001–D010 em `contexto/decisoes.md`). Mudanças nestas regras só pelo skill `registrar-decisao`.
+> **v1.0 — aprovada por Caio em 2026-10-20.** Este arquivo é a versão pública das decisões do projeto; o registro completo (D001…) é privado, em `pessoal/decisoes.md`. Mudanças nestas regras só pelo skill `registrar-decisao`.
 
 ## O projeto
 
@@ -65,11 +65,10 @@ Sorocaba é só o MVP; o projeto precisa servir a qualquer cidade.
 `contexto/` é a memória versionada do projeto. É pública: nada pessoal ali.
 
 - `contexto/estado-atual.md` — **ler no início de toda sessão.** Fase atual, o que funciona, próximos passos.
-- `contexto/decisoes.md` — registro de decisões (propostas, aprovadas, rejeitadas).
 - `contexto/fontes.md` — toda fonte de dados e serviço, com abrangência, licença, custo e status.
 - `contexto/diario/` — um arquivo por sessão: o que foi feito e o que foi aprendido.
 
-`pessoal/` (fora do Git) guarda critérios pessoais e rascunhos de LinkedIn.
+`pessoal/` (fora do Git) guarda o registro de decisões (`pessoal/decisoes.md`, D011), critérios pessoais e rascunhos de LinkedIn. Não tem backup pelo Git: é cópia única no PC de Caio.
 
 Ao fim de cada sessão de trabalho: skill `fechar-sessao`.
 

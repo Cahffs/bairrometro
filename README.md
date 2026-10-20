@@ -21,8 +21,7 @@ Ferramenta de dados para escolher bairro e imóvel em cidades brasileiras. **MVP
 
 Desenvolvido com [Claude Code](https://claude.com/claude-code), com processo documentado:
 
-- [`CLAUDE.md`](CLAUDE.md) — regras que a IA segue no projeto.
-- [`contexto/decisoes.md`](contexto/decisoes.md) — todas as decisões, com as opções avaliadas.
+- [`CLAUDE.md`](CLAUDE.md) — regras que a IA segue no projeto, resultado das decisões tomadas.
 - [`contexto/fontes.md`](contexto/fontes.md) — fontes de dados, licenças e custos.
 - [`contexto/diario/`](contexto/diario/) — diário de cada sessão de trabalho.
 - [`.claude/skills/`](.claude/skills/) — skills do projeto (checagem legal de fontes, registro de decisões etc.).

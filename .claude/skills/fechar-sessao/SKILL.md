@@ -12,6 +12,6 @@ description: Fecha uma sessão de trabalho do Bairrômetro salvando o contexto -
    - Decisões — IDs criados ou alterados.
    - Próximo passo.
 2. **Estado atual:** reescreva `contexto/estado-atual.md` para refletir o agora. Ele não é histórico (o histórico fica no diário). Atualize a data.
-3. **Pendências:** liste para Caio as decisões que seguem como `proposta`.
+3. **Pendências:** liste para Caio as decisões que seguem como `proposta` em `pessoal/decisoes.md`.
 4. **Conferência:** nada pessoal, nenhum segredo e nenhum dado coletado pode ter entrado em `contexto/`.
 5. Responda com um resumo de 3 a 5 linhas.
