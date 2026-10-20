@@ -1,0 +1,30 @@
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Dados coletados e processados: ficam só na máquina local (D003)
+dados/
+*.duckdb
+*.duckdb.wal
+*.parquet
+*.sqlite
+
+# Informações pessoais e rascunhos de LinkedIn (D004)
+pessoal/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Claude Code: configurações locais
+.claude/settings.local.json
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
