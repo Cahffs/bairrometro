@@ -15,7 +15,8 @@ Abrangência: `nacional` · `estadual` · `municipal` · `global` — mostra o q
 | Ollama | IA local (modelos abertos no PC) | — | Grátis, roda offline | Licença de cada modelo | candidata |
 | FipeZap | Referência de preço de aluguel | nacional (~36 cidades) | Grátis (informes em PDF) | Conferir se cobre Sorocaba | candidata |
 | Sites de imobiliárias de Sorocaba | Anúncios | municipal | Grátis | Termos e `robots.txt` de cada site | candidata, caso a caso |
-| GitHub | Código | — | Grátis | — | candidata |
+| GitHub | Código | — | Grátis | — | aprovada (D001) |
+| GitHub CLI (`gh`) | Criar repositórios e PRs pelo terminal | — | Grátis | Licença MIT | aprovada (escolha de Caio, 2026-10-20) |
 | Streamlit Community Cloud | Hospedagem do app | — | Grátis | — | candidata |
 | ZAP, VivaReal, OLX, QuintoAndar, Imovelweb | Anúncios | nacional | — | Sem API pública de consulta; termos proíbem coleta automatizada | **vetada** |
 | Google Maps Platform | Lugares e rotas | global | Cota grátis, mas exige cartão | — | **vetada** (D002) |
