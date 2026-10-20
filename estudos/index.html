@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia de estudo do Bairrômetro</title>
+<meta name="description" content="A estatística e as métricas por trás das notas do Bairrômetro, com o porquê de cada escolha e as referências científicas.">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --surface-2: #f3f2ee;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #6f6d68;
+  --axis-text: #6f6d68;
+  --axis-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --callout: #eef4fc;
+  --callout-border: #b7d3f6;
+  --why: #f1f8f4;
+  --why-border: #a8d8c0;
+  --code-bg: #f3f2ee;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --surface-2: #232321;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #a3a29c;
+    --axis-text: #a3a29c;
+    --axis-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --callout: #16202c;
+    --callout-border: #24466f;
+    --why: #14211b;
+    --why-border: #2a5a42;
+    --code-bg: #232321;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232321;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #a3a29c;
+  --axis-text: #a3a29c;
+  --axis-muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10);
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --callout: #16202c;
+  --callout-border: #24466f;
+  --why: #14211b;
+  --why-border: #2a5a42;
+  --code-bg: #232321;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text-primary);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: var(--series-1); }
+h1, h2, h3 { line-height: 1.25; }
+h1 { font-size: 2rem; margin: 0 0 8px; }
+h2 { font-size: 1.5rem; margin: 0 0 12px; }
+h3 { font-size: 1.1rem; margin: 24px 0 8px; }
+p, li { color: var(--text-primary); }
+.lead { font-size: 1.1rem; color: var(--text-secondary); }
+code, .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.92em; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+
+/* layout */
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); max-width: 1240px; margin: 0 auto; }
+nav.toc {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  padding: 24px 16px; border-right: 1px solid var(--border);
+}
+nav.toc .brand { font-weight: 700; margin-bottom: 4px; }
+nav.toc .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; }
+nav.toc a {
+  display: block; padding: 5px 10px; border-radius: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 0.92rem;
+}
+nav.toc a:hover { background: var(--surface-2); color: var(--text-primary); }
+nav.toc a.active { background: var(--callout); color: var(--text-primary); font-weight: 600; }
+.theme-btn {
+  margin-top: 16px; width: 100%; padding: 8px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--surface-1); color: var(--text-secondary);
+  font: inherit; font-size: 0.85rem; cursor: pointer;
+}
+main { padding: 40px 48px 80px; min-width: 0; }
+section { max-width: 780px; margin: 0 0 72px; scroll-margin-top: 24px; }
+.num { color: var(--text-muted); font-weight: 400; margin-right: 6px; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  nav.toc {
+    position: sticky; top: 0; height: auto; z-index: 5; background: var(--page);
+    border-right: 0; border-bottom: 1px solid var(--border);
+    padding: 8px 16px; overflow-x: auto; white-space: nowrap;
+  }
+  nav.toc .brand, nav.toc .sub { display: none; }
+  nav.toc ol { display: flex; gap: 4px; }
+  nav.toc a { display: inline-block; }
+  .theme-btn { display: none; }
+  main { padding: 24px 16px 64px; }
+  section { scroll-margin-top: 64px; }
+}
+
+/* componentes */
+.notice {
+  background: var(--callout); border: 1px solid var(--callout-border);
+  border-radius: 10px; padding: 12px 16px; margin: 16px 0 24px; font-size: 0.95rem;
+}
+.where {
+  display: inline-block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 2px 10px; margin-bottom: 12px;
+}
+.formula {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  background: var(--code-bg); border-left: 3px solid var(--series-1);
+  border-radius: 6px; padding: 10px 14px; margin: 12px 0; overflow-x: auto; white-space: pre;
+}
+.why {
+  background: var(--why); border: 1px solid var(--why-border);
+  border-radius: 10px; padding: 12px 16px; margin: 20px 0;
+}
+.why strong:first-child { display: block; margin-bottom: 4px; }
+.why p { margin: 6px 0; }
+.demo {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; margin: 20px 0;
+}
+.demo-title { font-weight: 700; margin-bottom: 4px; }
+.demo-hint { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
+.demo svg { width: 100%; height: auto; display: block; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 12px; }
+button.btn {
+  font: inherit; font-size: 0.9rem; padding: 6px 12px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-primary);
+}
+button.btn:hover { border-color: var(--series-1); }
+button.btn[aria-pressed="true"] { background: var(--callout); border-color: var(--series-1); font-weight: 600; }
+button.btn:disabled { opacity: 0.45; cursor: default; }
+.tiles { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 12px; }
+.tile {
+  flex: 1 1 140px; background: var(--surface-2); border-radius: 10px; padding: 10px 14px;
+}
+.tile .label { font-size: 0.82rem; color: var(--text-muted); }
+.tile .value { font-size: 1.4rem; font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--text-secondary); margin: 4px 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.sw.line { width: 16px; height: 2px; border-radius: 1px; }
+.sw.dash { width: 16px; height: 0; border-top: 2px dashed var(--axis-muted); border-radius: 0; }
+.table-wrap { overflow-x: auto; margin: 12px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; background: var(--surface-2); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.minibar { display: inline-block; height: 8px; border-radius: 0 4px 4px 0; background: var(--series-1); vertical-align: middle; margin-left: 8px; }
+.sliders { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 20px; margin: 8px 0 12px; }
+.slider label { display: flex; justify-content: space-between; font-size: 0.9rem; }
+.slider input { width: 100%; accent-color: var(--series-1); }
+.explain { font-size: 0.9rem; color: var(--text-secondary); margin: 8px 0 0; padding-left: 18px; }
+.calc { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 8px 0 12px; }
+.calc label { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 4px; }
+.calc input {
+  width: 100%; font: inherit; padding: 6px 10px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-primary);
+}
+select {
+  font: inherit; font-size: 0.9rem; padding: 5px 8px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-primary);
+}
+details.practice {
+  border: 1px dashed var(--axis); border-radius: 10px; padding: 10px 14px; margin: 16px 0;
+}
+details.practice summary { cursor: pointer; font-weight: 600; }
+details.practice .answer { margin-top: 8px; color: var(--text-secondary); }
+dl.glossary dt { font-weight: 700; margin-top: 14px; }
+dl.glossary dd { margin: 2px 0 0 0; color: var(--text-secondary); }
+ol.refs li { margin-bottom: 10px; color: var(--text-secondary); }
+ol.refs li:target { background: var(--callout); border-radius: 6px; }
+.small { font-size: 0.88rem; color: var(--text-muted); }
+
+/* gráficos */
+.grid { stroke: var(--grid); stroke-width: 1; }
+.baseline { stroke: var(--axis); stroke-width: 1; }
+.tick { fill: var(--axis-text); font-size: 11px; font-variant-numeric: tabular-nums; }
+.axis-label { fill: var(--text-secondary); font-size: 12px; }
+.pt-label {
+  fill: var(--text-secondary); font-size: 11px; font-weight: 600;
+  paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round;
+}
+.dot { stroke: var(--surface-1); stroke-width: 2; }
+.s1 { fill: var(--series-1); }
+.s2 { fill: var(--series-2); }
+.muted-dot { fill: var(--axis-muted); }
+.ink-dot { fill: var(--text-secondary); }
+.fit { stroke: var(--text-secondary); stroke-width: 2; }
+.resid { stroke: var(--axis-muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.frontier { fill: none; stroke: var(--series-1); stroke-width: 2; stroke-linejoin: round; }
+.vline-1 { stroke: var(--series-1); stroke-width: 2; }
+.vline-2 { stroke: var(--series-2); stroke-width: 2; }
+.lbl-1 { fill: var(--text-primary); font-size: 12px; font-weight: 600; }
+.ref { stroke: var(--text-secondary); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.mid { stroke: var(--surface-1); stroke-width: 2; }
+.bar-label { fill: var(--text-primary); font-size: 13px; }
+.bar-value { fill: var(--text-secondary); font-size: 12px; font-variant-numeric: tabular-nums; }
+.hit { fill: transparent; cursor: pointer; }
+#tip {
+  position: fixed; z-index: 20; pointer-events: none; max-width: 280px;
+  background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+  font-size: 0.85rem; line-height: 1.45; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+#tip b { display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<div id="tip" hidden></div>
+<div class="layout">
+
+<nav class="toc" aria-label="Seções do guia">
+  <div class="brand">Bairrômetro</div>
+  <div class="sub">Guia de estudo</div>
+  <ol>
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#mediana">1. Média e mediana</a></li>
+    <li><a href="#percentil">2. Percentil</a></li>
+    <li><a href="#taxas">3. Taxas e subnotificação</a></li>
+    <li><a href="#agregacao">4. Agregação espacial</a></li>
+    <li><a href="#distancia">5. Distância e "por perto"</a></li>
+    <li><a href="#multicriterio">6. Decisão multicritério</a></li>
+    <li><a href="#regressao">7. Regressão e custo-benefício</a></li>
+    <li><a href="#pareto">8. Fronteira de eficiência</a></li>
+    <li><a href="#amostra">9. Amostras pequenas</a></li>
+    <li><a href="#ausentes">10. Dados ausentes</a></li>
+    <li><a href="#preco-aluguel">11. Preço × aluguel</a></li>
+    <li><a href="#vieses">12. Vieses e ética</a></li>
+    <li><a href="#stack">13. Stack e o que ela ensina</a></li>
+    <li><a href="#glossario">Glossário</a></li>
+    <li><a href="#referencias">Referências</a></li>
+  </ol>
+  <button class="theme-btn" id="theme-btn" type="button">Tema: automático</button>
+</nav>
+
+<main>
+
+<!-- ============ INÍCIO ============ -->
+<section id="inicio">
+  <h1>Guia de estudo do Bairrômetro</h1>
+  <p class="lead">A estatística e as métricas por trás das notas, com o porquê de cada escolha e as referências que a sustentam.</p>
+  <div class="notice">
+    <strong>Material de estudo, separado do sistema de busca.</strong> Nada aqui é usado pelo Bairrômetro em funcionamento.
+    Todos os bairros e números dos exemplos são <strong>fictícios</strong>. As regras oficiais estão em
+    <code>contexto/regras-de-negocio.md</code>.
+  </div>
+
+  <h3>Como estudar cada seção</h3>
+  <ol>
+    <li><strong>O conceito</strong>, em linguagem simples, com a fórmula.</li>
+    <li><strong>Onde aparece</strong> no Bairrômetro.</li>
+    <li><strong>Um exemplo interativo</strong>: mexa nos controles e veja o efeito.</li>
+    <li><strong>Por que escolhemos</strong> assim, com a referência científica entre colchetes, como [1].</li>
+    <li><strong>Para praticar</strong>: uma pergunta com resposta escondida.</li>
+  </ol>
+
+  <h3>Mapa: conceito → onde aparece</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Conceito</th><th>Onde aparece no Bairrômetro</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#mediana">Mediana</a></td><td>Preço típico do m² em cada bairro</td></tr>
+      <tr><td><a href="#percentil">Percentil</a></td><td>Escala de 0 a 100 de todos os critérios</td></tr>
+      <tr><td><a href="#taxas">Taxa por habitante</a></td><td>Critério de segurança</td></tr>
+      <tr><td><a href="#agregacao">Média ponderada pela população</a></td><td>Juntar setores censitários do IBGE em bairros</td></tr>
+      <tr><td><a href="#distancia">Distância e projeção</a></td><td>"Por perto" = raio de 1 km</td></tr>
+      <tr><td><a href="#multicriterio">Decisão multicritério</a></td><td>Filtros e nota de qualidade (Q)</td></tr>
+      <tr><td><a href="#regressao">Regressão e resíduo</a></td><td>Nota de custo-benefício (CB)</td></tr>
+      <tr><td><a href="#pareto">Fronteira de eficiência</a></td><td>Gráfico qualidade × preço</td></tr>
+      <tr><td><a href="#amostra">Tamanho de amostra</a></td><td>Mínimo de 5 anúncios por bairro</td></tr>
+      <tr><td><a href="#ausentes">Dados ausentes</a></td><td>"Dado ausente não elimina, vira aviso"</td></tr>
+      <tr><td><a href="#preco-aluguel">Razão preço/aluguel</a></td><td>Comparação alugar × comprar</td></tr>
+      <tr><td><a href="#vieses">Vieses</a></td><td>Renda fora da nota, subnotificação, preço pedido</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ 1. MÉDIA E MEDIANA ============ -->
+<section id="mediana">
+  <h2><span class="num">1.</span>Média, mediana e outliers</h2>
+  <span class="where">Onde aparece: preço típico do bairro (regras, seção 4.5)</span>
+  <p>A <strong>média</strong> soma todos os valores e divide pela quantidade. A <strong>mediana</strong> é o valor do meio depois de ordenar: metade fica acima, metade abaixo.</p>
+  <div class="formula">média   = (x₁ + x₂ + … + xₙ) ÷ n
+mediana = valor do meio dos dados ordenados
+          (com n par: média dos dois valores do meio)</div>
+  <p>Anúncios de imóveis têm <strong>outliers</strong>, valores muito fora do padrão: um aluguel de R$ 2.500 digitado como R$ 25.000, uma cobertura de luxo no meio de casas simples. Um único outlier arrasta a média; a mediana quase não se mexe.</p>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: um erro de digitação</div>
+    <div class="demo-hint">Sete aluguéis de um bairro fictício. Adicione um anúncio com erro e compare.</div>
+    <div class="controls">
+      <button class="btn" id="d1-add" type="button">Adicionar anúncio digitado errado (R$ 25.000)</button>
+      <button class="btn" id="d1-reset" type="button" disabled>Voltar ao original</button>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="label">Média</div><div class="value" id="d1-mean">–</div></div>
+      <div class="tile"><div class="label">Mediana</div><div class="value" id="d1-median">–</div></div>
+    </div>
+    <div class="legend">
+      <span><i class="sw ink-sw" style="background:var(--text-secondary)"></i>Anúncio</span>
+      <span><i class="sw line" style="background:var(--series-1)"></i>Mediana</span>
+      <span><i class="sw line" style="background:var(--series-2)"></i>Média</span>
+    </div>
+    <svg id="d1-chart" viewBox="0 0 640 130" role="img" aria-label="Valores dos aluguéis numa linha, com marcas da média e da mediana"></svg>
+    <p class="small" id="d1-list"></p>
+  </div>
+
+  <p>Esse comportamento tem nome: <strong>ponto de ruptura</strong> (<em>breakdown point</em>), a fração de dados ruins que uma estatística aguenta antes de dar resultados absurdos. A média tem ponto de ruptura zero: basta um valor ruim. A mediana aguenta quase 50%.</p>
+
+  <div class="why">
+    <strong>Por que escolhemos a mediana para o preço do bairro</strong>
+    <p>Estatísticas robustas existem justamente para dados com erros e valores extremos, como anúncios [1]. A média seria mais precisa se os dados fossem limpos e simétricos, mas preços de imóveis não são: têm cauda longa para cima.</p>
+  </div>
+
+  <details class="practice">
+    <summary>Para praticar: qual é a mediana de R$ 1.800, R$ 2.000, R$ 2.100 e R$ 9.000?</summary>
+    <div class="answer">São 4 valores (n par), então a mediana é a média dos dois do meio: (2.000 + 2.100) ÷ 2 = <strong>R$ 2.050</strong>. A média seria R$ 3.725, puxada pelos R$ 9.000.</div>
+  </details>
+</section>
+
+<!-- ============ 2. PERCENTIL ============ -->
+<section id="percentil">
+  <h2><span class="num">2.</span>Percentil: uma régua comum</h2>
+  <span class="where">Onde aparece: escala de 0 a 100 de todos os critérios (regras, seção 4.3)</span>
+  <p>Os critérios têm unidades diferentes: número de escolas, ocorrências por mil habitantes, metros quadrados de praça. Não dá para somar "escolas" com "ocorrências". Antes, tudo precisa ir para a mesma escala. Esse passo se chama <strong>normalização</strong>.</p>
+  <p>O <strong>percentil</strong> responde: "este bairro é melhor que quantos por cento dos bairros da cidade?".</p>
+  <div class="formula">percentil = posição ÷ (n − 1) × 100
+  posição: 0 para o menor valor, n − 1 para o maior
+  empates recebem a posição média
+quando "menos é melhor": percentil = 100 − percentil</div>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: oito bairros fictícios</div>
+    <div class="demo-hint">Desmarque a inversão e veja o erro: o bairro com mais ocorrências passaria a ser o "mais seguro".</div>
+    <div class="controls">
+      <label><input type="checkbox" id="d2-invert" checked> Segurança: inverter (menos ocorrências é melhor)</label>
+    </div>
+    <div class="table-wrap"><table id="d2-table"></table></div>
+  </div>
+
+  <h3>As alternativas e por que não usamos</h3>
+  <ul>
+    <li><strong>Mínimo-máximo</strong>: (valor − mínimo) ÷ (máximo − mínimo). Um único outlier esmaga todos os outros bairros perto de zero.</li>
+    <li><strong>Escore z</strong>: (valor − média) ÷ desvio-padrão. Funciona melhor com dados simétricos, e "1,3 desvio-padrão acima" é difícil de explicar para quem usa o app.</li>
+  </ul>
+  <div class="why">
+    <strong>Por que escolhemos o percentil</strong>
+    <p>O manual da OCDE para indicadores compostos compara esses métodos de normalização [2]. O percentil (ranking) é robusto a outliers e fácil de explicar. O custo: ele perde a distância entre bairros. O 1º e o 2º colocados podem estar coladinhos ou muito longe, e o percentil não mostra isso. Por isso guardamos também os valores brutos.</p>
+  </div>
+
+  <details class="practice">
+    <summary>Para praticar: um bairro tem percentil 75 em educação. O que isso significa?</summary>
+    <div class="answer">Ele tem mais escolas e creches por perto do que 75% dos bairros da cidade. Não significa "75 escolas" nem "nota 7,5 de 10".</div>
+  </details>
+</section>
+
+<!-- ============ 3. TAXAS ============ -->
+<section id="taxas">
+  <h2><span class="num">3.</span>Taxas por habitante e subnotificação</h2>
+  <span class="where">Onde aparece: critério de segurança (regras, seção 4.2)</span>
+  <p>30 ocorrências num bairro de 30 mil moradores não é o mesmo que 30 ocorrências num bairro de 3 mil. Número absoluto mede o tamanho do bairro, não o risco. Para comparar, divide-se pela população: isso é uma <strong>taxa</strong>.</p>
+  <div class="formula">taxa = ocorrências ÷ população × 1.000   (ocorrências por mil habitantes)</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Bairro (fictício)</th><th class="n">Ocorrências</th><th class="n">Moradores</th><th class="n">Por 1.000 hab.</th></tr></thead>
+    <tbody>
+      <tr><td>Bairro X</td><td class="n">120</td><td class="n">40.000</td><td class="n">3,0</td></tr>
+      <tr><td>Bairro Y</td><td class="n">45</td><td class="n">9.000</td><td class="n"><strong>5,0</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>O Bairro Y tem bem menos ocorrências, mas uma taxa maior.</p>
+
+  <h3>Dois cuidados que entram na explicação da nota</h3>
+  <ul>
+    <li><strong>Subnotificação ("cifra oculta").</strong> Nem todo crime vira boletim de ocorrência. Registrar depende da confiança na polícia, do acesso a uma delegacia e do tipo de crime (quem precisa do BO para o seguro registra mais). A nota mostra o que foi <em>registrado</em>, não a criminalidade real [5].</li>
+    <li><strong>Moradores × circulantes.</strong> Bairros comerciais recebem muita gente de passagem e têm poucos moradores. Dividir pelos moradores infla a taxa desses bairros.</li>
+  </ul>
+  <div class="why">
+    <strong>Por que escolhemos taxa por mil habitantes</strong>
+    <p>É a forma padrão de comparar eventos entre populações de tamanhos diferentes. A população vem do Censo 2022 do IBGE, a mesma base usada para os bairros. A limitação da subnotificação é conhecida na criminologia desde os estudos de vitimização [5], por isso fica explícita no app.</p>
+  </div>
+
+  <details class="practice">
+    <summary>Para praticar: um bairro tem 18 ocorrências e 6.000 moradores. Qual a taxa por mil?</summary>
+    <div class="answer">18 ÷ 6.000 × 1.000 = <strong>3,0 por mil habitantes</strong>.</div>
+  </details>
+</section>
+
+<!-- ============ 4. AGREGAÇÃO ============ -->
+<section id="agregacao">
+  <h2><span class="num">4.</span>Agregação espacial: de setores para bairros</h2>
+  <span class="where">Onde aparece: unidade espacial (regras, seção 4.1)</span>
+  <p>O <strong>setor censitário</strong> é a menor área em que o IBGE divulga dados do Censo, com algumas centenas de domicílios. Um bairro é formado por vários setores. Para chegar ao valor do bairro, juntamos os setores com uma <strong>média ponderada pela população</strong>: setor com mais moradores pesa mais.</p>
+  <div class="formula">valor do bairro = Σ (valor do setor × moradores do setor) ÷ Σ moradores</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Setor (fictício)</th><th class="n">Moradores</th><th class="n">Escolas a até 1 km</th></tr></thead>
+    <tbody>
+      <tr><td>S1</td><td class="n">1.200</td><td class="n">8</td></tr>
+      <tr><td>S2</td><td class="n">300</td><td class="n">2</td></tr>
+      <tr><td>S3</td><td class="n">1.500</td><td class="n">5</td></tr>
+      <tr><td><strong>Média simples</strong></td><td class="n"></td><td class="n">5,0</td></tr>
+      <tr><td><strong>Média ponderada</strong></td><td class="n"></td><td class="n"><strong>5,9</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Ponderada: (8 × 1.200 + 2 × 300 + 5 × 1.500) ÷ 3.000 = 17.700 ÷ 3.000 = 5,9. O setor S2, quase vazio, deixa de puxar o bairro para baixo.</p>
+
+  <h3>Dois conceitos para guardar</h3>
+  <ul>
+    <li><strong>Problema da unidade de área modificável (MAUP).</strong> O resultado muda conforme se desenham as fronteiras. Outra divisão de bairros daria outras médias com os mesmos dados [6].</li>
+    <li><strong>Falácia ecológica.</strong> O que vale para o bairro em média não vale para cada rua nem para cada morador [7]. Um bairro "seguro" pode ter uma rua problemática.</li>
+  </ul>
+  <div class="why">
+    <strong>Por que escolhemos setores do IBGE como base</strong>
+    <p>Existem no país inteiro com o mesmo padrão, o que permite levar o Bairrômetro a outras cidades sem trocar a unidade (princípio de escalabilidade). Trabalhar com a menor unidade e agregar depois reduz, sem eliminar, o efeito do MAUP [6].</p>
+  </div>
+</section>
+
+<!-- ============ 5. DISTÂNCIA ============ -->
+<section id="distancia">
+  <h2><span class="num">5.</span>Distância e "por perto"</h2>
+  <span class="where">Onde aparece: acesso próximo, raio de 1 km (regras, seção 4.2)</span>
+  <p>"Por perto" no Bairrômetro é um <strong>raio de 1 km em linha reta</strong>.</p>
+  <ul>
+    <li>Uma caminhada confortável de adultos fica em torno de 1,3 m/s [10]. 1.000 m ÷ 1,3 m/s ≈ 770 s ≈ <strong>13 minutos</strong>.</li>
+    <li>É a escala da "cidade de 15 minutos": o cotidiano resolvido a pé [9].</li>
+    <li>Por trás está a primeira lei da geografia: "tudo está relacionado a tudo, mas coisas próximas estão mais relacionadas" [8].</li>
+  </ul>
+
+  <h3>Graus não são metros: projeções</h3>
+  <p>Coordenadas de GPS (latitude e longitude) estão em <strong>graus</strong>, e grau não é uma distância fixa. Na latitude de Sorocaba (cerca de 23,5° Sul):</p>
+  <div class="formula">1° de latitude  ≈ 110,8 km
+1° de longitude ≈ 111,3 km × cos(23,5°) ≈ 102,1 km</div>
+  <p>Um "círculo" de 0,01° seria, na verdade, uma elipse. Para medir 1 km de verdade, convertemos as coordenadas para uma <strong>projeção métrica</strong>. Para Sorocaba, a usual é SIRGAS 2000 / UTM zona 23S (código EPSG:31983), que trabalha em metros. Esse conceito se chama <strong>sistema de referência de coordenadas (CRS)</strong>.</p>
+  <div class="why">
+    <strong>Por que 1 km em linha reta, sem rotas</strong>
+    <p>É simples, grátis e explicável, e cobre o tempo de caminhada da literatura [9][10]. A limitação: linha reta ignora rios, rodovias e morros, então o caminho real pode ser bem maior. Rotas a pé ficaram fora do MVP.</p>
+  </div>
+  <details class="practice">
+    <summary>Para praticar: quanto tempo leva para andar 1 km a 1,1 m/s (passo mais lento)?</summary>
+    <div class="answer">1.000 ÷ 1,1 ≈ 909 s ≈ <strong>15 minutos</strong>. Por isso dizemos "cerca de 12 a 15 minutos".</div>
+  </details>
+</section>
+
+<!-- ============ 6. MULTICRITÉRIO ============ -->
+<section id="multicriterio">
+  <h2><span class="num">6.</span>Decisão multicritério: filtros e pesos</h2>
+  <span class="where">Onde aparece: filtros e nota de qualidade Q (regras, seções 3, 4.4 e 5)</span>
+  <p>Escolher um bairro é uma decisão com vários objetivos ao mesmo tempo. O Bairrômetro usa duas regras diferentes:</p>
+  <ul>
+    <li><strong>Filtros: regra não compensatória.</strong> Falhou, saiu. Nada compensa um imóvel acima do orçamento.</li>
+    <li><strong>Nota: regra compensatória.</strong> Um critério muito bom pode compensar outro fraco. É uma <strong>soma ponderada</strong>:</li>
+  </ul>
+  <div class="formula">Q = Σ (peso do critério × percentil do critério) ÷ Σ pesos
+pesos de 0 a 5 (0 = ignorar)</div>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: o mesmo bairro, perfis diferentes</div>
+    <div class="demo-hint">Escolha um ponto de partida ou mexa nos pesos. Versão reduzida, com 6 dos 8 critérios. Percentis fictícios.</div>
+    <div class="controls" id="d3-presets"></div>
+    <div class="sliders" id="d3-sliders"></div>
+    <svg id="d3-chart" viewBox="0 0 640 160" role="img" aria-label="Nota de qualidade de três bairros fictícios"></svg>
+    <ul class="explain" id="d3-explain"></ul>
+    <div class="table-wrap"><table id="d3-table"></table></div>
+  </div>
+
+  <h3>Cuidados</h3>
+  <ul>
+    <li><strong>Dupla contagem:</strong> critérios muito correlacionados contam a mesma coisa duas vezes [2]. Por isso a renda ficou fora da nota (ela anda junto com o preço).</li>
+    <li><strong>Pesos são trocas.</strong> Dar peso 5 à segurança e 1 à mobilidade diz quanto de uma você aceita perder pela outra [3].</li>
+  </ul>
+  <div class="why">
+    <strong>Por que soma ponderada com pontos de partida</strong>
+    <p>A soma ponderada é o modelo aditivo de valor, a base da análise de decisão multicritério [3][4]: simples, transparente e fácil de explicar critério a critério. Uma alternativa mais rigorosa para definir pesos é o AHP, que compara critérios par a par [20]. Ele pede muitas perguntas a quem usa, por isso optamos por pontos de partida editáveis, cada um com sua justificativa.</p>
+  </div>
+</section>
+
+<!-- ============ 7. REGRESSÃO ============ -->
+<section id="regressao">
+  <h2><span class="num">7.</span>Regressão, resíduo e custo-benefício</h2>
+  <span class="where">Onde aparece: nota de custo-benefício CB (regras, seção 4.5)</span>
+  <p>A pergunta do custo-benefício não é "qual bairro é melhor", e sim <strong>"onde se ganha mais qualidade pelo que se paga"</strong>. Para responder, primeiro estimamos quanto um bairro com certa qualidade <em>costuma</em> custar na cidade.</p>
+  <ol>
+    <li><strong>Regressão linear:</strong> uma reta que relaciona qualidade (Q) e preço do m² (P). O método dos <strong>mínimos quadrados</strong> escolhe a reta que minimiza a soma dos quadrados das distâncias verticais até os pontos.</li>
+    <li><strong>Resíduo:</strong> a distância de cada bairro até a reta. Abaixo da reta = custa menos do que a qualidade sugere.</li>
+    <li><strong>CB:</strong> o percentil dessa diferença na cidade.</li>
+  </ol>
+  <div class="formula">P̂ = a + b × Q                 (preço esperado)
+diferença = (P̂ − P) ÷ P̂       (positiva = mais barato que o esperado)
+CB = percentil da diferença
+R² = 1 − Σ(P − P̂)² ÷ Σ(P − P̄)²  (quanto do preço a qualidade explica)
+nota final = (1 − ênfase) × Q + ênfase × CB</div>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: 12 bairros fictícios</div>
+    <div class="demo-hint">Passe o mouse nos pontos. As linhas tracejadas são os resíduos. Mude a ênfase em economia e veja o ranking.</div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--series-1)"></i>Bairro</span>
+      <span><i class="sw" style="background:var(--series-2)"></i>3 melhores em custo-benefício</span>
+      <span><i class="sw line" style="background:var(--text-secondary)"></i>Preço esperado (reta)</span>
+      <span><i class="sw dash"></i>Resíduo</span>
+    </div>
+    <svg id="d4-chart" viewBox="0 0 640 380" role="img" aria-label="Dispersão de qualidade e preço com reta de regressão"></svg>
+    <p class="small" id="d4-fit"></p>
+    <div class="slider" style="max-width:360px">
+      <label for="d4-enfase"><span>Ênfase em economia</span><span id="d4-enfase-v">0,5</span></label>
+      <input type="range" id="d4-enfase" min="0" max="1" step="0.1" value="0.5">
+    </div>
+    <div class="table-wrap"><table id="d4-table"></table></div>
+  </div>
+
+  <p>Repare no bairro A: é o de maior qualidade, mas cobra o que essa qualidade vale. Fica no meio do CB. Quem se destaca é quem entrega qualidade acima do que cobra (D e F). <strong>O bairro rico não ganha por ser rico.</strong></p>
+
+  <h3>Cuidados</h3>
+  <ul>
+    <li><strong>Resíduo grande não é garantia de bom negócio.</strong> Pode ser algo que o modelo não vê: enchente, obra, barulho de rodovia. É um sinal para investigar.</li>
+    <li><strong>Correlação não é causa.</strong> A reta descreve como preço e qualidade andam juntos na cidade, não que a qualidade "causa" o preço.</li>
+    <li><strong>Poucos bairros deixam a reta instável.</strong> Um bairro muito fora do padrão pode inclinar a reta toda.</li>
+  </ul>
+  <div class="why">
+    <strong>Por que regressão e resíduo</strong>
+    <p>É a ideia dos <strong>preços hedônicos</strong>: o preço de um bem reflete os preços implícitos das suas características [11]. Comparar o preço real com o esperado é a forma clássica de achar bens "baratos para o que oferecem". Aqui usamos a versão mais simples, com uma única variável (Q). O modelo do imóvel, na camada 3, usa várias (área, quartos, vagas). A regressão linear está no capítulo 3 de [12], livro gratuito e ótimo para estudar.</p>
+  </div>
+  <details class="practice">
+    <summary>Para praticar: a reta diz P̂ = 4 + 0,4 × Q. Um bairro com Q = 60 cobra R$ 24/m². Ele está acima ou abaixo do esperado?</summary>
+    <div class="answer">P̂ = 4 + 0,4 × 60 = R$ 28. Diferença = (28 − 24) ÷ 28 ≈ <strong>14% mais barato</strong> que o esperado: bom custo-benefício.</div>
+  </details>
+</section>
+
+<!-- ============ 8. PARETO ============ -->
+<section id="pareto">
+  <h2><span class="num">8.</span>Fronteira de eficiência (Pareto)</h2>
+  <span class="where">Onde aparece: gráfico qualidade × preço no app (regras, seção 4.5)</span>
+  <p>Um bairro é <strong>dominado</strong> quando existe outro com qualidade maior ou igual <em>e</em> preço menor ou igual, sendo melhor em pelo menos um dos dois. Os bairros que ninguém domina formam a <strong>fronteira de eficiência</strong>. A ideia vem de Pareto [21]. A técnica DEA generaliza para várias entradas e saídas [13].</p>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: os mesmos 12 bairros</div>
+    <div class="demo-hint">Passe o mouse nos pontos cinza para ver quem os domina.</div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--series-1)"></i>Na fronteira (não dominado)</span>
+      <span><i class="sw" style="background:var(--axis-muted)"></i>Dominado</span>
+    </div>
+    <svg id="d5-chart" viewBox="0 0 640 380" role="img" aria-label="Dispersão de qualidade e preço com a fronteira de eficiência"></svg>
+  </div>
+
+  <h3>Fronteira × regressão</h3>
+  <p>A fronteira só diz "está ou não está". E ela inclui o bairro de maior qualidade (A) mesmo sendo caro, porque nenhum outro é melhor que ele. A regressão dá uma nota contínua de custo-benefício. Por isso usamos <strong>as duas</strong>: regressão para a nota, fronteira para o gráfico.</p>
+  <div class="why">
+    <strong>Por que mostrar a fronteira</strong>
+    <p>Ela responde visualmente "existe opção melhor e mais barata que esta?", sem depender de pesos nem de reta. É o conceito de eficiência usado em economia e em avaliação de desempenho [13][21].</p>
+  </div>
+</section>
+
+<!-- ============ 9. AMOSTRAS PEQUENAS ============ -->
+<section id="amostra">
+  <h2><span class="num">9.</span>Amostras pequenas e o mínimo de 5 anúncios</h2>
+  <span class="where">Onde aparece: mínimo de 5 anúncios por bairro (regras, seção 4.5)</span>
+  <p>Com poucos dados, valores extremos aparecem por puro acaso. Howard Wainer chamou a fórmula que descreve isso de <strong>"a equação mais perigosa"</strong> [14], porque quem a ignora tira conclusões erradas. Exemplo clássico: as menores escolas aparecem tanto entre as melhores quanto entre as piores, só porque têm poucos alunos.</p>
+  <div class="formula">erro típico da média = σ ÷ √n
+  σ = quanto os preços variam dentro do bairro
+  n = número de anúncios
+para a mediana vale uma versão parecida:
+  cerca de 25% maior, em dados com distribuição normal</div>
+
+  <div class="demo">
+    <div class="demo-title">Experimente: sorteando anúncios de um bairro</div>
+    <div class="demo-hint">O preço real (mediana do bairro) é R$ 2.000. Sorteamos n anúncios, 1.000 vezes, e vemos onde a mediana da amostra cai.</div>
+    <div class="controls">
+      <label for="d6-sigma">Variação dos preços no bairro:</label>
+      <select id="d6-sigma">
+        <option value="0.15">baixa (cerca de 15%)</option>
+        <option value="0.25" selected>média (cerca de 25%)</option>
+        <option value="0.40">alta (cerca de 40%)</option>
+      </select>
+      <button class="btn" id="d6-run" type="button">Sortear de novo</button>
+    </div>
+    <svg id="d6-chart" viewBox="0 0 640 260" role="img" aria-label="Faixa em que a mediana da amostra cai para diferentes tamanhos de amostra"></svg>
+    <p class="small">Cada barra é a faixa onde caíram 90% das medianas sorteadas. A marca dentro da barra é o valor central.</p>
+    <div class="table-wrap"><table id="d6-table"></table></div>
+  </div>
+
+  <div class="why">
+    <strong>Por que 5, e não 2 ou 30</strong>
+    <p>Com variação média, a mediana de 2 ou 3 anúncios erra mais de 20% em cerca de um quarto dos sorteios. Com 5, isso cai para algo perto de 1 em 7. Com 10 ou 30 fica bem melhor, mas exigir isso provavelmente deixaria muitos bairros sem preço nenhum, porque poucos bairros têm tantos anúncios ao mesmo tempo.</p>
+    <p><strong>5 é um compromisso prático entre precisão e cobertura, não um número mágico.</strong> O erro continua relevante, por isso o app mostra quantos anúncios há em cada bairro e o aviso de poucos dados. Esse valor é fácil de revisar quando tivermos os dados reais. Nossa intuição costuma confiar demais em amostras pequenas [15].</p>
+  </div>
+</section>
+
+<!-- ============ 10. DADOS AUSENTES ============ -->
+<section id="ausentes">
+  <h2><span class="num">10.</span>Dados ausentes: não elimina, vira aviso</h2>
+  <span class="where">Onde aparece: filtros (regras, seção 3)</span>
+  <p>Muitos anúncios não informam condomínio, IPTU, garantias aceitas ou se aceitam pet. A estatística classifica a ausência em três tipos [16]:</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Tipo</th><th>O que significa</th><th>Exemplo nos anúncios</th></tr></thead>
+    <tbody>
+      <tr><td><strong>MCAR</strong><br><span class="small">ausente completamente ao acaso</span></td><td>A falta não tem relação com nada</td><td>O campo falhou ao carregar</td></tr>
+      <tr><td><strong>MAR</strong><br><span class="small">ausente ao acaso, dado o que se observa</span></td><td>A falta depende de algo que conhecemos</td><td>A imobiliária X nunca informa condomínio</td></tr>
+      <tr><td><strong>MNAR</strong><br><span class="small">ausente não ao acaso</span></td><td>A falta depende do próprio valor escondido</td><td>Condomínio caro é omitido de propósito</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Jogar fora todo anúncio incompleto (análise de "casos completos") só é seguro no caso MCAR, que é o mais raro. Nos outros, o resultado fica enviesado. Por exemplo, sobrariam só as imobiliárias que preenchem tudo.</p>
+  <div class="why">
+    <strong>Por que "não elimina, vira aviso"</strong>
+    <p>Eliminar incompletos enviesa quando a ausência não é aleatória [16]. Preencher o valor que falta "no chute" (imputação) esconderia a incerteza de quem usa o app. O meio-termo transparente é manter o imóvel e avisar o que falta.</p>
+  </div>
+</section>
+
+<!-- ============ 11. PREÇO/ALUGUEL ============ -->
+<section id="preco-aluguel">
+  <h2><span class="num">11.</span>Razão preço/aluguel</h2>
+  <span class="where">Onde aparece: comparação alugar × comprar (regras, seção 7)</span>
+  <p>Para quem ainda não decidiu entre alugar e comprar, cada bairro mostra quantos <strong>anos de aluguel</strong> equivalem ao preço de compra.</p>
+  <div class="formula">razão = preço de venda ÷ (aluguel mensal × 12)        → em anos
+rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
+
+  <div class="demo">
+    <div class="demo-title">Calculadora</div>
+    <div class="demo-hint">Valores de exemplo; troque pelos que quiser.</div>
+    <div class="calc">
+      <div><label for="d7-preco">Preço de venda (R$)</label><input id="d7-preco" type="number" min="1" step="1000" value="400000"></div>
+      <div><label for="d7-aluguel">Aluguel mensal (R$)</label><input id="d7-aluguel" type="number" min="1" step="50" value="1800"></div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="label">Razão preço/aluguel</div><div class="value" id="d7-razao">–</div></div>
+      <div class="tile"><div class="label">Rentabilidade bruta do aluguel</div><div class="value" id="d7-rent">–</div></div>
+    </div>
+    <p class="small">Material educativo, não é recomendação financeira.</p>
+  </div>
+
+  <div class="why">
+    <strong>Por que é só informação, e não recomendação</strong>
+    <p>A razão sozinha não decide nada. O estudo de referência mostra que ela precisa ser comparada ao <strong>custo de uso</strong> da casa própria: juros, impostos, manutenção, depreciação e valorização esperada. Uma razão alta não prova, por si só, que comprar é mau negócio [17]. Por isso o Bairrômetro mostra a razão por bairro e deixa a decisão com a pessoa.</p>
+  </div>
+</section>
+
+<!-- ============ 12. VIESES ============ -->
+<section id="vieses">
+  <h2><span class="num">12.</span>Vieses e ética</h2>
+  <span class="where">Onde aparece: em todas as notas e explicações</span>
+  <ul>
+    <li><strong>Viés de seleção.</strong> Anúncios não são todos os imóveis da cidade. O preço anunciado não é o preço fechado. Imóveis baratos podem ser alugados rápido e aparecer menos na coleta.</li>
+    <li><strong>Variável substituta (proxy) de riqueza.</strong> Usar renda como "melhor" premiaria bairros só por serem ricos, e contaria o preço duas vezes [2]. Por isso a renda é só informação.</li>
+    <li><strong>Subnotificação.</strong> Segurança mede o que foi registrado [5].</li>
+    <li><strong>Falácia ecológica.</strong> A média do bairro não descreve cada rua [7].</li>
+    <li><strong>Correlação não é causa.</strong> Vale para a reta do custo-benefício e para qualquer gráfico.</li>
+    <li><strong>Dados pessoais.</strong> Nome e telefone de corretores nunca são coletados (LGPD [19]). A lei também vira regra de negócio: a Lei do Inquilinato permite só uma garantia por contrato [18], por isso o filtro é "aceita pelo menos uma das que a pessoa pode oferecer".</li>
+    <li><strong>Explicabilidade.</strong> Nenhuma nota aparece sem dizer o que a puxou para cima e para baixo.</li>
+  </ul>
+</section>
+
+<!-- ============ 13. STACK ============ -->
+<section id="stack">
+  <h2><span class="num">13.</span>Stack e o que cada peça ensina</h2>
+  <div class="notice"><strong>Proposta, aguardando aprovação.</strong> Tudo gratuito e rodando no seu computador. A coluna da direita é o que você aprende além de "fazer funcionar".</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Camada</th><th>Proposta</th><th>Alternativas</th><th>Conceitos que você aprende</th></tr></thead>
+    <tbody>
+      <tr><td>Linguagem</td><td>Python 3.13</td><td>R, JavaScript</td><td>A língua franca de dados; ecossistema científico</td></tr>
+      <tr><td>Ambiente</td><td>uv</td><td>pip + venv, conda</td><td>Reprodutibilidade, versões fixas (lockfile), ambientes isolados</td></tr>
+      <tr><td>Tabelas</td><td>pandas</td><td>polars</td><td>DataFrame, dados "tidy", agrupar e resumir (groupby), junções</td></tr>
+      <tr><td>Banco analítico</td><td>DuckDB + Parquet</td><td>SQLite, PostgreSQL/PostGIS</td><td>SQL analítico, armazenamento colunar, camadas bruto → limpo → pronto</td></tr>
+      <tr><td>Geografia</td><td>GeoPandas, Shapely, OSMnx</td><td>QGIS, PostGIS</td><td>CRS e projeções, buffer de 1 km, junção espacial, centroides</td></tr>
+      <tr><td>Coleta</td><td>httpx + BeautifulSoup</td><td>Scrapy, Playwright</td><td>HTTP, estrutura de HTML, robots.txt, intervalo entre requisições, cache</td></tr>
+      <tr><td>Estatística</td><td>statsmodels + SciPy</td><td>–</td><td>Inferência: coeficientes, intervalos de confiança, R², diagnóstico de resíduos</td></tr>
+      <tr><td>Machine learning</td><td>scikit-learn (+ skore, via Probabl)</td><td>XGBoost</td><td>Treino e teste, validação cruzada, overfitting, modelo de base (baseline)</td></tr>
+      <tr><td>Validação de dados</td><td>pandera</td><td>Great Expectations</td><td>Contratos de dados: o que cada tabela promete conter</td></tr>
+      <tr><td>Visualização</td><td>Plotly + Folium</td><td>Altair, matplotlib</td><td>Gramática de gráficos, mapas coropléticos, cores acessíveis</td></tr>
+      <tr><td>App</td><td>Streamlit</td><td>Dash, FastAPI + React</td><td>Interface sobre dados, estado, cache, deploy gratuito</td></tr>
+      <tr><td>Notebooks</td><td>JupyterLab + nbstripout</td><td>Notebooks no VS Code</td><td>Exploração × código de produção; notebooks sem saídas no Git</td></tr>
+      <tr><td>Qualidade</td><td>ruff + pytest</td><td>flake8, black</td><td>Testes de pipeline de dados, padronização de código</td></tr>
+      <tr><td>IA (depois)</td><td>Ollama, local</td><td>APIs com cota grátis sem cartão</td><td>LLM local, extração estruturada de texto (ex.: garantias aceitas)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Conceitos de engenharia de dados que aparecem no caminho</h3>
+  <ul>
+    <li><strong>Camadas de dados:</strong> bruto (como veio da fonte), limpo (padronizado) e pronto (agregado para o app). Errou na limpeza? Refaz a partir do bruto.</li>
+    <li><strong>Pipeline idempotente:</strong> rodar duas vezes dá o mesmo resultado, sem duplicar dados.</li>
+    <li><strong>Cache:</strong> não baixar de novo o que já temos. É educado com a fonte e acelera.</li>
+    <li><strong>Configuração em vez de código:</strong> cidade, fontes e pesos em arquivos, para escalar sem reescrever.</li>
+    <li><strong>Reprodutibilidade:</strong> outra pessoa clona o repositório e chega ao mesmo resultado.</li>
+  </ul>
+</section>
+
+<!-- ============ GLOSSÁRIO ============ -->
+<section id="glossario">
+  <h2>Glossário</h2>
+  <dl class="glossary">
+    <dt>Agregação</dt><dd>Juntar dados de unidades menores (setores) em maiores (bairros).</dd>
+    <dt>Amostra</dt><dd>A parte dos dados que observamos (os anúncios) para estimar algo maior (o preço real do bairro).</dd>
+    <dt>CRS (sistema de referência de coordenadas)</dt><dd>A "régua" das coordenadas: graus (latitude e longitude) ou metros (projeções como UTM).</dd>
+    <dt>Dado ausente</dt><dd>Informação que deveria existir e não veio. Pode ser MCAR, MAR ou MNAR.</dd>
+    <dt>Dominância</dt><dd>Uma opção domina outra quando é melhor ou igual em tudo e melhor em pelo menos um critério.</dd>
+    <dt>Falácia ecológica</dt><dd>Concluir algo sobre indivíduos a partir de médias de grupos.</dd>
+    <dt>Fronteira de eficiência</dt><dd>O conjunto de opções que ninguém domina.</dd>
+    <dt>MAUP</dt><dd>Problema da unidade de área modificável: resultados que mudam conforme se desenham as fronteiras.</dd>
+    <dt>Mediana</dt><dd>O valor do meio dos dados ordenados. Robusta a outliers.</dd>
+    <dt>Normalização</dt><dd>Levar indicadores de unidades diferentes para a mesma escala.</dd>
+    <dt>Outlier</dt><dd>Valor muito fora do padrão, por erro ou por ser raro de verdade.</dd>
+    <dt>Percentil</dt><dd>A porcentagem de casos que ficam abaixo de um valor.</dd>
+    <dt>Peso</dt><dd>Quanto um critério importa na nota, de 0 a 5.</dd>
+    <dt>Preço hedônico</dt><dd>Ideia de que o preço reflete os preços implícitos das características do bem.</dd>
+    <dt>R²</dt><dd>Fração da variação do preço explicada pelo modelo, de 0 a 1.</dd>
+    <dt>Regressão linear</dt><dd>Reta que descreve como uma variável muda, em média, com outra.</dd>
+    <dt>Resíduo</dt><dd>Diferença entre o valor real e o previsto pelo modelo.</dd>
+    <dt>Setor censitário</dt><dd>Menor área em que o IBGE divulga dados do Censo.</dd>
+    <dt>Subnotificação</dt><dd>Eventos que acontecem e não são registrados.</dd>
+    <dt>Taxa</dt><dd>Contagem dividida pela população, para comparar grupos de tamanhos diferentes.</dd>
+    <dt>Viés de seleção</dt><dd>Quando os dados observados não representam o todo.</dd>
+  </dl>
+</section>
+
+<!-- ============ REFERÊNCIAS ============ -->
+<section id="referencias">
+  <h2>Referências</h2>
+  <p class="small">Referências citadas pelo Claude a partir do próprio conhecimento. Confira os dados bibliográficos antes de usá-las em trabalho acadêmico.</p>
+  <ol class="refs">
+    <li id="ref-1">Huber, P. J. (1981). <em>Robust Statistics</em>. Wiley.</li>
+    <li id="ref-2">OECD &amp; Joint Research Centre (2008). <em>Handbook on Constructing Composite Indicators: Methodology and User Guide</em>. OECD Publishing.</li>
+    <li id="ref-3">Keeney, R. L. &amp; Raiffa, H. (1976). <em>Decisions with Multiple Objectives: Preferences and Value Tradeoffs</em>. Wiley.</li>
+    <li id="ref-4">Belton, V. &amp; Stewart, T. J. (2002). <em>Multiple Criteria Decision Analysis: An Integrated Approach</em>. Kluwer Academic.</li>
+    <li id="ref-5">Skogan, W. G. (1977). Dimensions of the dark figure of unreported crime. <em>Crime &amp; Delinquency</em>, 23(1), 41–50.</li>
+    <li id="ref-6">Openshaw, S. (1984). <em>The Modifiable Areal Unit Problem</em>. CATMOG 38. Geo Books.</li>
+    <li id="ref-7">Robinson, W. S. (1950). Ecological correlations and the behavior of individuals. <em>American Sociological Review</em>, 15(3), 351–357. doi:10.2307/2087176</li>
+    <li id="ref-8">Tobler, W. R. (1970). A computer movie simulating urban growth in the Detroit region. <em>Economic Geography</em>, 46, 234–240. doi:10.2307/143141</li>
+    <li id="ref-9">Moreno, C., Allam, Z., Chabaud, D., Gall, C. &amp; Pratlong, F. (2021). Introducing the "15-Minute City": sustainability, resilience and place identity in future post-pandemic cities. <em>Smart Cities</em>, 4(1), 93–111. doi:10.3390/smartcities4010006</li>
+    <li id="ref-10">Bohannon, R. W. (1997). Comfortable and maximum walking speed of adults aged 20–79 years: reference values and determinants. <em>Age and Ageing</em>, 26(1), 15–19.</li>
+    <li id="ref-11">Rosen, S. (1974). Hedonic prices and implicit markets: product differentiation in pure competition. <em>Journal of Political Economy</em>, 82(1), 34–55. doi:10.1086/260169</li>
+    <li id="ref-12">James, G., Witten, D., Hastie, T. &amp; Tibshirani, R. (2021). <em>An Introduction to Statistical Learning</em> (2ª ed.). Springer. Gratuito em <a href="https://www.statlearning.com" target="_blank" rel="noopener">statlearning.com</a>.</li>
+    <li id="ref-13">Charnes, A., Cooper, W. W. &amp; Rhodes, E. (1978). Measuring the efficiency of decision making units. <em>European Journal of Operational Research</em>, 2(6), 429–444. doi:10.1016/0377-2217(78)90138-8</li>
+    <li id="ref-14">Wainer, H. (2007). The most dangerous equation. <em>American Scientist</em>, 95(3), 249–256.</li>
+    <li id="ref-15">Tversky, A. &amp; Kahneman, D. (1971). Belief in the law of small numbers. <em>Psychological Bulletin</em>, 76(2), 105–110. doi:10.1037/h0031322</li>
+    <li id="ref-16">Little, R. J. A. &amp; Rubin, D. B. (2019). <em>Statistical Analysis with Missing Data</em> (3ª ed.). Wiley.</li>
+    <li id="ref-17">Himmelberg, C., Mayer, C. &amp; Sinai, T. (2005). Assessing high house prices: bubbles, fundamentals and misperceptions. <em>Journal of Economic Perspectives</em>, 19(4), 67–92. doi:10.1257/089533005775196769</li>
+    <li id="ref-18">Brasil. Lei nº 8.245, de 18 de outubro de 1991 (Lei do Inquilinato), art. 37.</li>
+    <li id="ref-19">Brasil. Lei nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais).</li>
+    <li id="ref-20">Saaty, T. L. (1980). <em>The Analytic Hierarchy Process</em>. McGraw-Hill.</li>
+    <li id="ref-21">Pareto, V. (1906). <em>Manuale di economia politica</em>. Società Editrice Libraria.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- utilidades ---------- */
+  var NS = 'http://www.w3.org/2000/svg';
+  function $(s, r) { return (r || document).querySelector(s); }
+  var nf0 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
+  var nf1 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var nf2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function brl(x) { return 'R$ ' + nf0.format(x); }
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function txt(parent, attrs, content) { var t = el('text', attrs, parent); t.textContent = content; return t; }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function mean(a) { return a.reduce(function (s, x) { return s + x; }, 0) / a.length; }
+  function median(a) {
+    var s = a.slice().sort(function (x, y) { return x - y; }), m = s.length >> 1;
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+  function quantile(sorted, q) {
+    var pos = (sorted.length - 1) * q, lo = Math.floor(pos), hi = Math.ceil(pos);
+    return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+  }
+  // percentil 0–100; empates recebem a posição média
+  function percentRanks(values) {
+    var n = values.length;
+    var idx = values.map(function (v, i) { return [v, i]; }).sort(function (a, b) { return a[0] - b[0]; });
+    var ranks = new Array(n), i = 0;
+    while (i < n) {
+      var j = i;
+      while (j + 1 < n && idx[j + 1][0] === idx[i][0]) j++;
+      var avg = (i + j) / 2;
+      for (var k = i; k <= j; k++) ranks[idx[k][1]] = avg;
+      i = j + 1;
+    }
+    return ranks.map(function (r) { return n > 1 ? r / (n - 1) * 100 : 50; });
+  }
+  function scale(d0, d1, r0, r1) { var k = (r1 - r0) / (d1 - d0); return function (x) { return r0 + (x - d0) * k; }; }
+  function niceStep(range, count) {
+    var raw = range / count, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+    return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p;
+  }
+  // barra horizontal com a ponta de dados arredondada e a base reta
+  function barPath(x0, y0, w, h, r) {
+    r = Math.min(r, w, h / 2);
+    if (w <= 0) return '';
+    return 'M' + x0 + ',' + y0 + ' H' + (x0 + w - r) + ' Q' + (x0 + w) + ',' + y0 + ' ' + (x0 + w) + ',' + (y0 + r) +
+      ' V' + (y0 + h - r) + ' Q' + (x0 + w) + ',' + (y0 + h) + ' ' + (x0 + w - r) + ',' + (y0 + h) + ' H' + x0 + ' Z';
+  }
+
+  /* ---------- tooltip ---------- */
+  var tip = $('#tip');
+  function moveTip(e) {
+    var pad = 14, x = e.clientX + pad, y = e.clientY + pad;
+    var r = tip.getBoundingClientRect();
+    if (x + r.width > window.innerWidth - 8) x = e.clientX - r.width - pad;
+    if (y + r.height > window.innerHeight - 8) y = e.clientY - r.height - pad;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function bindTip(node, html) {
+    node.addEventListener('pointerenter', function (e) { tip.innerHTML = html; tip.hidden = false; moveTip(e); });
+    node.addEventListener('pointermove', moveTip);
+    node.addEventListener('pointerleave', function () { tip.hidden = true; });
+  }
+
+  /* ---------- tema ---------- */
+  (function theme() {
+    var btn = $('#theme-btn'), labels = { auto: 'automático', light: 'claro', dark: 'escuro' };
+    var order = ['auto', 'light', 'dark'], mode = 'auto';
+    try { mode = localStorage.getItem('estudos-tema') || 'auto'; } catch (e) { mode = 'auto'; }
+    function apply() {
+      if (mode === 'auto') delete document.documentElement.dataset.theme;
+      else document.documentElement.dataset.theme = mode;
+      btn.textContent = 'Tema: ' + labels[mode];
+    }
+    btn.addEventListener('click', function () {
+      mode = order[(order.indexOf(mode) + 1) % order.length];
+      try { localStorage.setItem('estudos-tema', mode); } catch (e) { /* sem armazenamento */ }
+      apply();
+    });
+    apply();
+  })();
+
+  /* ---------- navegação: seção ativa ---------- */
+  (function nav() {
+    var links = {};
+    document.querySelectorAll('nav.toc a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    if (!('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          Object.keys(links).forEach(function (k) { links[k].classList.remove('active'); });
+          var a = links[en.target.id];
+          if (a) { a.classList.add('active'); if (a.scrollIntoView && window.innerWidth <= 900) a.scrollIntoView({ block: 'nearest', inline: 'center' }); }
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    document.querySelectorAll('main section').forEach(function (s) { obs.observe(s); });
+  })();
+
+  /* ---------- 1. média × mediana ---------- */
+  (function demoMedia() {
+    var base = [1800, 2100, 1950, 2300, 2000, 2200, 1900], OUT = 25000;
+    var vals = base.slice();
+    var svg = $('#d1-chart'), add = $('#d1-add'), reset = $('#d1-reset');
+    function render() {
+      var mu = mean(vals), md = median(vals);
+      $('#d1-mean').textContent = brl(mu);
+      $('#d1-median').textContent = brl(md);
+      $('#d1-list').textContent = 'Anúncios: ' + vals.map(brl).join(' · ');
+      clear(svg);
+      var W = 640, H = 130, m = { l: 20, r: 20, t: 34, b: 30 };
+      var maxV = Math.max.apply(null, vals), step = niceStep(maxV, 5), top = Math.ceil(maxV / step) * step;
+      var x = scale(0, top, m.l, W - m.r), yc = (m.t + H - m.b) / 2 + 4;
+      for (var t = 0; t <= top + 1e-9; t += step) {
+        el('line', { x1: x(t), x2: x(t), y1: m.t - 6, y2: H - m.b, class: 'grid' }, svg);
+        txt(svg, { x: x(t), y: H - m.b + 18, class: 'tick', 'text-anchor': 'middle' }, nf0.format(t));
+      }
+      el('line', { x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b, class: 'baseline' }, svg);
+      el('line', { x1: x(md), x2: x(md), y1: m.t - 6, y2: H - m.b, class: 'vline-1' }, svg);
+      el('line', { x1: x(mu), x2: x(mu), y1: m.t - 6, y2: H - m.b, class: 'vline-2' }, svg);
+      txt(svg, { x: x(md) - 6, y: m.t - 12, class: 'lbl-1', 'text-anchor': 'end' }, 'mediana');
+      txt(svg, { x: x(mu) + 6, y: m.t - 12, class: 'lbl-1', 'text-anchor': 'start' }, 'média');
+      vals.forEach(function (v) {
+        el('circle', { cx: x(v), cy: yc, r: 6, class: 'dot ink-dot' }, svg);
+        var hit = el('circle', { cx: x(v), cy: yc, r: 13, class: 'hit' }, svg);
+        bindTip(hit, '<b>Anúncio</b>' + brl(v) + (v === OUT ? '<br>Erro de digitação: era R$ 2.500' : ''));
+      });
+    }
+    add.addEventListener('click', function () { vals = base.concat([OUT]); add.disabled = true; reset.disabled = false; render(); });
+    reset.addEventListener('click', function () { vals = base.slice(); add.disabled = false; reset.disabled = true; render(); });
+    render();
+  })();
+
+  /* ---------- 2. percentil ---------- */
+  (function demoPercentil() {
+    var rows = [['Alfa', 12, 18], ['Beta', 3, 9], ['Gama', 7, 25], ['Delta', 9, 12],
+      ['Épsilon', 1, 6], ['Zeta', 15, 30], ['Eta', 5, 14], ['Teta', 7, 11]];
+    var table = $('#d2-table'), box = $('#d2-invert');
+    function cell(p) {
+      return '<td class="n">' + nf0.format(p) + '<span class="minibar" style="width:' + (p * 0.6).toFixed(1) + 'px"></span></td>';
+    }
+    function render() {
+      var pe = percentRanks(rows.map(function (r) { return r[1]; }));
+      var ps = percentRanks(rows.map(function (r) { return r[2]; }));
+      if (box.checked) ps = ps.map(function (p) { return 100 - p; });
+      var h = '<thead><tr><th>Bairro (fictício)</th><th class="n">Escolas a até 1 km</th><th class="n">Percentil</th>' +
+        '<th class="n">Ocorrências por 1.000 hab.</th><th class="n">Percentil' + (box.checked ? ' (invertido)' : ' (sem inverter)') + '</th></tr></thead><tbody>';
+      rows.forEach(function (r, i) {
+        h += '<tr><td>Bairro ' + r[0] + '</td><td class="n">' + r[1] + '</td>' + cell(pe[i]) +
+          '<td class="n">' + r[2] + '</td>' + cell(ps[i]) + '</tr>';
+      });
+      table.innerHTML = h + '</tbody>';
+    }
+    box.addEventListener('change', render);
+    render();
+  })();
+
+  /* ---------- 6. multicritério ---------- */
+  (function demoMulti() {
+    var crit = [['dia', 'Dia a dia'], ['edu', 'Educação'], ['sau', 'Saúde'], ['mob', 'Mobilidade'], ['seg', 'Segurança'], ['laz', 'Lazer e verde']];
+    var bairros = [
+      { n: 'Bairro Alfa', d: 'central e movimentado', v: { dia: 95, edu: 70, sau: 90, mob: 95, seg: 30, laz: 40 } },
+      { n: 'Bairro Beta', d: 'residencial', v: { dia: 55, edu: 90, sau: 60, mob: 45, seg: 85, laz: 80 } },
+      { n: 'Bairro Gama', d: 'afastado e verde', v: { dia: 30, edu: 50, sau: 35, mob: 25, seg: 75, laz: 95 } }
+    ];
+    var presets = {
+      equilibrado: { label: 'Equilibrado', w: { dia: 3, edu: 3, sau: 3, mob: 3, seg: 3, laz: 3 },
+        why: ['Todos os critérios começam em 3: ponto de partida neutro.'] },
+      filhos: { label: 'Com filhos', w: { dia: 3, edu: 5, sau: 4, mob: 3, seg: 5, laz: 4 },
+        why: ['Educação 5: escola e creche perto encurtam o trajeto diário das crianças.',
+          'Segurança 5: crianças circulam mais a pé pelo bairro.',
+          'Saúde 4: crianças vão ao médico com mais frequência.',
+          'Lazer e verde 4: praças e parques são o quintal de quem mora com crianças.'] },
+      pet: { label: 'Com pet', w: { dia: 3, edu: 3, sau: 3, mob: 3, seg: 3, laz: 5 },
+        why: ['Lazer e verde 5: parques e praças para os passeios diários.',
+          '(Sossego 4 também faz parte deste ponto de partida, mas não está nesta versão reduzida.)'] },
+      semcarro: { label: 'Sem carro', w: { dia: 5, edu: 3, sau: 4, mob: 5, seg: 3, laz: 3 },
+        why: ['Dia a dia 5: as compras são feitas a pé.',
+          'Mobilidade 5: ônibus perto define a rotina.',
+          'Saúde 4: atendimento perto evita depender de transporte numa urgência.'] }
+    };
+    var w = Object.assign({}, presets.equilibrado.w), current = 'equilibrado';
+    var presetBox = $('#d3-presets'), sliderBox = $('#d3-sliders'), svg = $('#d3-chart'), explain = $('#d3-explain'), table = $('#d3-table');
+
+    Object.keys(presets).forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'btn'; b.textContent = presets[k].label; b.dataset.k = k;
+      b.addEventListener('click', function () { current = k; w = Object.assign({}, presets[k].w); syncSliders(); render(); });
+      presetBox.appendChild(b);
+    });
+    var inputs = {};
+    crit.forEach(function (c) {
+      var d = document.createElement('div'); d.className = 'slider';
+      d.innerHTML = '<label for="w-' + c[0] + '"><span>' + c[1] + '</span><span id="wv-' + c[0] + '"></span></label>' +
+        '<input type="range" min="0" max="5" step="1" id="w-' + c[0] + '">';
+      sliderBox.appendChild(d);
+      var inp = d.querySelector('input');
+      inp.addEventListener('input', function () { w[c[0]] = +inp.value; current = null; render(); });
+      inputs[c[0]] = inp;
+    });
+    function syncSliders() { crit.forEach(function (c) { inputs[c[0]].value = w[c[0]]; }); }
+
+    function scoreOf(b) {
+      var sw = 0, s = 0;
+      crit.forEach(function (c) { sw += w[c[0]]; s += w[c[0]] * b.v[c[0]]; });
+      return sw > 0 ? s / sw : null;
+    }
+    function render() {
+      presetBox.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.k === current ? 'true' : 'false'); });
+      crit.forEach(function (c) { $('#wv-' + c[0]).textContent = 'peso ' + w[c[0]]; });
+      var qs = bairros.map(scoreOf);
+      var order = qs.map(function (q, i) { return [q, i]; }).filter(function (p) { return p[0] !== null; })
+        .sort(function (a, b) { return b[0] - a[0]; });
+      var rank = {}; order.forEach(function (p, r) { rank[p[1]] = r + 1; });
+
+      clear(svg);
+      var W = 640, rowH = 42, m = { l: 120, r: 90, t: 8, b: 28 }, H = m.t + m.b + rowH * bairros.length;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var x = scale(0, 100, m.l, W - m.r);
+      [0, 25, 50, 75, 100].forEach(function (t) {
+        el('line', { x1: x(t), x2: x(t), y1: m.t, y2: H - m.b, class: 'grid' }, svg);
+        txt(svg, { x: x(t), y: H - m.b + 16, class: 'tick', 'text-anchor': 'middle' }, String(t));
+      });
+      el('line', { x1: x(0), x2: x(0), y1: m.t, y2: H - m.b, class: 'baseline' }, svg);
+      bairros.forEach(function (b, i) {
+        var yc = m.t + rowH * i + rowH / 2, h = 18, q = qs[i];
+        txt(svg, { x: m.l - 10, y: yc, class: 'bar-label', 'text-anchor': 'end', 'dominant-baseline': 'middle' }, b.n);
+        if (q === null) return;
+        var wpx = x(q) - x(0);
+        el('path', { d: barPath(x(0), yc - h / 2, wpx, h, 4), class: 's1' }, svg);
+        txt(svg, { x: x(0) + wpx + 8, y: yc, class: 'bar-value', 'dominant-baseline': 'middle' }, nf1.format(q) + '  (' + rank[i] + 'º)');
+        var hit = el('rect', { x: m.l, y: yc - rowH / 2, width: W - m.l - m.r, height: rowH, class: 'hit' }, svg);
+        bindTip(hit, '<b>' + b.n + '</b>' + b.d + '<br>Q = ' + nf1.format(q) + ' (' + rank[i] + 'º lugar)');
+      });
+
+      explain.innerHTML = '';
+      var whys = current ? presets[current].why : ['Pesos ajustados à mão: a nota segue as suas escolhas.'];
+      if (order.length === 0) whys = ['Com todos os pesos em 0, não há nota: nenhum critério importa.'];
+      whys.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; explain.appendChild(li); });
+
+      var h = '<thead><tr><th>Critério (percentil)</th>' + bairros.map(function (b) { return '<th class="n">' + b.n.replace('Bairro ', '') + '</th>'; }).join('') + '<th class="n">Peso</th></tr></thead><tbody>';
+      crit.forEach(function (c) {
+        h += '<tr><td>' + c[1] + '</td>' + bairros.map(function (b) { return '<td class="n">' + b.v[c[0]] + '</td>'; }).join('') + '<td class="n">' + w[c[0]] + '</td></tr>';
+      });
+      h += '<tr><td><strong>Nota Q</strong></td>' + qs.map(function (q) { return '<td class="n"><strong>' + (q === null ? '–' : nf1.format(q)) + '</strong></td>'; }).join('') + '<td></td></tr>';
+      table.innerHTML = h + '</tbody>';
+    }
+    syncSliders(); render();
+  })();
+
+  /* ---------- 7 e 8. regressão e fronteira ---------- */
+  var B = [['A', 88, 42], ['B', 82, 36], ['C', 76, 37], ['D', 71, 28], ['E', 66, 31], ['F', 63, 24],
+    ['G', 58, 30], ['H', 52, 25], ['I', 47, 21], ['J', 41, 22], ['K', 36, 17], ['L', 30, 18]]
+    .map(function (r) { return { id: r[0], q: r[1], p: r[2] }; });
+  var fit = (function ols(xs, ys) {
+    var mx = mean(xs), my = mean(ys), sxy = 0, sxx = 0;
+    for (var i = 0; i < xs.length; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) * (xs[i] - mx); }
+    var b = sxy / sxx, a = my - b * mx, ssr = 0, sst = 0;
+    for (var j = 0; j < xs.length; j++) { var yh = a + b * xs[j]; ssr += (ys[j] - yh) * (ys[j] - yh); sst += (ys[j] - my) * (ys[j] - my); }
+    return { a: a, b: b, r2: 1 - ssr / sst };
+  })(B.map(function (d) { return d.q; }), B.map(function (d) { return d.p; }));
+  B.forEach(function (d) { d.ph = fit.a + fit.b * d.q; d.diff = (d.ph - d.p) / d.ph; });
+  var cbp = percentRanks(B.map(function (d) { return d.diff; }));
+  B.forEach(function (d, i) { d.cb = cbp[i]; });
+  var top3 = B.slice().sort(function (a, b) { return b.cb - a.cb; }).slice(0, 3).map(function (d) { return d.id; });
+  B.forEach(function (d) {
+    d.dominators = B.filter(function (o) { return o !== d && o.q >= d.q && o.p <= d.p && (o.q > d.q || o.p < d.p); }).map(function (o) { return o.id; });
+    d.eff = d.dominators.length === 0;
+  });
+  function diffText(d) { var v = Math.abs(d.diff * 100); return nf0.format(v) + '% ' + (d.diff >= 0 ? 'mais barato' : 'mais caro'); }
+
+  function drawScatter(svg, mode) {
+    clear(svg);
+    var W = 640, H = 380, m = { l: 56, r: 20, t: 36, b: 46 };
+    var x = scale(20, 100, m.l, W - m.r), y = scale(10, 50, H - m.b, m.t);
+    [10, 20, 30, 40, 50].forEach(function (t) {
+      el('line', { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), class: 'grid' }, svg);
+      txt(svg, { x: m.l - 8, y: y(t), class: 'tick', 'text-anchor': 'end', 'dominant-baseline': 'middle' }, 'R$ ' + t);
+    });
+    [20, 40, 60, 80, 100].forEach(function (t) {
+      txt(svg, { x: x(t), y: H - m.b + 18, class: 'tick', 'text-anchor': 'middle' }, String(t));
+    });
+    el('line', { x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b, class: 'baseline' }, svg);
+    txt(svg, { x: (m.l + W - m.r) / 2, y: H - 6, class: 'axis-label', 'text-anchor': 'middle' }, 'Qualidade do bairro (Q, de 0 a 100)');
+    txt(svg, { x: m.l, y: m.t - 16, class: 'axis-label', 'text-anchor': 'start' }, 'Preço do m² (aluguel)');
+
+    if (mode === 'reg') {
+      B.forEach(function (d) { el('line', { x1: x(d.q), x2: x(d.q), y1: y(d.p), y2: y(d.ph), class: 'resid' }, svg); });
+      el('line', { x1: x(24), x2: x(96), y1: y(fit.a + fit.b * 24), y2: y(fit.a + fit.b * 96), class: 'fit' }, svg);
+    } else {
+      var fr = B.filter(function (d) { return d.eff; }).sort(function (a, b) { return a.p - b.p; });
+      el('polyline', { points: fr.map(function (d) { return x(d.q) + ',' + y(d.p); }).join(' '), class: 'frontier' }, svg);
+    }
+    B.forEach(function (d) {
+      var cls = 'dot s1';
+      if (mode === 'reg' && top3.indexOf(d.id) >= 0) cls = 'dot s2';
+      if (mode === 'pareto') cls = d.eff ? 'dot s1' : 'dot muted-dot';
+      el('circle', { cx: x(d.q), cy: y(d.p), r: 6, class: cls }, svg);
+      txt(svg, { x: x(d.q) + 9, y: y(d.p) - 9, class: 'pt-label' }, d.id);
+      var hit = el('circle', { cx: x(d.q), cy: y(d.p), r: 14, class: 'hit' }, svg);
+      var html = '<b>Bairro ' + d.id + '</b>Qualidade: ' + d.q + '<br>Preço: R$ ' + d.p + '/m²';
+      if (mode === 'reg') html += '<br>Esperado: R$ ' + nf1.format(d.ph) + '/m²<br>' + diffText(d) + ' que o esperado<br>CB: ' + nf0.format(d.cb);
+      else html += d.eff ? '<br>Na fronteira: ninguém é melhor e mais barato.' : '<br>Dominado por: ' + d.dominators.join(', ');
+      bindTip(hit, html);
+    });
+  }
+
+  (function demoReg() {
+    drawScatter($('#d4-chart'), 'reg');
+    $('#d4-fit').textContent = 'Reta ajustada: P̂ = ' + nf2.format(fit.a) + ' + ' + nf2.format(fit.b) + ' × Q.  R² = ' + nf2.format(fit.r2) +
+      ': a qualidade explica cerca de ' + nf0.format(fit.r2 * 100) + '% da variação do preço nestes dados fictícios.';
+    var slider = $('#d4-enfase'), out = $('#d4-enfase-v'), table = $('#d4-table');
+    function render() {
+      var e = +slider.value;
+      out.textContent = nf1.format(e);
+      var rows = B.map(function (d) { return { d: d, f: (1 - e) * d.q + e * d.cb }; }).sort(function (a, b) { return b.f - a.f; });
+      var h = '<thead><tr><th class="n">#</th><th>Bairro</th><th class="n">Q</th><th class="n">Preço/m²</th><th class="n">Esperado</th><th>Diferença</th><th class="n">CB</th><th class="n">Nota final</th></tr></thead><tbody>';
+      rows.forEach(function (r, i) {
+        var d = r.d;
+        h += '<tr><td class="n">' + (i + 1) + '</td><td>Bairro ' + d.id + '</td><td class="n">' + d.q + '</td><td class="n">R$ ' + d.p +
+          '</td><td class="n">R$ ' + nf1.format(d.ph) + '</td><td>' + diffText(d) + '</td><td class="n">' + nf0.format(d.cb) +
+          '</td><td class="n"><strong>' + nf1.format(r.f) + '</strong></td></tr>';
+      });
+      table.innerHTML = h + '</tbody>';
+    }
+    slider.addEventListener('input', render);
+    render();
+  })();
+
+  drawScatter($('#d5-chart'), 'pareto');
+
+  /* ---------- 9. amostras pequenas ---------- */
+  (function demoSample() {
+    var TRUE_MED = 2000, NS_ = [2, 3, 5, 10, 30], REPS = 1000;
+    var svg = $('#d6-chart'), table = $('#d6-table'), sel = $('#d6-sigma');
+    function randn() {
+      var u = 0, v = 0;
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+    function simulate(sig) {
+      return NS_.map(function (n) {
+        var meds = [], off = 0;
+        for (var r = 0; r < REPS; r++) {
+          var s = [];
+          for (var i = 0; i < n; i++) s.push(TRUE_MED * Math.exp(sig * randn()));
+          var md = median(s);
+          meds.push(md);
+          if (Math.abs(md - TRUE_MED) / TRUE_MED > 0.2) off++;
+        }
+        meds.sort(function (a, b) { return a - b; });
+        return { n: n, lo: quantile(meds, 0.05), hi: quantile(meds, 0.95), mid: quantile(meds, 0.5), off: off / REPS };
+      });
+    }
+    function draw(res) {
+      clear(svg);
+      var W = 640, rowH = 40, m = { l: 64, r: 150, t: 34, b: 30 }, H = m.t + m.b + rowH * res.length;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var lo = Math.min.apply(null, res.map(function (r) { return r.lo; }).concat([TRUE_MED]));
+      var hi = Math.max.apply(null, res.map(function (r) { return r.hi; }).concat([TRUE_MED]));
+      lo = Math.floor(lo * 0.95 / 250) * 250; hi = Math.ceil(hi * 1.05 / 250) * 250;
+      var x = scale(lo, hi, m.l, W - m.r), step = niceStep(hi - lo, 4);
+      for (var t = Math.ceil(lo / step) * step; t <= hi + 1e-9; t += step) {
+        el('line', { x1: x(t), x2: x(t), y1: m.t, y2: H - m.b, class: 'grid' }, svg);
+        txt(svg, { x: x(t), y: H - m.b + 18, class: 'tick', 'text-anchor': 'middle' }, brl(t));
+      }
+      el('line', { x1: x(TRUE_MED), x2: x(TRUE_MED), y1: m.t - 4, y2: H - m.b, class: 'ref' }, svg);
+      txt(svg, { x: x(TRUE_MED), y: m.t - 12, class: 'axis-label', 'text-anchor': 'middle' }, 'mediana real: R$ 2.000');
+      txt(svg, { x: W - m.r + 12, y: m.t - 12, class: 'axis-label', 'text-anchor': 'start' }, 'erra mais de 20%');
+      res.forEach(function (r, i) {
+        var yc = m.t + rowH * i + rowH / 2, h = 14;
+        txt(svg, { x: m.l - 10, y: yc, class: 'bar-label', 'text-anchor': 'end', 'dominant-baseline': 'middle' }, 'n = ' + r.n);
+        el('rect', { x: x(r.lo), y: yc - h / 2, width: Math.max(2, x(r.hi) - x(r.lo)), height: h, rx: 4, class: 's1' }, svg);
+        el('line', { x1: x(r.mid), x2: x(r.mid), y1: yc - h / 2, y2: yc + h / 2, class: 'mid' }, svg);
+        txt(svg, { x: W - m.r + 12, y: yc, class: 'bar-value', 'dominant-baseline': 'middle' }, nf0.format(r.off * 100) + '% das vezes');
+        var hit = el('rect', { x: m.l, y: yc - rowH / 2, width: W - m.l - m.r, height: rowH, class: 'hit' }, svg);
+        bindTip(hit, '<b>n = ' + r.n + ' anúncios</b>Em 90% dos sorteios a mediana ficou entre ' + brl(r.lo) + ' e ' + brl(r.hi) +
+          '.<br>Errou mais de 20%: ' + nf0.format(r.off * 100) + '% das vezes.');
+      });
+      var h2 = '<thead><tr><th class="n">Anúncios (n)</th><th class="n">Faixa de 90%</th><th class="n">Largura da faixa</th><th class="n">Erra mais de 20%</th></tr></thead><tbody>';
+      res.forEach(function (r) {
+        h2 += '<tr><td class="n">' + r.n + '</td><td class="n">' + brl(r.lo) + ' a ' + brl(r.hi) + '</td><td class="n">' + brl(r.hi - r.lo) +
+          '</td><td class="n">' + nf0.format(r.off * 100) + '%</td></tr>';
+      });
+      table.innerHTML = h2 + '</tbody>';
+    }
+    function run() { draw(simulate(+sel.value)); }
+    $('#d6-run').addEventListener('click', run);
+    sel.addEventListener('change', run);
+    run();
+  })();
+
+  /* ---------- 11. preço/aluguel ---------- */
+  (function demoRatio() {
+    var p = $('#d7-preco'), a = $('#d7-aluguel');
+    function render() {
+      var pv = +p.value, av = +a.value;
+      if (!(pv > 0 && av > 0)) { $('#d7-razao').textContent = '–'; $('#d7-rent').textContent = '–'; return; }
+      var ratio = pv / (av * 12);
+      $('#d7-razao').textContent = nf1.format(ratio) + ' anos';
+      $('#d7-rent').textContent = nf1.format(100 / ratio) + '% ao ano';
+    }
+    p.addEventListener('input', render); a.addEventListener('input', render);
+    render();
+  })();
+})();
+</script>
+</body>
+</html>
