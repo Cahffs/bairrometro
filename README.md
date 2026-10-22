@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="identidade/logo/logo-dark.svg">
+  <img src="identidade/logo/logo.svg" alt="Bairrômetro" width="340">
+</picture>
+
 # Bairrômetro
 
 Ferramenta de dados para escolher bairro e imóvel em cidades brasileiras. **MVP: Sorocaba-SP.**

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identidade visual do Bairrômetro</title>
+<meta name="description" content="Guia da identidade visual do Bairrômetro: logo, cores da marca, cores para dados, tipografia e como usar no código.">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="tokens.css">
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--page); color: var(--text); font: 16px/1.6 var(--font-text); }
+h1, h2, h3 { font-family: var(--font-display); font-variation-settings: var(--display-variation); font-weight: 600; line-height: 1.2; margin: 0; }
+h1 { font-size: 2.5rem; line-height: 1.1; }
+h2 { font-size: 1.75rem; margin-bottom: 12px; }
+h3 { font-size: 1.25rem; margin: 32px 0 8px; }
+p { margin: 0 0 12px; }
+a { color: var(--primary); }
+a:hover { color: var(--primary-hover); }
+code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; }
+nav.toc { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 24px 16px; border-right: 1px solid var(--border); }
+nav.toc img { width: 170px; display: block; margin: 4px 8px 6px; }
+nav.toc .sub { font-size: 0.8rem; color: var(--text-muted); margin: 0 8px 18px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; }
+nav.toc a { display: block; padding: 5px 8px; border-radius: 6px; color: var(--text-secondary); text-decoration: none; font-size: 0.92rem; }
+nav.toc a:hover { background: var(--surface-2); color: var(--text); }
+.theme-btn { margin-top: 16px; width: 100%; padding: 8px 10px; border-radius: var(--radius-control); border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-secondary); font: inherit; font-size: 0.85rem; cursor: pointer; }
+main { padding: 40px 48px 80px; min-width: 0; }
+section { max-width: 820px; margin: 0 0 72px; scroll-margin-top: 24px; }
+.lead { font-size: 1.1rem; color: var(--text-secondary); }
+.eyebrow { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.why { border-left: 3px solid var(--accent); background: var(--surface); padding: 12px 16px; margin: 16px 0; }
+.why strong { color: var(--accent); }
+.note { font-size: 0.85rem; color: var(--text-secondary); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 16px; }
+.logo-tile { border-radius: var(--radius-card); border: 1px solid var(--border); padding: 24px; display: flex; align-items: center; justify-content: center; min-height: 120px; }
+.logo-tile img { max-width: 100%; max-height: 64px; }
+.logo-tile.on-light { background: #FAF6EE; }
+.logo-tile.on-dark { background: #1B1410; border-color: #3D332C; }
+.file { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text); margin: 10px 0 2px; }
+.use { font-size: 0.85rem; color: var(--text-secondary); }
+
+.swatch { border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+.swatch .chip { height: 72px; }
+.swatch .info { padding: 10px 12px; font-size: 0.85rem; }
+.swatch .name { font-weight: 600; }
+.swatch .hex { font-family: var(--font-mono); color: var(--text-secondary); }
+.ramp { display: grid; grid-template-columns: 110px repeat(10, 1fr); gap: 2px; align-items: center; margin: 6px 0; font-size: 0.8rem; }
+.ramp span[data-hex] { height: 34px; border-radius: 4px; }
+.ramp .label { color: var(--text-secondary); }
+.ramp-steps { display: grid; grid-template-columns: 110px repeat(10, 1fr); gap: 2px; font-size: 0.7rem; color: var(--text-muted); text-align: center; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.chart { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 16px; margin: 12px 0; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart text { font-family: var(--font-text); }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 12px 0; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: 0.8rem; }
+.num { font-variant-numeric: tabular-nums; text-align: right; }
+
+.cvd { display: grid; grid-template-columns: 120px 1fr; gap: 6px 12px; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
+.cvd .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.cvd .row span { height: 28px; border-radius: 4px; }
+
+.status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; padding: 4px 10px; border-radius: var(--radius-control); }
+.status svg { width: 15px; height: 15px; flex: none; }
+.status.warning { background: var(--warning-bg); color: var(--warning-text); }
+.status.error { background: var(--error-bg); color: var(--error-text); }
+.status.info { background: var(--info-bg); color: var(--info-text); }
+
+.specimen-display { font-family: var(--font-display); font-variation-settings: var(--display-variation); font-weight: 600; font-size: 2.6rem; line-height: 1.1; }
+.specimen-text { font-size: 1.05rem; max-width: 60ch; }
+.figures { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 1.1rem; }
+.figures div { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-control); padding: 10px 14px; }
+.figures .tab { font-variant-numeric: tabular-nums; }
+.figures .prop { font-variant-numeric: proportional-nums; }
+.figures span { display: block; text-align: right; }
+
+.app { border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden; background: var(--page); }
+.app header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.app header img { height: 26px; }
+.app .body { padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 14px 16px; }
+.score-card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.score-card .bairro { font-family: var(--font-display); font-variation-settings: var(--display-variation); font-weight: 600; font-size: 1.2rem; }
+.score-card .score { font-family: var(--font-display); font-variation-settings: var(--display-variation); font-weight: 600; font-size: 2.5rem; line-height: 1; text-align: right; }
+.band-low { color: var(--band-low); }
+.band-mid { color: var(--band-mid); }
+.band-high { color: var(--band-high); }
+.fill.band-low { background: var(--band-low); }
+.fill.band-mid { background: var(--band-mid); }
+.fill.band-high { background: var(--band-high); }
+.bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 12px 0; }
+.band-card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 12px 16px; }
+.band-num { font-family: var(--font-display); font-variation-settings: var(--display-variation); font-weight: 600; font-size: 2.5rem; line-height: 1; }
+.band-card span { display: block; font-size: 0.85rem; color: var(--text-secondary); }
+.seq-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.seq-strip span { height: 28px; }
+.seq-strip span:first-child { border-radius: 6px 0 0 6px; }
+.seq-strip span:last-child { border-radius: 0 6px 6px 0; }
+.seq-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 4px; }
+.score-card small { display: block; font-size: 0.75rem; color: var(--text-muted); }
+.bar-row { display: grid; grid-template-columns: 112px 1fr 28px; gap: 8px; align-items: center; font-size: 0.85rem; margin-top: 8px; }
+.bar-row .track { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.bar-row .fill { height: 100%; border-radius: 4px; }
+.bar-row b { font-variant-numeric: tabular-nums; text-align: right; font-weight: 600; }
+.btn { font: inherit; font-weight: 600; font-size: 0.9rem; padding: 8px 14px; border-radius: var(--radius-control); cursor: pointer; border: 1px solid transparent; }
+.btn.primary { background: var(--primary); color: var(--on-primary); }
+.btn.primary:hover { background: var(--primary-hover); }
+.btn.secondary { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
+.btn.secondary:hover { background: var(--surface-2); }
+
+.dont { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.dont figure { margin: 0; }
+.dont .logo-tile { min-height: 90px; padding: 16px; position: relative; overflow: hidden; }
+.dont figcaption { font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px; }
+.dont .x { position: absolute; top: 6px; right: 8px; color: var(--error-text); font-weight: 700; }
+
+ol.refs li { margin-bottom: 8px; font-size: 0.9rem; }
+footer { font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 16px; }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  nav.toc { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+  main { padding: 24px 16px 64px; }
+  h1 { font-size: 2rem; }
+  .ramp, .ramp-steps { grid-template-columns: 70px repeat(10, 1fr); }
+  .figures { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" aria-label="Seções do guia">
+  <picture>
+    <source srcset="logo/logo-dark.svg" media="(prefers-color-scheme: dark)" id="nav-logo-dark">
+    <img src="logo/logo.svg" alt="Bairrômetro" id="nav-logo">
+  </picture>
+  <div class="sub">Identidade visual · v1.1</div>
+  <ol>
+    <li><a href="#conceito">1. Conceito</a></li>
+    <li><a href="#logo">2. Logo</a></li>
+    <li><a href="#cores">3. Cores da marca</a></li>
+    <li><a href="#dados">4. Cores para dados</a></li>
+    <li><a href="#tipografia">5. Tipografia</a></li>
+    <li><a href="#aplicacoes">6. Aplicações</a></li>
+    <li><a href="#codigo">7. Como usar no código</a></li>
+    <li><a href="#referencias">8. Referências e créditos</a></li>
+  </ol>
+  <button class="theme-btn" id="theme-btn" type="button">Alternar tema claro/escuro</button>
+</nav>
+
+<main>
+<section id="conceito">
+  <div class="eyebrow">Direção B · Telhado</div>
+  <h1>Identidade visual do Bairrômetro</h1>
+  <p class="lead">O acento do <strong>ô</strong> vira o telhado de uma casa. O símbolo nasce do próprio nome e junta as duas ideias do projeto: <em>casa</em> e <em>medida</em>.</p>
+
+  <h3>Personalidade</h3>
+  <div class="grid">
+    <div class="card"><strong>Acolhedor</strong><p class="note">Escolher onde morar é uma decisão de vida, não só uma conta. Cores de bairro brasileiro: telha de barro, verde de praça, parede caiada.</p></div>
+    <div class="card"><strong>Honesto</strong><p class="note">Nenhuma nota sem explicação; avisos sempre visíveis. A cor nunca exagera um resultado nem esconde uma incerteza.</p></div>
+    <div class="card"><strong>Claro</strong><p class="note">Fala a língua de quem procura casa. Termos técnicos aparecem com explicação ao lado.</p></div>
+  </div>
+
+  <div class="why"><strong>Por que esta direção.</strong> Foram comparadas três: um medidor com ponteiro (Instrumento), o ô como casa (Telhado) e uma grade de quarteirões (Quarteirão). O medidor é a imagem mais óbvia para "-ômetro" e a grade lembra qualquer produto de dados. O telhado é a única que só o Bairrômetro pode usar, porque sai da grafia do nome. Também se lê bem pequeno: no ícone da aba, com 16 px, ainda é uma casinha.</div>
+</section>
+
+<section id="logo">
+  <h2>2. Logo</h2>
+  <p>O logotipo é escrito em minúsculas, para soar próximo. No texto corrido, o nome continua com inicial maiúscula: <em>Bairrômetro</em>.</p>
+
+  <h3>Versões</h3>
+  <div class="grid">
+    <div><div class="logo-tile on-light"><img src="logo/logo.svg" alt="Logo completo em cores"></div><div class="file">logo/logo.svg</div><div class="use">Principal. Fundos claros.</div></div>
+    <div><div class="logo-tile on-dark"><img src="logo/logo-dark.svg" alt="Logo completo para fundo escuro"></div><div class="file">logo/logo-dark.svg</div><div class="use">Fundos escuros e modo escuro.</div></div>
+    <div><div class="logo-tile on-light"><img src="logo/logo-mono.svg" alt="Logo em uma cor escura"></div><div class="file">logo/logo-mono.svg</div><div class="use">Uma cor: impressão, carimbo, marca-d'água.</div></div>
+    <div><div class="logo-tile on-dark"><img src="logo/logo-mono-light.svg" alt="Logo em uma cor clara"></div><div class="file">logo/logo-mono-light.svg</div><div class="use">Uma cor clara, sobre fotos ou fundos escuros.</div></div>
+    <div><div class="logo-tile on-light"><img src="logo/symbol.svg" alt="Símbolo: telhado sobre um círculo"></div><div class="file">logo/symbol.svg · symbol-dark.svg</div><div class="use">Avatar, espaços quadrados.</div></div>
+    <div><div class="logo-tile on-light"><img src="logo/favicon.svg" alt="Ícone da aba" style="max-height:32px"></div><div class="file">logo/favicon.svg</div><div class="use">Ícone da aba. Traço mais grosso e cor que muda sozinha no modo escuro.</div></div>
+    <div><div class="logo-tile on-light"><img src="logo/wordmark.svg" alt="Só o nome escrito" style="max-height:40px"></div><div class="file">logo/wordmark.svg</div><div class="use">Só o nome, quando o símbolo já aparece por perto.</div></div>
+  </div>
+
+  <h3>Anatomia</h3>
+  <div class="chart">
+    <svg viewBox="0 0 640 160" role="img" aria-label="Anatomia do logo: o telhado vai até a altura da haste do b, o círculo apoia na linha de base, e a área de respiro ao redor equivale à altura do telhado.">
+      <rect x="87" y="27" width="466" height="95" rx="4" fill="none" style="stroke:var(--border-strong)" stroke-dasharray="5 5"/>
+      <image href="logo/logo.svg" x="110" y="50" width="420" height="49"/>
+      <line x1="80" y1="50" x2="560" y2="50" style="stroke:var(--data-axis-text)" stroke-width="0.75" stroke-dasharray="3 3"/>
+      <line x1="80" y1="99" x2="560" y2="99" style="stroke:var(--data-axis-text)" stroke-width="0.75" stroke-dasharray="3 3"/>
+      <text x="566" y="54" font-size="11" style="fill:var(--data-axis-text)">haste do b</text>
+      <text x="566" y="103" font-size="11" style="fill:var(--data-axis-text)">linha de base</text>
+      <line x1="300" y1="27" x2="300" y2="50" style="stroke:var(--primary)" stroke-width="2"/>
+      <text x="306" y="42" font-size="11" style="fill:var(--primary)">respiro = altura do telhado</text>
+      <text x="87" y="148" font-size="11" style="fill:var(--data-axis-text)">Nada entra no retângulo tracejado.</text>
+    </svg>
+  </div>
+  <ul>
+    <li><strong>Área de respiro:</strong> no mínimo a altura do telhado em todos os lados.</li>
+    <li><strong>Tamanho mínimo:</strong> 120 px de largura para o logo completo; abaixo disso, use o símbolo. O <code>favicon.svg</code> funciona a partir de 16 px.</li>
+    <li><strong>O símbolo funciona sem cor:</strong> quem tem protanopia vê o telhado e o círculo com cores parecidas (diferença de 4,7 na escala usada na seção 4). Quem diferencia as partes é o desenho, não a cor. A versão de uma cor existe por isso.</li>
+  </ul>
+
+  <h3>Não fazer</h3>
+  <div class="dont">
+    <figure><div class="logo-tile on-light"><span class="x" aria-hidden="true">✕</span><img src="logo/logo.svg" alt="" style="transform:scaleX(1.5);max-height:40px"></div><figcaption>Esticar ou achatar.</figcaption></figure>
+    <figure><div class="logo-tile on-light"><span class="x" aria-hidden="true">✕</span><img src="logo/logo.svg" alt="" style="transform:rotate(-8deg);max-height:40px"></div><figcaption>Girar.</figcaption></figure>
+    <figure><div class="logo-tile on-light"><span class="x" aria-hidden="true">✕</span><img src="logo/logo.svg" alt="" style="filter:hue-rotate(160deg);max-height:40px"></div><figcaption>Trocar as cores.</figcaption></figure>
+    <figure><div class="logo-tile" style="background:#B4532A"><span class="x" aria-hidden="true" style="color:#fff">✕</span><img src="logo/logo.svg" alt="" style="max-height:40px"></div><figcaption>Logo colorido sobre fundo terracota. Use a versão de uma cor.</figcaption></figure>
+  </div>
+</section>
+
+<section id="cores">
+  <h2>3. Cores da marca</h2>
+  <p>Cinco cores dizem "isto é o Bairrômetro". Os nomes vêm do bairro brasileiro.</p>
+  <div class="grid" id="brand-swatches"></div>
+
+  <h3>Escalas</h3>
+  <p>Cada cor da marca ganhou uma escala de 50 (mais clara) a 900 (mais escura), calculada no espaço de cor <strong>OKLCH</strong>. Nele, a claridade (L) é perceptual: do 100 ao 200 e do 700 ao 800 a mudança parece do mesmo tamanho. No RGB comum isso não acontece. É o que deixa a escala de um mapa honesta, porque passos iguais de cor viram passos iguais de valor.</p>
+  <div id="ramps"></div>
+  <div class="ramp-steps"><span></span><span>50</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span></div>
+
+  <h3>Contraste</h3>
+  <p>Todo par de texto e fundo foi conferido pela regra de contraste da WCAG 2.1: no mínimo <strong>4,5:1</strong> para texto e <strong>3:1</strong> para gráficos e ícones. O comando <code>python identidade/tools/build.py tokens</code> refaz a conta e falha se algum par cair abaixo do mínimo.</p>
+  <table id="contrast-table">
+    <thead><tr><th>Uso</th><th>Claro</th><th class="num">Contraste</th><th>Escuro</th><th class="num">Contraste</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="note">Detalhe: a terracota passa como texto sobre a cal por pouco (4,63). Para textos longos, use café; terracota fica para links, botões e destaques curtos.</p>
+</section>
+
+<section id="dados">
+  <h2>4. Cores para dados</h2>
+  <div class="why"><strong>Regra principal: cor de marca não é cor de dado.</strong> A terracota identifica o Bairrômetro, então num gráfico ela não pode significar "ruim" nem "caro". Nos dados ela tem um único papel: destacar o bairro que a pessoa está olhando. As outras cores dos gráficos foram escolhidas para cada tipo de informação e testadas para quem tem daltonismo.</div>
+
+  <p>Toda cor de gráfico faz um destes trabalhos, e cada trabalho tem sua regra:</p>
+  <table>
+    <thead><tr><th>Trabalho</th><th>O que mostra</th><th>Regra</th><th>No Bairrômetro</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Faixas de nota</strong></td><td>nível da nota</td><td>3 faixas fixas; cor e rótulo sempre juntos</td><td>toda nota de 0 a 100, inclusive no mapa</td></tr>
+      <tr><td><strong>Sequencial</strong></td><td>quantidade (quanto)</td><td>um só tom, do claro ao escuro</td><td>medidas brutas: mercados por perto, distâncias, taxas</td></tr>
+      <tr><td><strong>Divergente</strong></td><td>lado de uma referência</td><td>dois tons opostos e um cinza no meio</td><td>preço real contra o esperado</td></tr>
+      <tr><td><strong>Destaque</strong></td><td>"este aqui"</td><td>uma cor forte; o resto em cinza</td><td>o bairro em foco nos gráficos</td></tr>
+      <tr><td><strong>Categórica</strong></td><td>identidade (qual é qual)</td><td>tons bem diferentes, ordem fixa, poucos</td><td>comparar até 3 ou 4 bairros</td></tr>
+      <tr><td><strong>Status</strong></td><td>estado (aviso, erro)</td><td>sempre com ícone e texto</td><td>"preço com poucos dados"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Faixas de nota</h3>
+  <p>A cor da nota muda conforme a faixa (pedido de Caio, decisão D022). Vale para toda nota de 0 a 100 (nota final, qualidade e custo-benefício) e também para o mapa, para que a mesma nota tenha a mesma cor em todo lugar.</p>
+  <div class="bands">
+    <div class="band-card"><div class="band-num band-low">32</div><div><strong>0 a 49</strong><span>nota baixa · ameixa</span></div></div>
+    <div class="band-card"><div class="band-num band-mid">64</div><div><strong>50 a 79</strong><span>nota intermediária · verde médio</span></div></div>
+    <div class="band-card"><div class="band-num band-high">88</div><div><strong>80 a 100</strong><span>nota alta · verde escuro</span></div></div>
+  </div>
+  <ul>
+    <li><strong>Sem semáforo.</strong> Vermelho, amarelo e verde seria o óbvio, mas vermelho contra verde é justamente o par que mais some para quem tem daltonismo. O vermelho também ficaria perto da terracota da marca e da cor de erro. A ameixa diz "lado menos favorável" sem soar como alarme, e é a mesma cor do "mais caro" na escala divergente.</li>
+    <li><strong>Rótulo sempre junto.</strong> "Nota baixa", "intermediária" ou "alta" aparece ao lado da cor, para a cor nunca carregar a informação sozinha.</li>
+    <li><strong>Arredondamento.</strong> A faixa é escolhida pela nota já arredondada, a mesma que aparece na tela: 49,6 vira 50, faixa intermediária.</li>
+    <li><strong>Testes.</strong> As três cores passaram em todos os pares, com e sem daltonismo, nos modos claro e escuro. O verde médio é o mais justo: contraste de 3,08 com o fundo, acima do mínimo de 3 para texto grande. Por isso a cor da faixa vai no número grande, e o rótulo pequeno usa a cor de texto.</li>
+  </ul>
+  <div class="chart"><svg id="map" viewBox="0 0 640 300" role="img" aria-label="Mapa fictício com 30 bairros coloridos pelas três faixas de nota."></svg>
+    <div class="legend" id="map-legend"></div>
+    <p class="note">Bairros e notas fictícios.</p></div>
+  <div class="why"><strong>A conferir quando chegarem os dados reais.</strong> A nota é uma média ponderada de percentis, e médias puxam os valores para perto de 50: para chegar a 80, um bairro precisa ser bom em quase todos os critérios ao mesmo tempo. A faixa de 80 a 100 pode ficar quase vazia. Quando houver dados, vale olhar quantos bairros caem em cada faixa antes de manter os limites.</div>
+
+  <h3>Sequencial: medidas brutas</h3>
+  <p>Anil, do claro ao escuro, em 5 classes, para valores em que "mais" não quer dizer "melhor": quantos mercados há por perto, a distância até uma avenida, a taxa de ocorrências. Não é verde de propósito: no Bairrômetro, verde quer dizer "lado bom", e mais ocorrências não é bom. Mesmo a classe mais clara tem contraste de pelo menos 2:1 com o fundo. No modo escuro a escala se inverte: o menor valor fica escuro, perto do fundo.</p>
+  <div class="chart">
+    <div class="seq-strip"><span style="background:var(--seq-1)"></span><span style="background:var(--seq-2)"></span><span style="background:var(--seq-3)"></span><span style="background:var(--seq-4)"></span><span style="background:var(--seq-5)"></span></div>
+    <div class="seq-labels"><span>0–4</span><span>5–9</span><span>10–14</span><span>15–19</span><span>20 ou mais</span></div>
+    <p class="note" style="margin:8px 0 0">Exemplo fictício: mercados, farmácias e padarias num raio de 1 km.</p>
+  </div>
+
+  <h3>Divergente: preço real contra o esperado</h3>
+  <p>A nota de custo-benefício compara o preço do bairro com o preço que a qualidade dele sugere (regras de negócio, seção 4.5). Verde = mais barato que o esperado; ameixa = mais caro; cinza = como esperado. A ameixa foi escolhida no lugar do vermelho de propósito: pagar mais não é "errado", é só menos custo-benefício. E vermelho contra verde é justamente o par que mais some para quem tem daltonismo.</p>
+  <div class="chart"><svg id="diverging" viewBox="0 0 640 250" role="img" aria-label="Barras divergentes: sete bairros fictícios, de 23% mais barato a 19% mais caro que o esperado."></svg>
+    <div class="legend" id="div-legend"></div></div>
+
+  <h3>Destaque: o bairro em foco</h3>
+  <p>No gráfico de qualidade × preço, todos os bairros ficam em cinza e o bairro em foco aparece em terracota. A reta mostra o preço esperado para cada nível de qualidade; quem fica abaixo dela paga menos do que a qualidade sugere.</p>
+  <div class="chart"><svg id="scatter" viewBox="0 0 640 330" role="img" aria-label="Dispersão fictícia de qualidade por preço do metro quadrado, com reta de preço esperado e o Jardim Exemplo em destaque abaixo da reta."></svg>
+    <p class="note">Bairros e preços fictícios; reta ilustrativa: preço esperado = 4 + 0,42 × qualidade.</p></div>
+
+  <h3>Categórica: comparar bairros</h3>
+  <p>Anil, ocre, vinho e petróleo, sempre nessa ordem: o primeiro bairro comparado é anil, o segundo é ocre, e assim por diante. Em mapas e gráficos de dispersão, onde qualquer cor pode ficar ao lado de qualquer outra, o limite é <strong>3 séries</strong>. Em barras e linhas, onde só vizinhas se tocam, vai até <strong>4</strong>. Os 8 critérios não ganham cor própria: são identificados por ícone e nome, porque 8 cores não ficam distinguíveis para todo mundo.</p>
+  <div class="card">
+    <div class="cvd">
+      <span></span><div class="row" style="font-size:0.75rem;text-align:center"><span style="height:auto">anil</span><span style="height:auto">ocre</span><span style="height:auto">vinho</span><span style="height:auto">petróleo</span></div>
+      <span>Visão típica</span><div class="row"><span style="background:#467AC6"></span><span style="background:#BF801E"></span><span style="background:#8A2B60"></span><span style="background:#0C8FA7"></span></div>
+      <span>Deuteranopia</span><div class="row"><span style="background:#4674C4"></span><span style="background:#A59322"></span><span style="background:#53565E"></span><span style="background:#6C7DA7"></span></div>
+      <span>Protanopia</span><div class="row"><span style="background:#5880C9"></span><span style="background:#968404"></span><span style="background:#384562"></span><span style="background:#7F8AA8"></span></div>
+    </div>
+  </div>
+  <p class="note">Simulação de Machado, Oliveira e Fernandes (2009) na forma mais forte. O daltonismo vermelho-verde, família da deuteranopia e da protanopia, atinge cerca de 1 em cada 12 homens e 1 em cada 200 mulheres.</p>
+
+  <div class="why"><strong>Como a paleta foi escolhida.</strong> A primeira tentativa (petróleo, ocre, ameixa, verde-azulado) era bonita, mas o validador mostrou que, com deuteranopia, petróleo e ameixa ficam quase iguais. A distância entre as duas caiu para 1,5, quando o mínimo aceitável é 6 e o ideal é 8 ou mais.
+    <div class="cvd" style="margin-top:10px">
+      <span>Tentativa · típica</span><div class="row"><span style="background:#2B7CA6"></span><span style="background:#CE9B59"></span><span style="background:#905BA1"></span><span style="background:#419D98"></span></div>
+      <span>Tentativa · deuteranopia</span><div class="row"><span style="background:#576FA5"></span><span style="background:#B9A95B"></span><span style="background:#5E719F"></span><span style="background:#868B99"></span></div>
+    </div>
+    <p style="margin-top:10px">Em vez de ajustar no olho, um programa testou centenas de milhares de combinações de tons e claridades e ficou só com as que passaram em todos os testes, nos modos claro e escuro. Entre as aprovadas, escolhemos tons que combinam com a marca. Resultado da paleta final:</p>
+    <table>
+      <thead><tr><th>Teste</th><th class="num">Claro</th><th class="num">Escuro</th><th>Mínimo</th></tr></thead>
+      <tbody>
+        <tr><td>Pior par com daltonismo, 3 cores, todos os pares</td><td class="num">16,6</td><td class="num">14,5</td><td>8</td></tr>
+        <tr><td>Pior par com daltonismo, 4 cores, vizinhas</td><td class="num">14,9</td><td class="num">8,8</td><td>8</td></tr>
+        <tr><td>Pior par com visão típica</td><td class="num">23,4</td><td class="num">20,9</td><td>15</td></tr>
+        <tr><td>Contraste de cada cor com o fundo</td><td class="num">≥ 3,27</td><td class="num">≥ 3,28</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Distância medida no espaço OKLab (×100). Quanto maior, mais fácil distinguir as duas cores.</p>
+  </div>
+
+  <h3>Status: avisos</h3>
+  <p>Avisos nunca dependem só da cor: sempre vêm com ícone e texto. O amarelo do aviso é reservado e não aparece como cor de série em gráfico.</p>
+  <p style="display:flex;flex-wrap:wrap;gap:8px">
+    <span class="status warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Preço com poucos dados</span>
+    <span class="status warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Acima do orçamento</span>
+    <span class="status info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Garantias não informadas</span>
+    <span class="status error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Não foi possível carregar os dados</span>
+  </p>
+</section>
+
+<section id="tipografia">
+  <h2>5. Tipografia</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="eyebrow">Títulos, logo e notas</div>
+      <div class="specimen-display">Fraunces</div>
+      <p class="note" style="margin-top:8px">Serifada suave, com calor de livro antigo. Fonte variável: usamos peso 600, <code>SOFT 100</code> (pontas arredondadas, como as pontas do telhado) e <code>WONK 0</code> (letras retas). No logo, tamanho óptico 72.</p>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Textos, interface e tabelas</div>
+      <div style="font-size:2.4rem;font-weight:600;line-height:1.1">Source Sans 3</div>
+      <p class="note" style="margin-top:8px">Sem serifa, feita para tela, com acentos bem desenhados e algarismos tabulares. Pesos 400 e 600.</p>
+    </div>
+  </div>
+
+  <h3>Exemplo</h3>
+  <div class="card">
+    <h2 style="margin-bottom:6px">Qual bairro combina com você?</h2>
+    <p class="specimen-text">Conte o que importa na sua rotina, como escola perto, ônibus, praça para o cachorro ou silêncio à noite. O Bairrômetro mostra onde você ganha mais qualidade pelo que paga e explica cada nota.</p>
+    <p class="note">Ação, ônibus, praça, você, coração: acentos e cedilha em Fraunces e em Source Sans 3.</p>
+  </div>
+
+  <h3>Escala</h3>
+  <table>
+    <thead><tr><th>Estilo</th><th>Fonte</th><th class="num">Tamanho</th><th class="num">Entrelinha</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td>h1</td><td>Fraunces 600</td><td class="num">40 px</td><td class="num">1,1</td><td>título da página</td></tr>
+      <tr><td>h2</td><td>Fraunces 600</td><td class="num">28 px</td><td class="num">1,2</td><td>seções</td></tr>
+      <tr><td>h3</td><td>Fraunces 600</td><td class="num">20 px</td><td class="num">1,3</td><td>subseções, nome do bairro</td></tr>
+      <tr><td>nota</td><td>Fraunces 600</td><td class="num">40 px</td><td class="num">1,0</td><td>a nota do bairro</td></tr>
+      <tr><td>corpo</td><td>Source Sans 3 400</td><td class="num">16 px</td><td class="num">1,6</td><td>textos</td></tr>
+      <tr><td>pequeno</td><td>Source Sans 3 400</td><td class="num">14 px</td><td class="num">1,5</td><td>explicações, rótulos</td></tr>
+      <tr><td>legenda</td><td>Source Sans 3 400</td><td class="num">12 px</td><td class="num">1,4</td><td>fontes, notas de rodapé</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Algarismos tabulares</h3>
+  <p>Em tabelas, use <code>font-variant-numeric: tabular-nums</code>: todos os algarismos ficam com a mesma largura e as colunas de números se alinham.</p>
+  <div class="figures">
+    <div class="prop"><div class="note">proporcionais</div><span>R$ 1.111,11</span><span>R$ 24,90</span><span>R$ 808,00</span></div>
+    <div class="tab"><div class="note">tabulares</div><span>R$ 1.111,11</span><span>R$ 24,90</span><span>R$ 808,00</span></div>
+  </div>
+
+  <div class="why"><strong>Fontes no próprio repositório.</strong> As duas fontes ficam em <code>identidade/fonts/</code>, em vez de virem do Google Fonts a cada visita. Carregar do Google entrega o endereço IP de quem visita o site a um terceiro. Na Alemanha, um tribunal já considerou isso uma violação do RGPD, a lei europeia que inspirou a LGPD. Ter as fontes aqui também faz o site funcionar sem internet.</div>
+  <p class="note"><strong>Licenças:</strong> as duas usam a SIL Open Font License 1.1, que permite uso livre (inclusive comercial) e redistribuição junto com a licença (<code>fonts/OFL-*.txt</code>). A Source Sans 3 tem <em>Reserved Font Name</em> ("Source"): uma versão modificada teria de mudar de nome. Por isso os arquivos só foram comprimidos para WOFF2, sem cortar caracteres.</p>
+</section>
+
+<section id="aplicacoes">
+  <h2>6. Aplicações</h2>
+  <p>Como as peças se juntam numa tela do app. Bairros e números fictícios.</p>
+  <div class="app">
+    <header>
+      <picture><source srcset="logo/logo-dark.svg" media="(prefers-color-scheme: dark)" class="app-logo-dark"><img src="logo/logo.svg" alt="Bairrômetro" class="app-logo"></picture>
+      <span class="note" style="margin:0">Sorocaba · aluguel</span>
+    </header>
+    <div class="body">
+      <div class="score-card">
+        <div class="top">
+          <div><div class="bairro">Jardim Exemplo</div><small>bairro fictício · 12 anúncios</small></div>
+          <div><div class="score band-mid">78</div><small style="text-align:right">nota intermediária</small></div>
+        </div>
+        <div class="bar-row"><span>Qualidade</span><span class="track"><span class="fill band-high" style="display:block;width:82%"></span></span><b>82</b></div>
+        <div class="bar-row"><span>Custo-benefício</span><span class="track"><span class="fill band-mid" style="display:block;width:71%"></span></span><b>71</b></div>
+        <p class="note" style="margin:10px 0 0">Puxou para cima: <strong>educação</strong> e <strong>lazer e verde</strong>. Para baixo: <strong>sossego</strong>.</p>
+      </div>
+      <div class="score-card">
+        <div class="top">
+          <div><div class="bairro">Vila Aurora</div><small>bairro fictício · 3 anúncios</small></div>
+          <div><div class="score band-low">43</div><small style="text-align:right">nota baixa · só qualidade</small></div>
+        </div>
+        <div class="bar-row"><span>Qualidade</span><span class="track"><span class="fill band-low" style="display:block;width:43%"></span></span><b>43</b></div>
+        <p style="margin:12px 0 10px"><span class="status warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Preço com poucos dados</span></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button">Ver imóveis</button><button class="btn secondary" type="button">Comparar</button></div>
+      </div>
+    </div>
+  </div>
+  <ul class="note" style="margin-top:12px">
+    <li>Um só botão principal (terracota) por tela; os demais são secundários.</li>
+    <li>A nota usa Fraunces e a cor da sua faixa, com o rótulo logo abaixo. Cada barra também usa a cor da faixa do seu valor.</li>
+    <li>Sem nota de custo-benefício com menos de 5 anúncios: aparece o aviso, como mandam as regras de negócio.</li>
+  </ul>
+</section>
+
+<section id="codigo">
+  <h2>7. Como usar no código</h2>
+  <p><code>identidade/tokens.json</code> é a <strong>fonte única da verdade</strong>. O resto é gerado ou lê a partir dele, para que uma cor mude num lugar só.</p>
+  <table>
+    <thead><tr><th>Arquivo</th><th>O que é</th></tr></thead>
+    <tbody>
+      <tr><td><code>tokens.json</code></td><td>Cores, escalas, fontes e tamanhos. Editado à mão.</td></tr>
+      <tr><td><code>tokens.css</code></td><td>Variáveis CSS para páginas web, com modo claro e escuro. Gerado.</td></tr>
+      <tr><td><code>logo/*.svg</code></td><td>Logos com o texto já convertido em desenho, que não dependem da fonte instalada. Gerados.</td></tr>
+      <tr><td><code>fonts/</code></td><td>Fraunces e Source Sans 3 em WOFF2, com as licenças.</td></tr>
+      <tr><td><code>tools/build.py</code></td><td>Gera os arquivos acima e confere o contraste.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Página web</h3>
+<pre><code>&lt;link rel="stylesheet" href="identidade/tokens.css"&gt;
+.botao { background: var(--primary); color: var(--on-primary); }
+.nota-intermediaria { color: var(--band-mid); }
+.mapa-classe-3 { fill: var(--seq-3); }</code></pre>
+
+  <h3>Python (gráficos e mapas)</h3>
+<pre><code>import json
+from pathlib import Path
+
+tokens = json.loads(Path("identidade/tokens.json").read_text(encoding="utf-8"))
+focus = tokens["data"]["light"]["focus"]             # bairro em destaque
+
+
+def score_band(score, bands=tokens["data"]["light"]["score_bands"]):
+    """Faixa de uma nota de 0 a 100 (D022). Usa o mesmo arredondamento da nota exibida."""
+    shown = round(score)
+    return next(band for band in bands if band["min"] &lt;= shown &lt;= band["max"])
+
+
+score_band(49.6)["label"]   # 'nota intermediária'</code></pre>
+
+  <h3>Streamlit (quando a stack for aprovada)</h3>
+  <p>Proposta para <code>.streamlit/config.toml</code>. As fontes personalizadas ficam para quando o Streamlit estiver instalado e der para conferir as opções da versão. O Streamlit já usa a família Source Sans por padrão.</p>
+<pre><code>[theme]
+base = "light"
+primaryColor = "#B4532A"
+backgroundColor = "#FAF6EE"
+secondaryBackgroundColor = "#F3ECE0"
+textColor = "#2A211C"</code></pre>
+
+  <h3>Regenerar</h3>
+<pre><code>python identidade/tools/build.py tokens     # tokens.css + contraste (sem dependências)
+python identidade/tools/build.py logo       # SVGs do logo (pip install fonttools brotli)</code></pre>
+</section>
+
+<section id="referencias">
+  <h2>8. Referências e créditos</h2>
+  <ol class="refs">
+    <li>W3C. <a href="https://www.w3.org/TR/WCAG21/">Web Content Accessibility Guidelines (WCAG) 2.1</a>, 2018. Critérios 1.4.3 (contraste mínimo de texto) e 1.4.11 (contraste de elementos gráficos).</li>
+    <li>Ottosson, B. <a href="https://bottosson.github.io/posts/oklab/">A perceptual color space for image processing</a>, 2020. Origem do OKLab/OKLCH usado nas escalas.</li>
+    <li>Machado, G. M.; Oliveira, M. M.; Fernandes, L. A. F. A physiologically-based model for simulation of color vision deficiency. <em>IEEE Transactions on Visualization and Computer Graphics</em>, 15(6), 2009. Modelo usado para simular daltonismo.</li>
+    <li>Harrower, M.; Brewer, C. A. ColorBrewer.org: an online tool for selecting colour schemes for maps. <em>The Cartographic Journal</em>, 40(1), 2003. Escalas sequenciais e divergentes em mapas.</li>
+    <li>Crameri, F.; Shephard, G. E.; Heron, P. J. The misuse of colour in science communication. <em>Nature Communications</em>, 11, 5444, 2020. Por que evitar arco-íris e escalas não perceptuais.</li>
+    <li>Munzner, T. <em>Visualization Analysis and Design</em>. CRC Press, 2014. Capítulo 10: cor como canal de informação.</li>
+    <li>SIL International. <a href="https://openfontlicense.org">SIL Open Font License 1.1 e FAQ</a>.</li>
+    <li>Landgericht München I, sentença de 20/01/2022, processo 3 O 17493/20: o uso do Google Fonts carregado de servidor externo, sem consentimento, violou o RGPD.</li>
+  </ol>
+  <h3>Créditos</h3>
+  <ul class="note">
+    <li><strong>Fraunces</strong>: Undercase Type (Phaedra Charles e Flavia Zimbardi), <a href="https://github.com/undercasetype/Fraunces">github.com/undercasetype/Fraunces</a>. SIL OFL 1.1.</li>
+    <li><strong>Source Sans 3</strong>: Paul D. Hunt, Adobe, <a href="https://github.com/adobe-fonts/source-sans">github.com/adobe-fonts/source-sans</a>. SIL OFL 1.1, Reserved Font Name "Source".</li>
+    <li>Arquivos das fontes obtidos do repositório oficial <a href="https://github.com/google/fonts">google/fonts</a>.</li>
+  </ul>
+  <footer>Identidade visual v1.1 · 2026-10-22 · direção B (Telhado), escolhida por Caio (D021); faixas de nota (D022).</footer>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+  // tema: claro, escuro ou o do sistema; a escolha fica só neste navegador
+  const root = document.documentElement;
+  const btn = document.getElementById("theme-btn");
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  function read() { try { return localStorage.getItem("bairrometro-tema"); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem("bairrometro-tema", v); } catch (e) {} }
+  function isDark() { return root.dataset.theme ? root.dataset.theme === "dark" : darkQuery.matches; }
+  function syncLogos() {
+    // o <picture> só segue o sistema; aqui ele passa a seguir o tema escolhido
+    const dark = isDark();
+    document.querySelectorAll("picture").forEach(function (p) {
+      const source = p.querySelector("source");
+      source.media = dark ? "all" : "not all";
+    });
+  }
+  const saved = read();
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  syncLogos();
+  darkQuery.addEventListener("change", syncLogos);
+  btn.addEventListener("click", function () {
+    root.dataset.theme = isDark() ? "light" : "dark";
+    save(root.dataset.theme);
+    syncLogos();
+  });
+})();
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent, text) {
+  const node = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, v);
+  if (text !== undefined) node.textContent = text;
+  if (parent) parent.appendChild(node);
+  return node;
+}
+function title(node, text) { el("title", {}, node, text); return node; }
+
+fetch("tokens.json").then(function (r) { return r.json(); }).then(function (tokens) {
+  // cores da marca
+  const brand = document.getElementById("brand-swatches");
+  Object.values(tokens.brand).forEach(function (c) {
+    brand.insertAdjacentHTML("beforeend",
+      '<div class="swatch"><div class="chip" style="background:' + c.hex + '"></div><div class="info">' +
+      '<div class="name">' + c.label + '</div><div class="hex">' + c.hex + '</div><div class="note" style="margin:4px 0 0">' + c.role + '</div></div></div>');
+  });
+  // escalas
+  const names = { terracotta: "Terracota", green: "Verde-praça", plum: "Ameixa", neutral: "Neutro" };
+  const ramps = document.getElementById("ramps");
+  Object.entries(tokens.ramps).forEach(function ([key, steps]) {
+    let html = '<div class="ramp"><span class="label">' + names[key] + '</span>';
+    ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900"].forEach(function (s) {
+      html += '<span data-hex="' + steps[s] + '" title="' + names[key] + " " + s + ": " + steps[s] + '" style="background:' + steps[s] + '"></span>';
+    });
+    ramps.insertAdjacentHTML("beforeend", html + "</div>");
+  });
+  // tabela de contraste (mesma fórmula do build.py)
+  function lum(hex) {
+    const c = [1, 3, 5].map(function (i) { const v = parseInt(hex.slice(i, i + 2), 16) / 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function ratio(a, b) { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  const rows = [
+    ["Texto principal", "text", "page"], ["Texto secundário", "text-secondary", "page"], ["Texto discreto", "text-muted", "page"],
+    ["Link e botão (terracota)", "primary", "page"], ["Texto do botão", "on-primary", "primary"], ["Verde-praça", "accent", "page"],
+  ];
+  const tbody = document.querySelector("#contrast-table tbody");
+  rows.forEach(function ([label, fg, bg]) {
+    const L = tokens.themes.light, D = tokens.themes.dark;
+    function cell(t) {
+      return '<td><span style="display:inline-block;padding:2px 8px;border-radius:4px;background:' + t[bg] + ';color:' + t[fg] + ';border:1px solid var(--border)">Aa</span> <code>' + t[fg] + "</code></td>" +
+        '<td class="num">' + ratio(t[fg], t[bg]).toFixed(2).replace(".", ",") + "</td>";
+    }
+    tbody.insertAdjacentHTML("beforeend", "<tr><td>" + label + "</td>" + cell(L) + cell(D) + "</tr>");
+  });
+});
+
+// mapa fictício: grade de bairros coloridos por classe de nota
+(function () {
+  const svg = document.getElementById("map");
+  const shape = [
+    "..XXXX...", ".XXXXXXX.", "XXXXXXXXX", ".XXXXXXX.", "...XXX...",
+  ];
+  const scores = [12, 35, 58, 71, 44, 66, 83, 91, 77, 52, 28, 9, 47, 63, 88, 95, 74, 39, 18, 55, 69, 81, 62, 33, 26, 49, 72, 86, 57, 41, 15];
+  const size = 58, gap = 2, x0 = (640 - 9 * (size + gap)) / 2, y0 = 0;
+  let k = 0;
+  shape.forEach(function (row, r) {
+    row.split("").forEach(function (cell, c) {
+      if (cell !== "X") return;
+      const v = scores[k++ % scores.length];
+      const band = v < 50 ? ["low", "nota baixa"] : v < 80 ? ["mid", "nota intermediária"] : ["high", "nota alta"];
+      const rect = el("rect", { x: x0 + c * (size + gap), y: y0 + r * (size + gap), width: size, height: size, rx: 6, style: "fill:var(--band-" + band[0] + ");stroke:var(--surface);stroke-width:2" }, svg);
+      title(rect, "Bairro fictício " + k + ": " + band[1] + " (" + v + ")");
+    });
+  });
+  const legend = document.getElementById("map-legend");
+  [["low", "0–49 · nota baixa"], ["mid", "50–79 · nota intermediária"], ["high", "80–100 · nota alta"]].forEach(function ([id, t]) {
+    legend.insertAdjacentHTML("beforeend", '<span><i style="background:var(--band-' + id + ')"></i>' + t + "</span>");
+  });
+})();
+
+// barras divergentes: diferença entre o preço esperado e o real
+(function () {
+  const svg = document.getElementById("diverging");
+  const data = [["Vila Aurora", 23], ["Jardim Exemplo", 12], ["Parque das Flores", 5], ["Centro Novo", 0], ["Alto da Serra", -6], ["Recanto Azul", -11], ["Bela Vista", -19]];
+  const cx = 400, scale = 8, rowH = 30, top = 14;
+  function cls(v) { return v <= -15 ? 1 : v <= -7 ? 2 : v <= -2 ? 3 : v < 2 ? 4 : v < 7 ? 5 : v < 15 ? 6 : 7; }
+  data.forEach(function ([name, v], i) {
+    const y = top + i * rowH;
+    el("text", { x: 170, y: y + 15, "text-anchor": "end", "font-size": 13, style: "fill:var(--text)" }, svg, name);
+    const w = Math.max(Math.abs(v) * scale, 3), x = v >= 0 ? cx : cx - w;
+    title(el("rect", { x: x, y: y + 3, width: w, height: rowH - 10, rx: 4, style: "fill:var(--div-" + cls(v) + ")" }, svg),
+      name + ": " + (v > 0 ? v + "% mais barato" : v < 0 ? -v + "% mais caro" : "como esperado"));
+    el("text", { x: v >= 0 ? x + w + 6 : x - 6, y: y + 15, "text-anchor": v >= 0 ? "start" : "end", "font-size": 12, style: "fill:var(--text-secondary)" }, svg,
+      v > 0 ? "+" + v + "%" : v < 0 ? "−" + -v + "%" : "0%");
+  });
+  el("line", { x1: cx, y1: 6, x2: cx, y2: top + data.length * rowH, style: "stroke:var(--data-axis)", "stroke-width": 1 }, svg);
+  el("text", { x: cx + 8, y: top + data.length * rowH + 16, "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "mais barato que o esperado →");
+  el("text", { x: cx - 8, y: top + data.length * rowH + 16, "text-anchor": "end", "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "← mais caro");
+  const legend = document.getElementById("div-legend");
+  [[1, "muito mais caro"], [3, "um pouco mais caro"], [4, "como esperado"], [5, "um pouco mais barato"], [7, "muito mais barato"]].forEach(function ([i, t]) {
+    legend.insertAdjacentHTML("beforeend", '<span><i style="background:var(--div-' + i + ')"></i>' + t + "</span>");
+  });
+})();
+
+// dispersão qualidade × preço com o bairro em foco
+(function () {
+  const svg = document.getElementById("scatter");
+  const L = 56, R = 620, T = 16, B = 290;
+  const x = function (q) { return L + (q / 100) * (R - L); };
+  const y = function (p) { return B - ((p - 5) / 45) * (B - T); };
+  [10, 20, 30, 40, 50].forEach(function (p) {
+    el("line", { x1: L, x2: R, y1: y(p), y2: y(p), style: "stroke:var(--data-grid)", "stroke-width": 1 }, svg);
+    el("text", { x: L - 8, y: y(p) + 4, "text-anchor": "end", "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "R$ " + p);
+  });
+  [0, 25, 50, 75, 100].forEach(function (q) {
+    el("text", { x: x(q), y: B + 18, "text-anchor": "middle", "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, q);
+  });
+  el("line", { x1: L, x2: R, y1: B, y2: B, style: "stroke:var(--data-axis)", "stroke-width": 1 }, svg);
+  el("text", { x: R, y: B + 36, "text-anchor": "end", "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "qualidade (percentil) →");
+  el("text", { x: L, y: T - 4, "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "preço/m² (aluguel)");
+  el("line", { x1: x(5), y1: y(4 + 0.42 * 5), x2: x(98), y2: y(4 + 0.42 * 98), style: "stroke:var(--data-axis-text)", "stroke-width": 1.5, "stroke-dasharray": "5 4" }, svg);
+  el("text", { x: x(98), y: y(4 + 0.42 * 98) - 8, "text-anchor": "end", "font-size": 11, style: "fill:var(--data-axis-text)" }, svg, "preço esperado");
+  const pts = [[8, 9], [15, 12], [22, 11], [28, 17], [33, 16], [38, 20], [42, 18], [47, 25], [52, 23], [56, 28], [60, 25], [70, 33], [74, 30], [79, 37], [85, 42], [88, 36], [93, 45], [40, 21], [62, 30]];
+  pts.forEach(function ([q, p]) {
+    title(el("circle", { cx: x(q), cy: y(p), r: 5, style: "fill:var(--data-context);stroke:var(--surface);stroke-width:2" }, svg), "Bairro fictício: qualidade " + q + ", R$ " + p + "/m²");
+  });
+  const fq = 65, fp = 24;
+  el("line", { x1: x(fq), y1: y(fp), x2: x(fq), y2: y(4 + 0.42 * fq), style: "stroke:var(--data-focus)", "stroke-width": 1.5 }, svg);
+  title(el("circle", { cx: x(fq), cy: y(fp), r: 7, style: "fill:var(--data-focus);stroke:var(--surface);stroke-width:2" }, svg), "Jardim Exemplo: qualidade 65, R$ 24/m², esperado R$ 31/m²");
+  el("text", { x: x(fq) + 12, y: y(fp) + 4, "font-size": 13, "font-weight": 600, style: "fill:var(--text)" }, svg, "Jardim Exemplo");
+  el("text", { x: x(fq) + 12, y: y(fp) + 20, "font-size": 11, style: "fill:var(--text-secondary)" }, svg, "R$ 24 · esperado R$ 31 (23% abaixo)");
+})();
+</script>
+</body>
+</html>
