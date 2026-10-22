@@ -65,12 +65,31 @@ Sorocaba é só o MVP; o projeto precisa servir a qualquer cidade.
 `contexto/` é a memória versionada do projeto. É pública: nada pessoal ali.
 
 - `contexto/estado-atual.md` — **ler no início de toda sessão.** Fase atual, o que funciona, próximos passos.
+- `contexto/regras-de-negocio.md` — o que o Bairrômetro avalia e como: perfis, filtros, critérios, notas.
 - `contexto/fontes.md` — toda fonte de dados e serviço, com abrangência, licença, custo e status.
 - `contexto/diario/` — um arquivo por sessão: o que foi feito e o que foi aprendido.
 
 `pessoal/` (fora do Git) guarda o registro de decisões (`pessoal/decisoes.md`, D011), critérios pessoais e rascunhos de LinkedIn. Não tem backup pelo Git: é cópia única no PC de Caio.
 
 Ao fim de cada sessão de trabalho: skill `fechar-sessao`.
+
+## Material de estudo (`estudos/`)
+
+Guia interativo em HTML (`estudos/index.html`) para Caio estudar, com o porquê de cada escolha e as referências científicas. Escopo (D023): **só** as contas e fórmulas usadas nas notas e métricas, e os pipelines de busca e tratamento de dados, incluindo as APIs. Design, cores e identidade visual não entram aqui (ficam em `identidade/`).
+
+- **Separado do sistema de busca:** o código do Bairrômetro nunca importa nem depende de nada em `estudos/`. Exemplos com bairros e números fictícios.
+- **Roda em localhost:** `python -m http.server 8765 --bind 127.0.0.1 --directory estudos` e abrir http://localhost:8765. No app, a configuração `estudos` do `.claude/launch.json` faz o mesmo.
+- **Manter atualizado:** quando entrar no projeto uma conta ou fórmula nova (estatística, métrica, ML), quando uma regra de negócio mudar uma conta, ou quando um pipeline de coleta e tratamento de dados ou uma API nova for montado, atualizar a seção correspondente do guia, com referência.
+
+## Identidade visual (`identidade/`)
+
+Direção Telhado (D021): o acento do ô vira o telhado de uma casa. Guia em `identidade/index.html`, em http://localhost:8766 (configuração `identidade` do `.claude/launch.json`).
+
+- **Fonte única da verdade:** `identidade/tokens.json`. `tokens.css` e `logo/*.svg` são gerados por `python identidade/tools/build.py tokens|logo`; nunca editar à mão.
+- **Cor de marca não é cor de dado:** a terracota só marca o bairro em destaque nos gráficos; nunca significa "ruim" ou "caro".
+- **Faixas de nota (D022):** toda nota de 0 a 100 usa a cor da sua faixa (0–49, 50–79, 80–100), com o rótulo sempre junto.
+- **Cor nova em gráfico** passa pelo validador de paletas do skill `dataviz` (daltonismo e contraste), nos modos claro e escuro.
+- **Fontes no repositório** (Fraunces e Source Sans 3, SIL OFL), nunca carregadas do Google Fonts.
 
 ## Skills do projeto (`.claude/skills/`)
 
@@ -88,5 +107,8 @@ Plugins do projeto (D008): **Data** (explorar, validar e analisar dados; os cone
 - Caio está aprendendo: explicar o porquê das escolhas, nomear o conceito de dados por trás de cada passo, preferir código simples e legível a código esperto.
 - Mostrar resultados intermediários (tabelas, gráficos), não só dizer que funcionou.
 
-## Stack
-A definir. Proposta inicial: Python, DuckDB, Streamlit; dados de IBGE, SSP-SP e OpenStreetMap.
+## Stack (D019, D024)
+
+- **Dados, só no PC de Caio:** Python 3.13 com uv; pandas; DuckDB + Parquet; GeoPandas, Shapely e OSMnx (medir distâncias em SIRGAS 2000 / UTM 23S); httpx + BeautifulSoup; statsmodels + SciPy; scikit-learn (+ skore); pandera; JupyterLab + nbstripout; ruff + pytest. Ollama mais tarde (D005).
+- **Site:** estático (HTML, CSS com os tokens de `identidade/`, JavaScript sem framework, gráficos em SVG), hospedado no GitHub Pages. O Python gera arquivos de dados prontos, só abertos e agregados (D003), e o site os lê.
+- **Segurança:** coleta e banco completo nunca ficam online. Consultas sempre parametrizadas; DuckDB em modo só leitura e sem acesso a arquivos externos onde entrar texto de fora; a IA nunca escreve SQL, só filtros validados. No site, texto vindo de fora nunca vai para `innerHTML`.

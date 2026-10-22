@@ -38,5 +38,31 @@ D001 a D011 aprovadas, e o `CLAUDE.md` passou a v1.0. A pasta local ficou `caça
 - O plugin Data traz 8 conectores de serviços pagos (Snowflake, BigQuery etc.). Ficam desligados; não vamos conectar nenhum (D002).
 - Achado para depois: o catálogo oficial tem `duckdb-skills`, da própria DuckDB. Candidato quando decidirmos a stack.
 
+## Regras de negócio (início)
+- O Bairrômetro passa a ser uma ferramenta para vários perfis de busca, não só para um caso.
+- Tempo de deslocamento até o trabalho saiu do MVP; a escolha se apoia em acesso próximo, custo-benefício, orçamento e condições do negócio.
+- Rascunho v0.1 em [`regras-de-negocio.md`](../regras-de-negocio.md): filtros, nota do bairro com 9 critérios, nota do imóvel, comparação alugar × comprar.
+
+### Aprendizados
+- **Análise de decisão multicritério:** filtros eliminam, pesos ordenam. Cada indicador precisa ir para a mesma escala antes de ser somado.
+- **Dado ausente não deve eliminar:** anúncio mal preenchido não é imóvel ruim. Melhor passar com aviso.
+- **Viés escondido em critério:** usar renda como "melhor" premia bairros ricos e duplica o critério de custo.
+- **Subnotificação:** dado de ocorrência mostra o que foi registrado, não a criminalidade real.
+- **Razão preço/aluguel:** preço de venda ÷ aluguel anual. Quanto maior, mais caro comprar em relação a alugar.
+- **A lei vira regra de negócio:** a Lei do Inquilinato permite só uma garantia por contrato, então o filtro é "aceita pelo menos uma das que a pessoa pode oferecer".
+- **Custo-benefício sem premiar riqueza:** separar qualidade de preço e perguntar "quanto um bairro com essa qualidade costuma custar aqui?" (regressão). O que importa é o resíduo: quanto o bairro custa abaixo ou acima do esperado. A fronteira de eficiência (Pareto) mostra isso num gráfico.
+- **Percentil como escala comum:** transforma indicadores de unidades diferentes (contagem, área, taxa) em "melhor que X% dos bairros da cidade".
+- **Média ponderada pela população:** ao juntar setores censitários num bairro, o setor com mais moradores pesa mais.
+
+## Regras de negócio fechadas e material de estudo
+- Mínimo de 5 anúncios por bairro aprovado; regras de negócio v1.0, fechadas para o MVP.
+- Criamos `estudos/index.html`: guia interativo, separado do sistema, com 13 seções (média e mediana, percentil, taxas, agregação espacial, distância, multicritério, regressão, Pareto, amostras pequenas, dados ausentes, preço/aluguel, vieses, stack), demonstrações, glossário e referências. Roda em localhost com `python -m http.server`.
+- Stack proposta, aguardando aprovação.
+
+### Aprendizados
+- **Simulação ensina mais que fórmula:** sortear anúncios mil vezes mostra o efeito do tamanho da amostra sem precisar de demonstração matemática.
+- **Ser honesto com o número escolhido:** a simulação mostrou que de 5 para 10 anúncios o erro ainda cai bastante. O 5 é um compromisso de cobertura, não um ótimo estatístico, e o guia diz isso.
+- **Conferir o visual de verdade:** capturas do navegador em segundo plano saíram em branco; o diagnóstico (página de controle também em branco) mostrou que era o ambiente, não a página.
+
 ## Próximo passo
-Regras de negócio.
+Aprovar a stack e começar o ambiente.

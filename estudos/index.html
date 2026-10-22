@@ -696,22 +696,22 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
 <!-- ============ 13. STACK ============ -->
 <section id="stack">
   <h2><span class="num">13.</span>Stack e o que cada peça ensina</h2>
-  <div class="notice"><strong>Proposta, aguardando aprovação.</strong> Tudo gratuito e rodando no seu computador. A coluna da direita é o que você aprende além de "fazer funcionar".</div>
+  <div class="notice"><strong>Aprovada em 2026-10-22.</strong> Tudo gratuito. A parte de dados roda no seu computador; o site é estático e fica no GitHub Pages. A coluna da direita é o que você aprende além de "fazer funcionar".</div>
   <div class="table-wrap">
   <table>
-    <thead><tr><th>Camada</th><th>Proposta</th><th>Alternativas</th><th>Conceitos que você aprende</th></tr></thead>
+    <thead><tr><th>Camada</th><th>Escolha</th><th>Alternativas</th><th>Conceitos que você aprende</th></tr></thead>
     <tbody>
       <tr><td>Linguagem</td><td>Python 3.13</td><td>R, JavaScript</td><td>A língua franca de dados; ecossistema científico</td></tr>
       <tr><td>Ambiente</td><td>uv</td><td>pip + venv, conda</td><td>Reprodutibilidade, versões fixas (lockfile), ambientes isolados</td></tr>
       <tr><td>Tabelas</td><td>pandas</td><td>polars</td><td>DataFrame, dados "tidy", agrupar e resumir (groupby), junções</td></tr>
-      <tr><td>Banco analítico</td><td>DuckDB + Parquet</td><td>SQLite, PostgreSQL/PostGIS</td><td>SQL analítico, armazenamento colunar, camadas bruto → limpo → pronto</td></tr>
+      <tr><td>Banco analítico</td><td>DuckDB + Parquet, só local</td><td>SQLite, PostgreSQL/PostGIS</td><td>SQL analítico, armazenamento colunar, camadas bruto → limpo → pronto, consultas parametrizadas</td></tr>
       <tr><td>Geografia</td><td>GeoPandas, Shapely, OSMnx</td><td>QGIS, PostGIS</td><td>CRS e projeções, buffer de 1 km, junção espacial, centroides</td></tr>
       <tr><td>Coleta</td><td>httpx + BeautifulSoup</td><td>Scrapy, Playwright</td><td>HTTP, estrutura de HTML, robots.txt, intervalo entre requisições, cache</td></tr>
       <tr><td>Estatística</td><td>statsmodels + SciPy</td><td>–</td><td>Inferência: coeficientes, intervalos de confiança, R², diagnóstico de resíduos</td></tr>
       <tr><td>Machine learning</td><td>scikit-learn (+ skore, via Probabl)</td><td>XGBoost</td><td>Treino e teste, validação cruzada, overfitting, modelo de base (baseline)</td></tr>
       <tr><td>Validação de dados</td><td>pandera</td><td>Great Expectations</td><td>Contratos de dados: o que cada tabela promete conter</td></tr>
-      <tr><td>Visualização</td><td>Plotly + Folium</td><td>Altair, matplotlib</td><td>Gramática de gráficos, mapas coropléticos, cores acessíveis</td></tr>
-      <tr><td>App</td><td>Streamlit</td><td>Dash, FastAPI + React</td><td>Interface sobre dados, estado, cache, deploy gratuito</td></tr>
+      <tr><td>Visualização</td><td>SVG feito à mão (como neste guia)</td><td>Plotly, Altair, matplotlib</td><td>Escalas, eixos, mapas coropléticos a partir de GeoJSON</td></tr>
+      <tr><td>Site</td><td>Estático (HTML, CSS, JavaScript) no GitHub Pages; Python gera os dados prontos</td><td>Streamlit, Dash, FastAPI + React</td><td>Separar cálculo pesado (Python, offline) de interação (navegador); site sem servidor</td></tr>
       <tr><td>Notebooks</td><td>JupyterLab + nbstripout</td><td>Notebooks no VS Code</td><td>Exploração × código de produção; notebooks sem saídas no Git</td></tr>
       <tr><td>Qualidade</td><td>ruff + pytest</td><td>flake8, black</td><td>Testes de pipeline de dados, padronização de código</td></tr>
       <tr><td>IA (depois)</td><td>Ollama, local</td><td>APIs com cota grátis sem cartão</td><td>LLM local, extração estruturada de texto (ex.: garantias aceitas)</td></tr>

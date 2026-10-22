@@ -1,6 +1,6 @@
 # Material de estudo
 
-Guia interativo da estatística e das métricas usadas no Bairrômetro, com o porquê de cada escolha e as referências científicas.
+Guia interativo das contas e fórmulas usadas no Bairrômetro e dos pipelines de busca e tratamento de dados (incluindo as APIs), com o porquê de cada escolha e as referências científicas. Design e cores ficam fora, no guia da identidade visual (`identidade/`).
 
 **Separado do sistema de busca:** nada nesta pasta é usado pelo Bairrômetro em funcionamento. Os bairros e números dos exemplos são fictícios.
 
