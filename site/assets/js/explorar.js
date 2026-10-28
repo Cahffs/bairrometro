@@ -155,14 +155,19 @@ function buildToolbar() {
     seg.append(h('label', {}, input, label));
   }
 
-  const presets = h('div', { class: 'chips', role: 'group', 'aria-label': 'Quem vai morar' },
-    ...Object.entries(PRESETS).map(([key, preset]) => chip(preset.label, state.flags.includes(key), () => {
-      state.flags = Object.keys(PRESETS).filter((k) => (k === key ? !state.flags.includes(k) : state.flags.includes(k)));
-      state.weights = startingWeights(ids, state.flags).weights;
-      buildToolbar();
-      buildTuneDialog();
-      update();
-    })));
+  // Duas perguntas diferentes, em grupos separados: quem mora junto e como a pessoa se desloca.
+  const toggle = (key, label) => chip(label, state.flags.includes(key), () => {
+    state.flags = Object.keys(PRESETS).filter((k) => (k === key ? !state.flags.includes(k) : state.flags.includes(k)));
+    state.weights = startingWeights(ids, state.flags).weights;
+    buildToolbar();
+    buildTuneDialog();
+    update();
+  });
+  const group = (title, ...chips) => h('div', { class: 'toolbar-field', role: 'group', 'aria-label': title },
+    h('span', { class: 'toolbar-label', text: title }), h('div', { class: 'chips' }, ...chips));
+  const presets = h('div', { class: 'toolbar-group' },
+    group('Mora com você', toggle('filhos', 'Crianças'), toggle('pet', 'Pets')),
+    group('Deslocamento', toggle('semcarro', 'Sem carro')));
 
   const tune = h('button', { type: 'button', class: 'btn btn-tune', on: { click: () => $('#tune').showModal() } },
     svgIcon(SLIDERS), 'Ajustar prioridades');

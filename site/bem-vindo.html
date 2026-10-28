@@ -31,19 +31,27 @@
     </nav>
   </div>
 </header>
-<main id="conteudo" class="narrow">
+<main id="conteudo" class="onb">
   <p id="status" role="status" hidden></p>
-  <section class="card onboarding" id="onboarding" hidden>
-    <p class="eyebrow" id="greeting"></p>
-    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
-    <p class="muted small" id="step-count"></p>
-    <div id="step" class="stack"></div>
-    <div class="row onboarding-actions">
-      <button class="btn" id="back" type="button">Voltar</button>
-      <button class="btn btn-primary" id="next" type="button">Continuar</button>
-    </div>
-    <p class="small center"><a href="explorar.html">Pular por enquanto</a></p>
-  </section>
+  <div class="onb-split" id="onboarding" hidden>
+    <section class="onb-panel">
+      <ol class="onb-steps" id="steps" aria-label="Etapas"></ol>
+      <p class="onb-greeting" id="greeting"></p>
+      <p class="onb-count" id="step-count"></p>
+      <h1 class="onb-title" id="step-title"></h1>
+      <p class="onb-help" id="step-help"></p>
+      <div class="onb-now" id="preview" aria-live="polite"></div>
+    </section>
+    <section class="onb-side">
+      <div id="step"></div>
+      <div class="onb-actions">
+        <button class="btn-link" id="back" type="button">← Voltar</button>
+        <button class="btn btn-pick btn-lg" id="next" type="button">Continuar</button>
+      </div>
+      <p class="onb-kbd" id="kbd-hint">Atalhos: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> para escolher, <kbd>Enter</kbd> para continuar</p>
+      <p class="onb-skip"><a href="explorar.html">Pular e ver todos os bairros</a></p>
+    </section>
+  </div>
 </main>
 <footer class="site-footer">
   <div class="footer-inner">
