@@ -246,11 +246,13 @@ function onKey(e) {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   const typing = e.target instanceof HTMLInputElement;
   if (e.key === 'Enter') {
+    // Enter num botão ou link faz o que eles fazem; no resto da página, avança
+    const onControl = e.target instanceof HTMLButtonElement || e.target instanceof HTMLAnchorElement;
     const next = $('#next');
-    if (!next.disabled && (typing || !(e.target instanceof HTMLButtonElement))) { e.preventDefault(); next.click(); }
+    if (!next.disabled && (typing || !onControl)) { e.preventDefault(); next.click(); }
     return;
   }
-  if (typing || e.key.length !== 1) return;
+  if (typing || !/^[a-h]$/i.test(e.key)) return;
   const button = document.querySelector(`.opt[data-key="${e.key.toUpperCase()}"]`);
   if (button && !button.disabled) { e.preventDefault(); button.click(); button.focus(); }
 }
