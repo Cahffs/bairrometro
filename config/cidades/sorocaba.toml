@@ -1,0 +1,11 @@
+# Configuração de uma cidade. Para outra cidade, copie este arquivo e troque os valores:
+# nada no código depende de Sorocaba (princípio de escalabilidade, D009).
+
+nome = "Sorocaba"
+uf = "SP"
+codigo_ibge = "3552205"   # conferido em BR_bairros/SP_setores_CD2022 (IBGE), não de memória
+geofabrik_regiao = "south-america/brazil/sudeste"
+crs_metrico = "EPSG:31983"   # SIRGAS 2000 / UTM 23S: medir distâncias em metros
+anos_ocorrencias = [2024, 2025]
+bairro_min_moradores = 1000   # bairros menores são juntados ao vizinho com a maior fronteira (D035)
+fontes = ["ibge_censo2022", "osm_geofabrik", "ssp_sp_criminais", "cnes_estabelecimentos", "inep_censo_escolar"]

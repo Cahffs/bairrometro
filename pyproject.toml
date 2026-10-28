@@ -1,0 +1,37 @@
+[project]
+name = "bairrometro"
+version = "0.1.0"
+description = "Pipeline de dados do Bairrômetro: coleta, tratamento e geração dos dados do site."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+dependencies = [
+  "certifi",
+  "duckdb",
+  "geopandas",
+  "numpy",
+  "pandas",
+  "pyogrio",
+  "pyproj",
+  "python-calamine",
+  "shapely",
+]
+
+[dependency-groups]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[tool.uv]
+package = false
+# Só pacotes publicados há pelo menos 14 dias (proteção contra versão adulterada recém-publicada).
+# Atualize a data junto com as dependências.
+exclude-newer = "2026-10-08T00:00:00Z"
+
+[tool.ruff]
+line-length = 110
+target-version = "py313"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/pipeline"]
