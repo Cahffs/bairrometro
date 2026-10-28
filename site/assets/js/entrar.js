@@ -69,6 +69,12 @@ async function main() {
   if (params.get('motivo') === 'inatividade') say(status, 'info', 'Você saiu da conta depois de 30 minutos sem uso. Entre de novo para continuar.');
 
   document.querySelectorAll('[role="tab"]').forEach((tab) => tab.addEventListener('click', () => showTab(tab.dataset.tab)));
+  // Sem servidor de e-mail (D040), o link de nova senha não chegaria: a aba sai e o cadastro avisa.
+  if (!auth.emailEnabled) {
+    document.querySelector('[role="tab"][data-tab="forgot"]').hidden = true;
+    $('#form-signup button[type="submit"]').before(
+      h('p', { class: 'hint', text: 'Guarde bem a sua senha: por enquanto não há recuperação de senha por e-mail.' }));
+  }
 
   // Já conectado?
   const session = await auth.getSession();
@@ -116,6 +122,8 @@ async function main() {
     const res = await auth.signUp(email, suPw.value);
     btn.disabled = false;
     if (!res.ok) { say(status, 'error', res.message); return; }
+    // sem confirmação por e-mail, a conta já nasce conectada: segue para as boas-vindas
+    if (!res.needsConfirmation) { window.location.href = 'bem-vindo.html'; return; }
     e.target.reset();
     wireRules(suPw, $('#signup-rules'), suEmail);
     say(status, 'info', res.needsConfirmation

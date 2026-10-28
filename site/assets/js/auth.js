@@ -20,6 +20,9 @@ function safe(fn, fallback = null) {
   try { return fn(); } catch { return fallback; }
 }
 
+// Recuperação de senha e confirmação por e-mail (D040: desligadas até haver servidor de e-mail).
+export const emailEnabled = cfg.emailEnabled !== false;
+
 export function rememberEnabled() {
   return safe(() => localStorage.getItem(REMEMBER_KEY) === '1', false);
 }
@@ -71,6 +74,7 @@ function friendly(error) {
   if (text.includes('email_not_confirmed') || text.includes('not confirmed')) return 'Confirme seu e-mail antes de entrar: procure a mensagem na caixa de entrada.';
   if (text.includes('weak_password') || text.includes('password should')) return 'Senha fraca. Use pelo menos 10 caracteres, com letras e números.';
   if (text.includes('same_password') || text.includes('different from the old')) return 'A nova senha precisa ser diferente da atual.';
+  if (text.includes('already') || text.includes('user_already_exists')) return 'Não foi possível criar uma conta com este e-mail. Se você já tem conta, use "Entrar".';
   if (text.includes('rate') || text.includes('too many') || text.includes('over_')) return 'Muitas tentativas. Espere alguns minutos e tente de novo.';
   if (text.includes('limite')) return 'Você chegou ao limite desta conta. Apague um item para salvar outro.';
   if (text.includes('fetch') || text.includes('network')) return 'Sem conexão com o serviço de contas. Tente de novo em instantes.';

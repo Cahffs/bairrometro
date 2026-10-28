@@ -1,0 +1,38 @@
+# Publica o site estático no GitHub Pages a cada envio para a main (D041).
+# Só a pasta site/ vai para o ar, sem os modelos de página (_pages, _partials).
+# Dados brutos, pipeline e registros pessoais nunca entram aqui.
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Separar o que vai para o ar
+        run: rsync -a --exclude '_pages' --exclude '_partials' site/ _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

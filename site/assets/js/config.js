@@ -7,4 +7,7 @@ window.BAIRROMETRO_CONFIG = {
   supabasePublishableKey: 'sb_publishable_Gb1jrePhKgYStparQgQ8sw_5zDUsSx9',
   dataUrl: 'data/sorocaba.json', // dados que o site lê (gerado por pipeline/build_city.py)
   inactivityMinutes: 30,         // sai da conta após este tempo sem uso
+  // O e-mail padrão do Supabase só chega a quem é da equipe do projeto (D040): sem confirmação
+  // de cadastro e sem recuperação de senha por e-mail. Vira true com um servidor de e-mail próprio.
+  emailEnabled: false,
 };
