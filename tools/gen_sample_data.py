@@ -12,7 +12,7 @@ import random
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "site" / "data" / "exemplo.json"
+OUT = ROOT / "tests" / "site" / "exemplo.json"  # fora do site publicado
 SEED = 42
 
 CRITERIA = [

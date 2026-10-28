@@ -41,6 +41,7 @@ _Preenchido pelo skill `checar-fonte` quando cada fonte for avaliada._
 - **Legal:** serviço usado como cliente, dentro dos termos; não é coleta automatizada.
 - **Gratuito:** plano Free. A [página de preços](https://supabase.com/pricing) não diz se o cadastro pede cartão: conferir na hora; se pedir, parar (D002). Passar da cota gera restrição (pausa, modo só leitura, respostas HTTP 402), não cobrança ([FAQ de cobrança](https://supabase.com/docs/guides/platform/billing-faq)).
 - **Limites:** 50 mil usuários ativos por mês, 500 MB de banco, 2 projetos ativos, pausa após 7 dias sem uso (reativação manual).
+- **Pausa na prática (2026-10-28):** o projeto foi pausado depois de uma semana sem uso; o endereço da API some do DNS e o painel mostra "paused", com os dados preservados e retomada grátis pelo botão "Resume project" (prazo indicado: até 01/12/2027). O site continua funcionando sem contas: o Explorar usa só os dados estáticos, e o login mostra "Sem conexão com o serviço de contas". Retomado em 2026-10-28. Truques de "manter vivo" com acesso automático não são usados sem checar os termos.
 - **Dados pessoais:** recebe e-mail e hash de senha de quem se cadastra (exceção D026). Região São Paulo. Política de privacidade no site.
 - **Acesso:** o navegador usa só a chave pública; RLS obrigatória em toda tabela ([documentação de RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)); a chave administrativa nunca sai do painel.
 - **Publicação:** nada deste banco é publicado.

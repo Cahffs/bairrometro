@@ -1,6 +1,6 @@
 # Estado atual
 
-_Atualizado em 2026-10-23_
+_Atualizado em 2026-10-28_
 
 ## Fase
 **3 — Dados reais**: o site já mostra os 303 bairros de Sorocaba com dados reais (IBGE, OpenStreetMap, SSP-SP, CNES, INEP). Ainda não há preços: a nota usa só a qualidade. As contas estão ligadas ao Supabase e testadas por Caio (login e favoritos funcionando).
@@ -25,14 +25,13 @@ _Atualizado em 2026-10-23_
   - **Boas-vindas** (`bem-vindo.html`): depois de confirmar o e-mail, um assistente em 4 passos monta o primeiro perfil de busca e leva ao Explorar.
   - **Minha conta:** painel com perfis, favoritos, sessão, download dos dados e exclusão da conta.
   - **Tema:** claro e escuro, com ícones de sol e lua.
-- **Supabase** (projeto `bairrometro`, São Paulo, plano Free): migração aplicada, 14 testes de RLS passando, visitante sem login barrado.
+- **Supabase** (projeto `bairrometro`, São Paulo, plano Free): migração aplicada, 14 testes de RLS passando, visitante sem login barrado. O plano grátis pausa o projeto após uma semana sem uso; foi pausado e retomado em 2026-10-28 (dados preservados).
 
 ## Aguardando Caio
-- Antes de publicar o site: escolher um servidor de e-mail próprio (o padrão do Supabase só envia para o time, 2 e-mails por hora).
-- **Commit:** tudo desta fase ainda está fora do Git (Caio: "depois de terminarmos tudo vamos commitar"); `security-review` antes de qualquer envio.
+- **Envio ao GitHub e publicação:** os três commits de 2026-10-28 estão só no PC; `security-review` antes de qualquer envio.
+- **Contas para o público:** o e-mail padrão do Supabase só envia para a equipe do projeto (e no máximo 2 por hora); decidir como as contas aparecem no site publicado.
 
 ## Próximos passos
-1. Commit (com `security-review` antes de qualquer envio), com aprovação de Caio.
-2. Servidor de e-mail próprio e publicação no GitHub Pages.
-3. Anúncios de imobiliárias (preço do m²): checagem caso a caso.
-4. Opcional: guardar em cache as ocorrências da SSP já filtradas (hoje é a etapa mais lenta, cerca de 2 minutos).
+1. Decidir as contas para o público e publicar no GitHub Pages (com `security-review` antes do envio).
+2. Anúncios de imobiliárias (preço do m²): checagem caso a caso.
+3. Opcional: guardar em cache as ocorrências da SSP já filtradas (hoje é a etapa mais lenta, cerca de 2 minutos).

@@ -68,6 +68,11 @@ function resolveId(id) {
   return idByAlias.get(id) || id;
 }
 
+// sem anúncios coletados, alugar/comprar, economia e tipo de imóvel não mudam nada: ficam escondidos
+function pricesAvailable() {
+  return !(data.meta && data.meta.prices_available === false);
+}
+
 function labelOf(id) {
   const c = criteria.find((x) => x.id === id);
   return c ? c.label : id;
@@ -162,7 +167,7 @@ function buildToolbar() {
   const tune = h('button', { type: 'button', class: 'btn btn-tune', on: { click: () => $('#tune').showModal() } },
     svgIcon(SLIDERS), 'Ajustar prioridades');
 
-  const left = h('div', { class: 'toolbar-group' }, seg, presets, tune);
+  const left = h('div', { class: 'toolbar-group' }, pricesAvailable() ? seg : null, presets, tune);
   const right = h('div', { class: 'toolbar-group' }, buildProfileArea());
   bar.replaceChildren(left, right);
 }
@@ -230,6 +235,10 @@ function buildTuneDialog() {
     grid.append(h('div', { class: 'slider' }, h('label', { for: `w-${c.id}` }, h('span', { text: c.label }), out), input));
   }
   body.append(grid, h('ul', { class: 'why-list', id: 'why-list' }));
+  if (!pricesAvailable()) {
+    body.append(h('p', { class: 'hint', text: 'Alugar ou comprar, preço e tipo de imóvel entram quando os anúncios forem coletados.' }));
+    return;
+  }
 
   const eOut = h('span', { class: 'weight-value' });
   const eInput = h('input', { type: 'range', min: 0, max: 1, step: 0.1, value: state.emphasis, id: 'emphasis' });
