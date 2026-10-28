@@ -1,6 +1,6 @@
 # Regras de negócio
 
-> **v1.1 — 2026-10-22** (v1.0 fechada para o MVP em 2026-10-20; a v1.1 acrescenta as faixas de nota da seção 4.7). Documento vivo: define o que o Bairrômetro avalia e como. É público e genérico; os valores de cada pessoa ficam no perfil dela, nunca aqui.
+> **v1.2 — 2026-10-22** (v1.0 fechada para o MVP em 2026-10-20; a v1.1 acrescenta as faixas de nota da seção 4.7; a v1.2 muda a medida de segurança, as fontes de saúde e educação e junta bairros pequenos, seções 4.1 e 4.2). Documento vivo: define o que o Bairrômetro avalia e como. É público e genérico; os valores de cada pessoa ficam no perfil dela, nunca aqui.
 
 ## 1. Visão
 
@@ -49,7 +49,8 @@ Tudo é configurável; o código não assume nenhum perfil.
 ### 4.1 Unidade espacial
 
 - **Base:** setores censitários do IBGE (Censo 2022), que existem no país todo.
-- **Bairro:** a divisão de bairros publicada pelo IBGE, quando existir para a cidade (confirmar com o skill `checar-fonte`).
+- **Bairro:** a divisão de bairros publicada pelo IBGE, quando existir para a cidade (confirmar com o skill `checar-fonte`). Sem ela, cada setor recebe o nome do bairro mais próximo no OpenStreetMap.
+- **Bairros pequenos:** bairro com menos de 1.000 moradores é juntado ao vizinho com quem divide a maior fronteira, repetindo até não sobrar nenhum. Os nomes absorvidos continuam na busca e os favoritos antigos são redirecionados. O mínimo fica na configuração de cada cidade.
 - Indicadores são calculados por setor e agregados por bairro, com média ponderada pela população de cada setor.
 
 ### 4.2 Critérios de qualidade
@@ -59,10 +60,10 @@ Tudo é configurável; o código não assume nenhum perfil.
 | Critério | Indicador (proposta) | Melhor quando | Fonte | Abrangência |
 |---|---|---|---|---|
 | Dia a dia | Mercados, farmácias e padarias por perto | mais | OpenStreetMap | global |
-| Educação | Escolas e creches por perto | mais | OpenStreetMap (avaliar INEP) | global / nacional |
-| Saúde | UBS, clínicas e hospitais por perto | mais | OpenStreetMap (avaliar CNES) | global / nacional |
+| Educação | Escolas e creches em atividade por perto (Censo Escolar), localizadas com o OpenStreetMap | mais | INEP + OpenStreetMap | nacional |
+| Saúde | Unidades de atendimento por perto: UBS e postos, policlínicas, clínicas especializadas, hospitais, pronto-atendimento, CAPS (sem consultórios isolados) | mais | CNES (Ministério da Saúde) | nacional |
 | Mobilidade | Pontos de ônibus por perto; distância a avenidas principais | mais / menor | OpenStreetMap | global |
-| Segurança | Ocorrências por 1.000 habitantes, por tipo | menos | SSP-SP + IBGE | estadual |
+| Segurança | Ocorrências registradas por ano a até 500 m de casa (furtos, roubos, agressões, homicídios) | menos | SSP-SP | estadual |
 | Lazer e verde | Área de parques e praças por perto; academias ao ar livre | mais | OpenStreetMap | global |
 | Infraestrutura | Saneamento (água, esgoto, coleta de lixo) | mais | IBGE Censo 2022 | nacional |
 | Sossego | Distância de vias de tráfego intenso e de bares/casas noturnas | maior | OpenStreetMap | global |
@@ -70,6 +71,9 @@ Tudo é configurável; o código não assume nenhum perfil.
 **Renda fica fora da nota.** Aparece só como informação. Usar renda como "melhor" premiaria bairros só por serem ricos.
 
 **Segurança:** boletins de ocorrência têm subnotificação, que varia entre bairros. A nota mostra o que foi registrado, não a criminalidade real.
+- **Perto de casa, não por morador:** conta as ocorrências a até 500 m do centro de cada setor e faz a média ponderada pelos moradores. A taxa por mil moradores foi descartada: ela explode onde mora pouca gente e circula muita (áreas comerciais e industriais), porque morador não mede quem passa pelo lugar.
+- **O que conta:** crimes contra a pessoa e o patrimônio. Ficam de fora acidentes de trânsito (já pesam em Sossego) e entorpecentes e porte de arma (medem mais a atividade da polícia). A lista de naturezas fica na configuração da fonte de cada estado.
+- **Sem local, fora da conta:** a SSP não publica o local de crimes sexuais e de parte da violência doméstica, para proteger a vítima. Essas ocorrências não são localizadas de outro jeito, e o site avisa que ficam de fora.
 
 ### 4.3 Escala
 
@@ -205,6 +209,10 @@ Nenhuma nota aparece sem explicação.
 | Pontos de partida | Tabela e explicativo da seção 5, com o campo "carro" no perfil |
 | Mínimo de anúncios | 5 por bairro; abaixo disso, aviso e sem nota de custo-benefício |
 | Faixas de nota (2026-10-22) | 0–49, 50–79 e 80–100, cada uma com cor e rótulo próprios (seção 4.7) |
+| Segurança (2026-10-22) | Ocorrências a até 500 m de casa, só crimes contra a pessoa e o patrimônio com local (seção 4.2) |
+| Bairros pequenos (2026-10-22) | Menos de 1.000 moradores: junta ao vizinho com a maior fronteira (seção 4.1) |
+| Saúde (2026-10-22) | CNES no lugar do OpenStreetMap, que cobria só 36% das unidades (seção 4.2) |
+| Educação (2026-10-23) | Escolas do INEP localizadas por ligação de registros com o OpenStreetMap; as sem local ficam de fora, com aviso (seção 4.2) |
 
 ## 11. Perguntas em aberto
 

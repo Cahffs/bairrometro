@@ -266,6 +266,7 @@ ol.refs li:target { background: var(--callout); border-radius: 6px; }
     <li><a href="#preco-aluguel">11. Preço × aluguel</a></li>
     <li><a href="#vieses">12. Vieses e ética</a></li>
     <li><a href="#stack">13. Stack e o que ela ensina</a></li>
+    <li><a href="#pipeline">14. Pipeline de dados</a></li>
     <li><a href="#glossario">Glossário</a></li>
     <li><a href="#referencias">Referências</a></li>
   </ol>
@@ -300,7 +301,7 @@ ol.refs li:target { background: var(--callout); border-radius: 6px; }
     <tbody>
       <tr><td><a href="#mediana">Mediana</a></td><td>Preço típico do m² em cada bairro</td></tr>
       <tr><td><a href="#percentil">Percentil</a></td><td>Escala de 0 a 100 de todos os critérios</td></tr>
-      <tr><td><a href="#taxas">Taxa por habitante</a></td><td>Critério de segurança</td></tr>
+      <tr><td><a href="#taxas">Taxa, denominador e ocorrências perto de casa</a></td><td>Critério de segurança</td></tr>
       <tr><td><a href="#agregacao">Média ponderada pela população</a></td><td>Juntar setores censitários do IBGE em bairros</td></tr>
       <tr><td><a href="#distancia">Distância e projeção</a></td><td>"Por perto" = raio de 1 km</td></tr>
       <tr><td><a href="#multicriterio">Decisão multicritério</a></td><td>Filtros e nota de qualidade (Q)</td></tr>
@@ -310,6 +311,7 @@ ol.refs li:target { background: var(--callout); border-radius: 6px; }
       <tr><td><a href="#ausentes">Dados ausentes</a></td><td>"Dado ausente não elimina, vira aviso"</td></tr>
       <tr><td><a href="#preco-aluguel">Razão preço/aluguel</a></td><td>Comparação alugar × comprar</td></tr>
       <tr><td><a href="#vieses">Vieses</a></td><td>Renda fora da nota, subnotificação, preço pedido</td></tr>
+      <tr><td><a href="#pipeline">Ligação de registros e validação</a></td><td>Localizar as escolas do Censo Escolar; pipeline de dados</td></tr>
     </tbody>
   </table>
   </div>
@@ -396,9 +398,9 @@ quando "menos é melhor": percentil = 100 − percentil</div>
 
 <!-- ============ 3. TAXAS ============ -->
 <section id="taxas">
-  <h2><span class="num">3.</span>Taxas por habitante e subnotificação</h2>
+  <h2><span class="num">3.</span>Taxas, denominador e ocorrências perto de casa</h2>
   <span class="where">Onde aparece: critério de segurança (regras, seção 4.2)</span>
-  <p>30 ocorrências num bairro de 30 mil moradores não é o mesmo que 30 ocorrências num bairro de 3 mil. Número absoluto mede o tamanho do bairro, não o risco. Para comparar, divide-se pela população: isso é uma <strong>taxa</strong>.</p>
+  <p>30 ocorrências num bairro de 30 mil moradores não é o mesmo que 30 ocorrências num bairro de 3 mil. Número absoluto mede o tamanho do bairro, não o risco. O jeito clássico de comparar é dividir pela população: isso é uma <strong>taxa</strong>.</p>
   <div class="formula">taxa = ocorrências ÷ população × 1.000   (ocorrências por mil habitantes)</div>
   <div class="table-wrap">
   <table>
@@ -411,19 +413,47 @@ quando "menos é melhor": percentil = 100 − percentil</div>
   </div>
   <p>O Bairro Y tem bem menos ocorrências, mas uma taxa maior.</p>
 
-  <h3>Dois cuidados que entram na explicação da nota</h3>
+  <h3>Quando a taxa engana: o denominador</h3>
+  <p>A taxa supõe que quem está exposto ao risco são os moradores. Num bairro comercial, quase ninguém mora, mas milhares de pessoas circulam. As ocorrências acontecem com quem passa, e a conta divide só pelos poucos moradores:</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Bairro (fictício)</th><th class="n">Ocorrências por ano</th><th class="n">Moradores</th><th class="n">Por 1.000 hab.</th></tr></thead>
+    <tbody>
+      <tr><td>Bairro Z (comércio)</td><td class="n">240</td><td class="n">300</td><td class="n"><strong>800</strong></td></tr>
+      <tr><td>Bairro W (residencial)</td><td class="n">60</td><td class="n">5.000</td><td class="n">12</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>800 por mil não quer dizer que quase todo morador foi vítima: o denominador errado infla o número. A criminologia chama quem realmente circula num lugar de <strong>população ambiente</strong>, e mostra que trocar o denominador muda o mapa do crime [22].</p>
+
+  <h3>Ruído ou viés? Por que o Bayes empírico não resolveu</h3>
+  <p>Com poucos moradores, uma taxa também pode ser alta por acaso: 3 ocorrências em 200 moradores já dão 15 por mil. Para isso existe o <strong>Bayes empírico</strong> [23]: ele puxa a taxa de bairros pequenos em direção à média da cidade, na medida em que a diferença poderia ser só sorte.</p>
+  <div class="formula">taxa ajustada = média da cidade + C × (taxa do bairro − média da cidade)
+C perto de 0: diferença pode ser acaso → fica perto da média
+C perto de 1: diferença grande demais para ser acaso → mantém a taxa</div>
+  <p>Testamos com os dados reais e C deu praticamente 1 em todos os bairros. 240 ocorrências não são azar estatístico. O problema não era <strong>ruído</strong> (variação aleatória, que diminui com mais dados), era <strong>viés</strong> (um erro sistemático do denominador, que não diminui com mais dados). Corrigir ruído não conserta viés.</p>
+
+  <h3>A medida que usamos: ocorrências perto de casa</h3>
+  <p>Em vez de dividir por moradores, olhamos o que acontece em volta de onde as pessoas moram: para cada setor censitário, contamos as ocorrências a até 500 m do centro dele. O bairro recebe a média ponderada pelos moradores (seção 4), por ano.</p>
+  <div class="formula">perto de casa (setor) = ocorrências a até 500 m ÷ anos
+perto de casa (bairro) = Σ (perto de casa × moradores) ÷ Σ moradores</div>
+  <p>No Bairro Z, os 300 moradores vivem numa ponta, longe das lojas: o que acontece perto da casa deles é bem menos do que a taxa sugeria. Não há denominador pequeno para explodir.</p>
+
+  <h3>Cuidados que entram na explicação da nota</h3>
   <ul>
     <li><strong>Subnotificação ("cifra oculta").</strong> Nem todo crime vira boletim de ocorrência. Registrar depende da confiança na polícia, do acesso a uma delegacia e do tipo de crime (quem precisa do BO para o seguro registra mais). A nota mostra o que foi <em>registrado</em>, não a criminalidade real [5].</li>
-    <li><strong>Moradores × circulantes.</strong> Bairros comerciais recebem muita gente de passagem e têm poucos moradores. Dividir pelos moradores infla a taxa desses bairros.</li>
+    <li><strong>Lugar movimentado sempre tem mais.</strong> Onde circula mais gente acontecem mais ocorrências, mesmo que o risco de cada pessoa seja menor. Para quem vai morar ali, o movimento em volta de casa é justamente o que importa.</li>
+    <li><strong>Só o que é segurança de quem mora.</strong> Entram furtos, roubos, agressões e homicídios. Acidentes de trânsito ficam de fora (já pesam em Sossego), e apreensões de drogas e armas também, porque medem mais onde a polícia age do que o risco dos moradores.</li>
+    <li><strong>O que vem sem local fica de fora.</strong> A fonte omite de propósito o local de alguns crimes, como os sexuais (seção 10).</li>
   </ul>
   <div class="why">
-    <strong>Por que escolhemos taxa por mil habitantes</strong>
-    <p>É a forma padrão de comparar eventos entre populações de tamanhos diferentes. A população vem do Censo 2022 do IBGE, a mesma base usada para os bairros. A limitação da subnotificação é conhecida na criminologia desde os estudos de vitimização [5], por isso fica explícita no app.</p>
+    <strong>Por que escolhemos ocorrências perto de casa</strong>
+    <p>A taxa por mil habitantes é o padrão para comparar populações de tamanhos diferentes, mas o denominador "moradores" falha onde muita gente circula e pouca mora [22]. Contar num raio fixo em volta das casas usa a mesma ideia de "por perto" dos outros critérios (o raio de 500 m é o mesmo dos bares) e não depende do número de moradores. A subnotificação continua, por isso fica explícita no app [5].</p>
   </div>
 
   <details class="practice">
-    <summary>Para praticar: um bairro tem 18 ocorrências e 6.000 moradores. Qual a taxa por mil?</summary>
-    <div class="answer">18 ÷ 6.000 × 1.000 = <strong>3,0 por mil habitantes</strong>.</div>
+    <summary>Para praticar: um bairro tem dois setores. S1 tem 1.200 moradores e 30 ocorrências a até 500 m em 2 anos; S2 tem 800 moradores e 10. Qual o valor do bairro por ano?</summary>
+    <div class="answer">Por ano: S1 = 15, S2 = 5. Média ponderada: (15 × 1.200 + 5 × 800) ÷ 2.000 = 22.000 ÷ 2.000 = <strong>11 ocorrências por ano perto de casa</strong>.</div>
   </details>
 </section>
 
@@ -452,6 +482,8 @@ quando "menos é melhor": percentil = 100 − percentil</div>
     <li><strong>Problema da unidade de área modificável (MAUP).</strong> O resultado muda conforme se desenham as fronteiras. Outra divisão de bairros daria outras médias com os mesmos dados [6].</li>
     <li><strong>Falácia ecológica.</strong> O que vale para o bairro em média não vale para cada rua nem para cada morador [7]. Um bairro "seguro" pode ter uma rua problemática.</li>
   </ul>
+  <h3>Bairros pequenos demais</h3>
+  <p>Quando a cidade não tem bairros oficiais no IBGE, cada setor recebe o nome do bairro mais próximo no OpenStreetMap. Isso gera muitos fragmentos: pedaços com poucas centenas de moradores. O Bairrômetro junta cada bairro com menos de 1.000 moradores ao vizinho com quem divide a <strong>maior fronteira</strong>, do menor para o maior, até não sobrar nenhum. É uma escolha de desenho de fronteiras, portanto sujeita ao MAUP [6]: os nomes absorvidos continuam na busca, para ninguém perder o bairro que conhece.</p>
   <div class="why">
     <strong>Por que escolhemos setores do IBGE como base</strong>
     <p>Existem no país inteiro com o mesmo padrão, o que permite levar o Bairrômetro a outras cidades sem trocar a unidade (princípio de escalabilidade). Trabalhar com a menor unidade e agregar depois reduz, sem eliminar, o efeito do MAUP [6].</p>
@@ -644,6 +676,8 @@ para a mediana vale uma versão parecida:
   </table>
   </div>
   <p>Jogar fora todo anúncio incompleto (análise de "casos completos") só é seguro no caso MCAR, que é o mais raro. Nos outros, o resultado fica enviesado. Por exemplo, sobrariam só as imobiliárias que preenchem tudo.</p>
+  <h3>Um caso de MNAR de propósito: o local das ocorrências</h3>
+  <p>Nos dados criminais da SSP-SP, cerca de 4 em cada 10 ocorrências vêm sem coordenada, e a falta depende do tipo de crime: crimes sexuais nunca têm local, e boa parte das agressões também não. A Secretaria omite o local para proteger a vítima, que muitas vezes é atacada em casa. É MNAR por desenho. Tentar adivinhar o local pelo nome do bairro seria imputação sobre um dado escondido de propósito, e o nome do bairro da fonte nem sempre bate com o mapa. A regra é a mesma dos anúncios: não inventar o que falta e avisar no app o que ficou de fora.</p>
   <div class="why">
     <strong>Por que "não elimina, vira aviso"</strong>
     <p>Eliminar incompletos enviesa quando a ausência não é aleatória [16]. Preencher o valor que falta "no chute" (imputação) esconderia a incerteza de quem usa o app. O meio-termo transparente é manter o imóvel e avisar o que falta.</p>
@@ -729,6 +763,82 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
   </ul>
 </section>
 
+<!-- ============ 14. PIPELINE ============ -->
+<section id="pipeline">
+  <h2><span class="num">14.</span>Pipeline de dados: da fonte ao bairro</h2>
+  <span class="where">Onde aparece: <code>pipeline/download.py</code>, <code>pipeline/build_city.py</code> e <code>pipeline/locate_schools.py</code></span>
+  <p>Um <strong>pipeline</strong> é a sequência de etapas que transforma os arquivos das fontes no arquivo pronto que o site lê. Cada etapa tem uma entrada, uma saída e um teste. Se uma etapa muda, as outras não precisam mudar.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Etapa</th><th>Entra</th><th>Sai</th><th>Conceito</th></tr></thead>
+    <tbody>
+      <tr><td>1. Coleta</td><td>Endereços das fontes aprovadas (configuração)</td><td>Arquivos brutos e um manifesto com endereço, data e SHA-256</td><td>Proveniência, cache, coleta educada</td></tr>
+      <tr><td>2. Recorte</td><td>Extrato do OpenStreetMap do Sudeste</td><td>Só a caixa da cidade, guardada uma vez</td><td>Cache de etapa intermediária</td></tr>
+      <tr><td>3. Setores e bairros</td><td>Setores e população do IBGE, lugares do OSM</td><td>Cada setor com um bairro; bairros pequenos juntados</td><td>Junção espacial pelo vizinho mais próximo; algoritmo guloso</td></tr>
+      <tr><td>4. Serviços por perto</td><td>Pontos do OSM, do CNES e do INEP</td><td>Contagens a até 1 km de cada setor</td><td>Projeção em metros, buffer (seção 5)</td></tr>
+      <tr><td>5. Ocorrências</td><td>Planilhas da SSP-SP</td><td>Ocorrências a até 500 m de cada setor</td><td>Denominador (seção 3), dado ausente de propósito (seção 10)</td></tr>
+      <tr><td>6. Bairros e percentis</td><td>Setores com todos os indicadores</td><td><code>site/data/&lt;cidade&gt;.json</code>, só agregados</td><td>Média ponderada (seção 4), percentil (seção 2)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Regras de coleta que viraram decisões</h3>
+  <ul>
+    <li><strong>O <code>robots.txt</code> vale mais que a política de uso.</strong> O serviço de busca de endereços do OpenStreetMap (Nominatim) aceita pequenos lotes pela política, mas o <code>robots.txt</code> proíbe robôs na busca. Pela regra do projeto, vale a restrição mais forte.</li>
+    <li><strong>Bloqueio não se contorna.</strong> Um portal que corta conexões de script não é enganado com um "disfarce" de navegador.</li>
+    <li><strong>Ler só o necessário.</strong> O cadastro de saúde tem nome, telefone e e-mail de consultórios; o pipeline nem lê essas colunas. É o princípio da necessidade da LGPD (art. 6º, III) aplicado no código [19].</li>
+    <li><strong>Fonte oficial mede a colaborativa.</strong> Com as coordenadas de um cadastro oficial, dá para medir quanto falta no OpenStreetMap: conte quantas unidades oficiais têm um ponto do OSM a até 150 m. Se for pouco, a fonte oficial entra no lugar.</li>
+  </ul>
+
+  <h3>Ligação de registros: a mesma escola em duas bases</h3>
+  <p>O Censo Escolar lista as escolas com nome e endereço, mas sem coordenadas; o OpenStreetMap tem escolas com coordenadas, mas com nomes escritos de outro jeito. Não existe um código comum. Achar o par certo se chama <strong>ligação de registros</strong> (<em>record linkage</em>) [24, 25].</p>
+  <ol>
+    <li><strong>Normalizar:</strong> maiúsculas, sem acento e sem pontuação; siglas com pontos viram uma palavra ("C.E.I." → "CEI"); abreviações por extenso ("PROFA" → "PROFESSORA").</li>
+    <li><strong>Chave:</strong> tirar as palavras que toda escola tem (escola, municipal, professora…) e ordenar o resto.</li>
+    <li><strong>Semelhança</strong> entre as chaves, de 0 a 1 [26]:</li>
+  </ol>
+  <div class="formula">semelhança = 2 × M ÷ (letras da chave A + letras da chave B)
+M = letras que aparecem em blocos iguais, na mesma ordem</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Cadastro (fictício)</th><th>OpenStreetMap (fictício)</th><th>Chaves</th><th class="n">Semelhança</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>EM PROFA ANA LIMA</td><td>Escola Municipal Professora Ana Lima</td><td>ANA LIMA × ANA LIMA</td><td class="n">1,00</td><td>casa</td></tr>
+      <tr><td>CEI 12 JOAO PRADO</td><td>C.E.I. 12 - João Prado Filho</td><td>12 JOAO PRADO × 12 FILHO JOAO PRADO</td><td class="n">0,81</td><td>não casa pelo nome</td></tr>
+      <tr><td>COLEGIO ALFA</td><td>Colégio Alfa Unidade II</td><td>ALFA × ALFA II</td><td class="n">0,73</td><td>não casa (pode ser outra unidade)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>A decisão usa três travas: semelhança de pelo menos 0,85; o melhor candidato precisa ganhar do segundo com folga; e os dois lados precisam se escolher (melhor amigo mútuo). O modelo clássico de Fellegi e Sunter [24] divide os pares em três zonas: casa, não casa e "talvez", que vai para revisão manual. No Bairrômetro, os pares entre 0,85 e 0,95 são conferidos à mão.</p>
+  <p>Quem não casa pelo nome passa para métodos menos precisos, em cascata: endereço exato (rua e número), número próximo na mesma rua e, por último, o ponto da rua mais perto do bairro informado. Cada escola guarda o método que a localizou.</p>
+
+  <h3>Como saber se funcionou: validação com gabarito</h3>
+  <p>As escolas achadas pelo nome viram um <strong>gabarito</strong>: esconde-se o nome delas, deixa-se o método de rua localizá-las, e mede-se a distância até o lugar certo. É a mesma ideia de separar dados de teste no machine learning.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Método (exemplo fictício)</th><th class="n">Escolas no teste</th><th class="n">Erro mediano</th><th class="n">Até 1 km</th></tr></thead>
+    <tbody>
+      <tr><td>Endereço exato</td><td class="n">10</td><td class="n">30 m</td><td class="n">100%</td></tr>
+      <tr><td>Rua e bairro</td><td class="n">100</td><td class="n">160 m</td><td class="n">92%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Cuidado com o gabarito: escolas que estão no OpenStreetMap costumam ficar em áreas mais bem mapeadas. O erro nas outras pode ser maior. É um <strong>viés de seleção</strong> do próprio teste.</p>
+
+  <h3>Juntar bairros pequenos: um algoritmo guloso</h3>
+  <p>Repete-se o mesmo passo até acabar: pega o menor bairro abaixo do mínimo e junta ao vizinho com quem ele divide a maior fronteira. Cada passo escolhe o que parece melhor naquele momento, sem planejar tudo antes: por isso se chama <strong>guloso</strong>. É simples, previsível e fácil de testar; o preço é que outra ordem daria fronteiras um pouco diferentes (MAUP, seção 4).</p>
+
+  <div class="why">
+    <strong>Por que um pipeline em etapas, com cache e testes</strong>
+    <p>Etapas separadas deixam ver onde um número mudou. O manifesto com SHA-256 diz de qual versão de cada arquivo veio cada resultado. O cache evita baixar e reler o que não mudou: com o recorte do OpenStreetMap guardado, uma rodada completa do pipeline caiu de cerca de 13 minutos para cerca de 3,5 minutos. E os testes garantem que uma mudança numa função (como a normalização de nomes) não quebra outra.</p>
+  </div>
+
+  <details class="practice">
+    <summary>Para praticar: as chaves "ANA LIMA" (8 letras) e "ANA LIMA SOUZA" (14 letras) têm 8 letras em um bloco igual. Qual a semelhança? Casa pelo nome?</summary>
+    <div class="answer">2 × 8 ÷ (8 + 14) = 16 ÷ 22 = <strong>0,73</strong>. Fica abaixo de 0,85: não casa pelo nome, e a escola segue para o endereço.</div>
+  </details>
+</section>
+
 <!-- ============ GLOSSÁRIO ============ -->
 <section id="glossario">
   <h2>Glossário</h2>
@@ -739,7 +849,9 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
     <dt>Dado ausente</dt><dd>Informação que deveria existir e não veio. Pode ser MCAR, MAR ou MNAR.</dd>
     <dt>Dominância</dt><dd>Uma opção domina outra quando é melhor ou igual em tudo e melhor em pelo menos um critério.</dd>
     <dt>Falácia ecológica</dt><dd>Concluir algo sobre indivíduos a partir de médias de grupos.</dd>
+    <dt>Algoritmo guloso</dt><dd>Resolve um problema escolhendo, a cada passo, o que parece melhor naquele momento.</dd>
     <dt>Fronteira de eficiência</dt><dd>O conjunto de opções que ninguém domina.</dd>
+    <dt>Ligação de registros</dt><dd>Achar, em duas bases sem código em comum, os registros que falam da mesma coisa.</dd>
     <dt>MAUP</dt><dd>Problema da unidade de área modificável: resultados que mudam conforme se desenham as fronteiras.</dd>
     <dt>Mediana</dt><dd>O valor do meio dos dados ordenados. Robusta a outliers.</dd>
     <dt>Normalização</dt><dd>Levar indicadores de unidades diferentes para a mesma escala.</dd>
@@ -748,6 +860,7 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
     <dt>Peso</dt><dd>Quanto um critério importa na nota, de 0 a 5.</dd>
     <dt>Preço hedônico</dt><dd>Ideia de que o preço reflete os preços implícitos das características do bem.</dd>
     <dt>R²</dt><dd>Fração da variação do preço explicada pelo modelo, de 0 a 1.</dd>
+    <dt>Proveniência</dt><dd>De onde veio cada dado: fonte, versão do arquivo e data.</dd>
     <dt>Regressão linear</dt><dd>Reta que descreve como uma variável muda, em média, com outra.</dd>
     <dt>Resíduo</dt><dd>Diferença entre o valor real e o previsto pelo modelo.</dd>
     <dt>Setor censitário</dt><dd>Menor área em que o IBGE divulga dados do Censo.</dd>
@@ -783,6 +896,11 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
     <li id="ref-19">Brasil. Lei nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais).</li>
     <li id="ref-20">Saaty, T. L. (1980). <em>The Analytic Hierarchy Process</em>. McGraw-Hill.</li>
     <li id="ref-21">Pareto, V. (1906). <em>Manuale di economia politica</em>. Società Editrice Libraria.</li>
+    <li id="ref-22">Andresen, M. A. (2006). Crime measures and the spatial analysis of criminal activity. <em>British Journal of Criminology</em>, 46(2), 258–285.</li>
+    <li id="ref-23">Marshall, R. J. (1991). Mapping disease and mortality rates using empirical Bayes estimators. <em>Applied Statistics</em>, 40(2), 283–294.</li>
+    <li id="ref-24">Fellegi, I. P. &amp; Sunter, A. B. (1969). A theory for record linkage. <em>Journal of the American Statistical Association</em>, 64(328), 1183–1210.</li>
+    <li id="ref-25">Christen, P. (2012). <em>Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection</em>. Springer.</li>
+    <li id="ref-26">Ratcliff, J. W. &amp; Metzener, D. E. (1988). Pattern matching: the Gestalt approach. <em>Dr. Dobb's Journal</em>, julho de 1988.</li>
   </ol>
 </section>
 
@@ -941,7 +1059,7 @@ rentabilidade bruta do aluguel = 1 ÷ razão           → em % ao ano</div>
       var ps = percentRanks(rows.map(function (r) { return r[2]; }));
       if (box.checked) ps = ps.map(function (p) { return 100 - p; });
       var h = '<thead><tr><th>Bairro (fictício)</th><th class="n">Escolas a até 1 km</th><th class="n">Percentil</th>' +
-        '<th class="n">Ocorrências por 1.000 hab.</th><th class="n">Percentil' + (box.checked ? ' (invertido)' : ' (sem inverter)') + '</th></tr></thead><tbody>';
+        '<th class="n">Ocorrências por ano (500 m)</th><th class="n">Percentil' + (box.checked ? ' (invertido)' : ' (sem inverter)') + '</th></tr></thead><tbody>';
       rows.forEach(function (r, i) {
         h += '<tr><td>Bairro ' + r[0] + '</td><td class="n">' + r[1] + '</td>' + cell(pe[i]) +
           '<td class="n">' + r[2] + '</td>' + cell(ps[i]) + '</tr>';
