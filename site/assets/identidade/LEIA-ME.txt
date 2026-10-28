@@ -1,0 +1,1 @@
+Cópia gerada por tools/build_site.py a partir de identidade/. Não edite aqui.

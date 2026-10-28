@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Entrar · Bairrômetro</title>
+<meta name="description" content="Entre ou crie uma conta para salvar perfis de busca e bairros favoritos.">
+<meta name="robots" content="noindex">
+<script type="module" src="assets/js/entrar.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo" class="narrow">
+  <h1>Sua conta</h1>
+  <p class="muted">Opcional: serve para salvar perfis de busca e bairros favoritos. Pedimos só e-mail e senha.</p>
+  <p id="status" role="status" hidden></p>
+  <p id="already" hidden><a class="btn" href="conta.html">Ir para Minha conta</a></p>
+
+  <div class="card">
+    <div class="tabs" role="tablist" id="tabs" aria-label="Opções de conta">
+      <button type="button" role="tab" data-tab="login" aria-controls="panel-login">Entrar</button>
+      <button type="button" role="tab" data-tab="signup" aria-controls="panel-signup">Criar conta</button>
+      <button type="button" role="tab" data-tab="forgot" aria-controls="panel-forgot">Esqueci a senha</button>
+    </div>
+
+    <section role="tabpanel" data-tab="login" id="panel-login">
+      <form id="form-login" novalidate>
+        <label class="field"><span>E-mail</span><input id="login-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Senha</span><input id="login-password" type="password" autocomplete="current-password" required></label>
+        <label class="check"><input id="login-keep" type="checkbox"><span>Manter conectado neste navegador</span></label>
+        <p class="hint">Sem marcar, a sessão vale só nesta aba e termina depois de 30 minutos sem uso. Não marque em computador compartilhado.</p>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section role="tabpanel" data-tab="signup" id="panel-signup" hidden>
+      <form id="form-signup" novalidate>
+        <label class="field"><span>E-mail</span><input id="signup-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Senha</span><input id="signup-password" type="password" autocomplete="new-password" minlength="10" required aria-describedby="signup-rules"></label>
+        <ul class="rules" id="signup-rules" aria-live="polite"></ul>
+        <label class="field"><span>Repita a senha</span><input id="signup-password2" type="password" autocomplete="new-password" required></label>
+        <label class="check"><input id="signup-consent" type="checkbox" required><span>Li e aceito a <a href="privacidade.html">política de privacidade</a>.</span></label>
+        <button class="btn btn-primary" type="submit">Criar conta</button>
+      </form>
+    </section>
+
+    <section role="tabpanel" data-tab="forgot" id="panel-forgot" hidden>
+      <form id="form-forgot" novalidate>
+        <label class="field"><span>E-mail da conta</span><input id="forgot-email" type="email" autocomplete="email" required></label>
+        <button class="btn btn-primary" type="submit">Enviar link para nova senha</button>
+      </form>
+    </section>
+
+    <section id="panel-recovery" hidden>
+      <h2>Nova senha</h2>
+      <form id="form-recovery" novalidate>
+        <label class="field"><span>Nova senha</span><input id="recovery-password" type="password" autocomplete="new-password" minlength="10" required aria-describedby="recovery-rules"></label>
+        <ul class="rules" id="recovery-rules" aria-live="polite"></ul>
+        <label class="field"><span>Repita a nova senha</span><input id="recovery-password2" type="password" autocomplete="new-password" required></label>
+        <button class="btn btn-primary" type="submit">Salvar nova senha</button>
+      </form>
+    </section>
+  </div>
+</main>
+<!--#include footer-->
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Como calculamos · Bairrômetro</title>
+<meta name="description" content="As fórmulas por trás das notas do Bairrômetro: percentil, qualidade, custo-benefício, faixas de nota e limites.">
+<script type="module" src="assets/js/page.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo" class="narrow prose">
+  <h1>Como calculamos</h1>
+  <p class="lead muted">Todas as contas do Bairrômetro, em linguagem simples. A versão completa, com exemplos interativos e referências científicas, está no <a href="https://github.com/Cahffs/bairrometro/tree/main/estudos" rel="noopener">guia de estudos</a>, e as regras oficiais em <a href="https://github.com/Cahffs/bairrometro/blob/main/contexto/regras-de-negocio.md" rel="noopener">regras de negócio</a>.</p>
+
+  <h2>1. Uma régua comum: o percentil</h2>
+  <p>Os critérios têm unidades diferentes (número de escolas, ocorrências perto de casa, área de praças). Cada um vira um percentil dentro da cidade: 80 quer dizer "melhor que 80% dos bairros". Quando menos é melhor, como em ocorrências, a conta é invertida.</p>
+  <p>"Por perto" é um raio de 1 km em linha reta, cerca de 12 a 15 minutos a pé.</p>
+  <p><strong>Segurança</strong> conta as ocorrências registradas por ano a até 500 m de onde as pessoas moram: furtos, roubos, agressões e homicídios. Não usamos "ocorrências por mil moradores" porque essa conta explode onde mora pouca gente e circula muita, como áreas comerciais e industriais. Acidentes de trânsito e apreensões de drogas e armas ficam de fora: não medem o risco de quem mora ali.</p>
+  <p><strong>Saúde</strong> conta as unidades de atendimento do Cadastro Nacional de Estabelecimentos de Saúde (CNES), do Ministério da Saúde: UBS e postos, policlínicas, clínicas especializadas, hospitais, pronto-atendimento e CAPS. Consultórios isolados ficam de fora.</p>
+  <p><strong>Educação</strong> conta as escolas e creches em atividade do Censo Escolar, do INEP. O cadastro não traz a localização, então cada escola é ligada a uma escola do OpenStreetMap pelo nome ou, se não houver, ao endereço ou à rua informada. Cerca de 1 em cada 10 escolas fica sem local e não entra na conta.</p>
+  <p><strong>Bairros:</strong> cada setor do Censo recebe o nome do bairro mais próximo no OpenStreetMap. Bairros com menos de 1.000 moradores são juntados ao vizinho com quem dividem a maior fronteira; a busca continua achando o nome antigo.</p>
+
+  <h2>2. Qualidade (Q)</h2>
+  <div class="formula">Q = soma de (peso × percentil) ÷ soma dos pesos
+pesos de 0 a 5 (0 = ignorar)</div>
+  <p>São 8 critérios: dia a dia, educação, saúde, mobilidade, segurança, lazer e verde, infraestrutura e sossego. A renda do bairro aparece só como informação: usá-la na nota premiaria bairros por serem ricos.</p>
+
+  <h2>3. Custo-benefício (CB)</h2>
+  <p>A pergunta é "onde se ganha mais qualidade pelo que se paga". Uma reta ajustada com todos os bairros da cidade (regressão linear) diz quanto um bairro com certa qualidade costuma custar.</p>
+  <div class="formula">preço esperado = a + b × Q
+diferença      = (preço esperado − preço real) ÷ preço esperado
+CB             = percentil da diferença na cidade</div>
+  <p>O preço do bairro é a mediana do preço do metro quadrado dos anúncios. A mediana não é arrastada por um anúncio com preço digitado errado.</p>
+
+  <h2>4. Nota final e faixas</h2>
+  <div class="formula">nota final = (1 − ênfase) × Q + ênfase × CB
+ênfase em economia de 0 a 1 (padrão 0,5)</div>
+  <p>A nota é arredondada e ganha a cor da sua faixa, sempre com o rótulo junto: <strong>0 a 49</strong> nota baixa, <strong>50 a 79</strong> intermediária, <strong>80 a 100</strong> alta.</p>
+
+  <h2>5. Poucos anúncios</h2>
+  <p>Com menos de 5 anúncios, o preço de um bairro é instável demais. O bairro continua aparecendo com a nota de qualidade, mas fica sem custo-benefício e fora do ranking, com um aviso.</p>
+
+  <h2>6. Alugar ou comprar</h2>
+  <div class="formula">anos de aluguel = preço do m² de venda ÷ (aluguel do m² × 12)</div>
+  <p>É informação para a decisão, não recomendação financeira: a comparação completa considera juros, impostos, manutenção e valorização.</p>
+
+  <h2>7. Limites que você deve conhecer</h2>
+  <ul>
+    <li><strong>Preço anunciado não é preço fechado</strong>, e anúncios não são todos os imóveis da cidade.</li>
+    <li><strong>Segurança mede o que foi registrado</strong>: nem todo crime vira boletim de ocorrência.</li>
+    <li><strong>Violência sexual e parte da violência doméstica não entram</strong>: a Secretaria da Segurança Pública não publica o local dessas ocorrências, para proteger a vítima.</li>
+    <li><strong>Lugar movimentado tem mais ocorrências</strong>: o centro e as avenidas comerciais sempre aparecem com mais registros, porque mais gente circula ali.</li>
+    <li><strong>A média do bairro não descreve cada rua.</strong></li>
+    <li><strong>Correlação não é causa</strong>: a reta descreve como preço e qualidade andam juntos, não que um cause o outro.</li>
+  </ul>
+</main>
+<!--#include footer-->
+</body>
+</html>

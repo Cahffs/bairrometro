@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Bairrômetro: descubra onde vale a pena morar</title>
+<meta name="description" content="Compare bairros com dados abertos e veja onde você ganha mais qualidade pelo que paga, com cada nota explicada.">
+<script type="module" src="assets/js/page.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo">
+  <p class="notice notice-info" id="page-note" hidden></p>
+  <p class="notice notice-warning">Em construção: dados reais de Sorocaba (IBGE, OpenStreetMap e SSP-SP), com <strong>bairros aproximados</strong>. Os preços ainda não foram coletados, então o ranking usa só a qualidade.</p>
+
+  <section class="hero">
+    <h1>Descubra onde vale a pena morar</h1>
+    <p class="lead">O Bairrômetro compara bairros com dados abertos e mostra onde você ganha mais qualidade pelo que paga. Cada nota vem com a explicação do que a puxou para cima e para baixo.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="explorar.html">Explorar bairros</a>
+      <a class="btn" href="como-calculamos.html">Como calculamos</a>
+    </div>
+  </section>
+
+  <h2>Como funciona</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="step-num">1</div>
+      <h3>Você diz o que importa</h3>
+      <p>Escolha pontos de partida (com filhos, com pet, sem carro) e ajuste o peso de cada critério: dia a dia, educação, saúde, mobilidade, segurança, lazer, infraestrutura e sossego.</p>
+    </div>
+    <div class="card">
+      <div class="step-num">2</div>
+      <h3>Medimos a qualidade</h3>
+      <p>Cada critério vira um percentil dentro da cidade (melhor que X% dos bairros) e entra numa média com os seus pesos. A renda do bairro não entra na nota.</p>
+    </div>
+    <div class="card">
+      <div class="step-num">3</div>
+      <h3>Comparamos com o preço</h3>
+      <p>Calculamos quanto um bairro com essa qualidade costuma custar. Quem custa menos do que a qualidade sugere ganha em custo-benefício: o bairro rico não ganha por ser rico.</p>
+    </div>
+  </div>
+
+  <h2>Princípios</h2>
+  <div class="grid-3">
+    <div class="card"><h3>Dados abertos</h3><p>IBGE, OpenStreetMap, Secretaria da Segurança Pública, Ministério da Saúde e INEP, com crédito a cada fonte.</p></div>
+    <div class="card"><h3>Nada de anúncio publicado</h3><p>Anúncios de imóveis nunca aparecem aqui, só estatísticas agregadas por bairro.</p></div>
+    <div class="card"><h3>Toda nota explicada</h3><p>Nenhuma nota aparece sem dizer de onde veio e quais limites tem.</p></div>
+  </div>
+
+  <div class="card">
+    <h2>Conta opcional</h2>
+    <p>O explorador funciona sem cadastro. Com uma conta, você salva seus perfis de busca e os bairros favoritos para comparar depois, em qualquer dispositivo.</p>
+    <div class="row">
+      <a class="btn" href="entrar.html?aba=criar">Criar conta</a>
+      <a href="privacidade.html">Política de privacidade</a>
+    </div>
+  </div>
+</main>
+<!--#include footer-->
+</body>
+</html>

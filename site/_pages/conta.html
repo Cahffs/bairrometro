@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Minha conta · Bairrômetro</title>
+<meta name="robots" content="noindex">
+<script type="module" src="assets/js/conta.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo">
+  <p id="status" role="status" hidden></p>
+
+  <div id="account" hidden>
+    <div class="page-head account-head">
+      <div>
+        <h1>Olá!</h1>
+        <p class="muted" id="email"></p>
+      </div>
+      <a class="btn btn-primary" href="explorar.html">Explorar bairros</a>
+    </div>
+
+    <section class="card welcome-card" id="first-profile" hidden>
+      <h2>Comece pelo seu perfil de busca</h2>
+      <p>Conte o que você procura e o que mais importa. Em menos de um minuto, os bairros ficam ordenados do seu jeito.</p>
+      <a class="btn btn-primary" href="bem-vindo.html">Criar meu perfil</a>
+    </section>
+
+    <div class="dashboard">
+      <section class="card">
+        <div class="card-head">
+          <h2>Meus perfis</h2>
+          <a class="btn btn-small" href="bem-vindo.html">+ Novo perfil</a>
+        </div>
+        <ul class="list-plain" id="profiles"></ul>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Bairros favoritos</h2>
+          <a class="btn btn-small" href="explorar.html">Ver bairros</a>
+        </div>
+        <ul class="list-plain" id="favorites"></ul>
+      </section>
+    </div>
+
+    <section class="card settings">
+      <h2>Conta e privacidade</h2>
+      <div class="settings-row">
+        <div>
+          <h3>Sessão</h3>
+          <p class="muted small" id="keep"></p>
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-small" id="logout">Sair</button>
+          <button type="button" class="btn btn-small" id="logout-all">Sair de todos os dispositivos</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <h3>Seus dados</h3>
+          <p class="muted small">Baixe um arquivo com tudo o que a sua conta guarda.</p>
+        </div>
+        <button type="button" class="btn btn-small" id="download">Baixar meus dados</button>
+      </div>
+      <details class="danger">
+        <summary>Excluir minha conta</summary>
+        <p>Apaga na hora o seu e-mail, a senha, os perfis e os favoritos. Não dá para desfazer.</p>
+        <label class="field"><span>Para confirmar, digite EXCLUIR</span><input id="delete-confirm" type="text" autocomplete="off"></label>
+        <button type="button" class="btn btn-danger" id="delete" disabled>Excluir minha conta</button>
+      </details>
+    </section>
+  </div>
+</main>
+<!--#include footer-->
+</body>
+</html>

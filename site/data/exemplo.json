@@ -1,0 +1,424 @@
+{
+  "meta": {
+    "city": "Cidade de exemplo",
+    "city_code": "exemplo",
+    "ibge_code": null,
+    "sample": true,
+    "note": "Dados fictícios, gerados por tools/gen_sample_data.py, para desenvolver o site. Não representam nenhuma cidade real.",
+    "generated_by": "tools/gen_sample_data.py",
+    "seed": 42,
+    "sources": []
+  },
+  "criteria": [
+    {
+      "id": "daily",
+      "label": "Dia a dia",
+      "direction": "higher"
+    },
+    {
+      "id": "education",
+      "label": "Educação",
+      "direction": "higher"
+    },
+    {
+      "id": "health",
+      "label": "Saúde",
+      "direction": "higher"
+    },
+    {
+      "id": "mobility",
+      "label": "Mobilidade",
+      "direction": "higher"
+    },
+    {
+      "id": "safety",
+      "label": "Segurança",
+      "direction": "higher"
+    },
+    {
+      "id": "green",
+      "label": "Lazer e verde",
+      "direction": "higher"
+    },
+    {
+      "id": "infrastructure",
+      "label": "Infraestrutura",
+      "direction": "higher"
+    },
+    {
+      "id": "quiet",
+      "label": "Sossego",
+      "direction": "higher"
+    }
+  ],
+  "neighborhoods": [
+    {
+      "id": "alfa",
+      "name": "Bairro Alfa",
+      "population": 4600,
+      "percentiles": {
+        "daily": 6.7,
+        "education": 33.3,
+        "health": 33.3,
+        "mobility": 53.3,
+        "safety": 33.3,
+        "green": 0.0,
+        "infrastructure": 53.3,
+        "quiet": 13.3
+      },
+      "price_m2": {
+        "rent": 25.14,
+        "sale": 4775
+      },
+      "listings": {
+        "rent": 23,
+        "sale": 3
+      }
+    },
+    {
+      "id": "beta",
+      "name": "Bairro Beta",
+      "population": 17200,
+      "percentiles": {
+        "daily": 13.3,
+        "education": 26.7,
+        "health": 20.0,
+        "mobility": 33.3,
+        "safety": 86.7,
+        "green": 53.3,
+        "infrastructure": 26.7,
+        "quiet": 66.7
+      },
+      "price_m2": {
+        "rent": 27.02,
+        "sale": 5873
+      },
+      "listings": {
+        "rent": 33,
+        "sale": 7
+      }
+    },
+    {
+      "id": "gama",
+      "name": "Bairro Gama",
+      "population": 27200,
+      "percentiles": {
+        "daily": 60.0,
+        "education": 60.0,
+        "health": 53.3,
+        "mobility": 66.7,
+        "safety": 40.0,
+        "green": 100.0,
+        "infrastructure": 46.7,
+        "quiet": 26.7
+      },
+      "price_m2": {
+        "rent": 25.16,
+        "sale": 6358
+      },
+      "listings": {
+        "rent": 17,
+        "sale": 26
+      }
+    },
+    {
+      "id": "delta",
+      "name": "Bairro Delta",
+      "population": 23800,
+      "percentiles": {
+        "daily": 93.3,
+        "education": 100.0,
+        "health": 93.3,
+        "mobility": 93.3,
+        "safety": 46.7,
+        "green": 6.7,
+        "infrastructure": 33.3,
+        "quiet": 0.0
+      },
+      "price_m2": {
+        "rent": 29.41,
+        "sale": 6277
+      },
+      "listings": {
+        "rent": 14,
+        "sale": 4
+      }
+    },
+    {
+      "id": "epsilon",
+      "name": "Bairro Épsilon",
+      "population": 26900,
+      "percentiles": {
+        "daily": 46.7,
+        "education": 0.0,
+        "health": 40.0,
+        "mobility": 40.0,
+        "safety": 13.3,
+        "green": 20.0,
+        "infrastructure": 40.0,
+        "quiet": 73.3
+      },
+      "price_m2": {
+        "rent": 25.72,
+        "sale": 5367
+      },
+      "listings": {
+        "rent": 5,
+        "sale": 22
+      }
+    },
+    {
+      "id": "zeta",
+      "name": "Bairro Zeta",
+      "population": 8000,
+      "percentiles": {
+        "daily": 20.0,
+        "education": 20.0,
+        "health": 6.7,
+        "mobility": 13.3,
+        "safety": 93.3,
+        "green": 66.7,
+        "infrastructure": 13.3,
+        "quiet": 93.3
+      },
+      "price_m2": {
+        "rent": 27.01,
+        "sale": 6232
+      },
+      "listings": {
+        "rent": 5,
+        "sale": 13
+      }
+    },
+    {
+      "id": "eta",
+      "name": "Bairro Eta",
+      "population": 12800,
+      "percentiles": {
+        "daily": 0.0,
+        "education": 13.3,
+        "health": 0.0,
+        "mobility": 0.0,
+        "safety": 73.3,
+        "green": 46.7,
+        "infrastructure": 20.0,
+        "quiet": 86.7
+      },
+      "price_m2": {
+        "rent": 20.82,
+        "sale": 3715
+      },
+      "listings": {
+        "rent": 14,
+        "sale": 18
+      }
+    },
+    {
+      "id": "teta",
+      "name": "Bairro Teta",
+      "population": 24600,
+      "percentiles": {
+        "daily": 66.7,
+        "education": 66.7,
+        "health": 66.7,
+        "mobility": 60.0,
+        "safety": 60.0,
+        "green": 60.0,
+        "infrastructure": 80.0,
+        "quiet": 46.7
+      },
+      "price_m2": {
+        "rent": 26.58,
+        "sale": 5610
+      },
+      "listings": {
+        "rent": 13,
+        "sale": 9
+      }
+    },
+    {
+      "id": "iota",
+      "name": "Bairro Iota",
+      "population": 8000,
+      "percentiles": {
+        "daily": 40.0,
+        "education": 46.7,
+        "health": 60.0,
+        "mobility": 20.0,
+        "safety": 100.0,
+        "green": 73.3,
+        "infrastructure": 6.7,
+        "quiet": 80.0
+      },
+      "price_m2": {
+        "rent": 22.73,
+        "sale": 3983
+      },
+      "listings": {
+        "rent": 5,
+        "sale": 21
+      }
+    },
+    {
+      "id": "capa",
+      "name": "Bairro Capa",
+      "population": 3700,
+      "percentiles": {
+        "daily": 86.7,
+        "education": 86.7,
+        "health": 86.7,
+        "mobility": 86.7,
+        "safety": 0.0,
+        "green": 13.3,
+        "infrastructure": 66.7,
+        "quiet": 6.7
+      },
+      "price_m2": {
+        "rent": 30.86,
+        "sale": 8144
+      },
+      "listings": {
+        "rent": 7,
+        "sale": 30
+      }
+    },
+    {
+      "id": "lambda",
+      "name": "Bairro Lambda",
+      "population": 27600,
+      "percentiles": {
+        "daily": 73.3,
+        "education": 73.3,
+        "health": 100.0,
+        "mobility": 46.7,
+        "safety": 20.0,
+        "green": 86.7,
+        "infrastructure": 60.0,
+        "quiet": 40.0
+      },
+      "price_m2": {
+        "rent": 32.05,
+        "sale": 6635
+      },
+      "listings": {
+        "rent": 15,
+        "sale": 28
+      }
+    },
+    {
+      "id": "mi",
+      "name": "Bairro Mi",
+      "population": 6000,
+      "percentiles": {
+        "daily": 33.3,
+        "education": 6.7,
+        "health": 26.7,
+        "mobility": 26.7,
+        "safety": 80.0,
+        "green": 33.3,
+        "infrastructure": 73.3,
+        "quiet": 60.0
+      },
+      "price_m2": {
+        "rent": 23.25,
+        "sale": 4801
+      },
+      "listings": {
+        "rent": 12,
+        "sale": 13
+      }
+    },
+    {
+      "id": "ni",
+      "name": "Bairro Ni",
+      "population": 26200,
+      "percentiles": {
+        "daily": 100.0,
+        "education": 53.3,
+        "health": 73.3,
+        "mobility": 100.0,
+        "safety": 66.7,
+        "green": 40.0,
+        "infrastructure": 93.3,
+        "quiet": 20.0
+      },
+      "price_m2": {
+        "rent": 37.05,
+        "sale": 9519
+      },
+      "listings": {
+        "rent": 20,
+        "sale": 14
+      }
+    },
+    {
+      "id": "csi",
+      "name": "Bairro Csi",
+      "population": 27900,
+      "percentiles": {
+        "daily": 26.7,
+        "education": 40.0,
+        "health": 13.3,
+        "mobility": 6.7,
+        "safety": 26.7,
+        "green": 26.7,
+        "infrastructure": 0.0,
+        "quiet": 100.0
+      },
+      "price_m2": {
+        "rent": 21.65,
+        "sale": 5084
+      },
+      "listings": {
+        "rent": 11,
+        "sale": 7
+      }
+    },
+    {
+      "id": "omicron",
+      "name": "Bairro Ômicron",
+      "population": 6100,
+      "percentiles": {
+        "daily": 80.0,
+        "education": 80.0,
+        "health": 46.7,
+        "mobility": 73.3,
+        "safety": 53.3,
+        "green": 80.0,
+        "infrastructure": 100.0,
+        "quiet": 33.3
+      },
+      "price_m2": {
+        "rent": 31.43,
+        "sale": 7027
+      },
+      "listings": {
+        "rent": 22,
+        "sale": 2
+      }
+    },
+    {
+      "id": "pi",
+      "name": "Bairro Pi",
+      "population": 27400,
+      "percentiles": {
+        "daily": 53.3,
+        "education": 93.3,
+        "health": 80.0,
+        "mobility": 80.0,
+        "safety": 6.7,
+        "green": 93.3,
+        "infrastructure": 86.7,
+        "quiet": 53.3
+      },
+      "price_m2": {
+        "rent": 41.93,
+        "sale": 7246
+      },
+      "listings": {
+        "rent": 34,
+        "sale": 30
+      }
+    }
+  ]
+}

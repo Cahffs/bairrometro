@@ -1,0 +1,96 @@
+<!doctype html>
+<!-- GERADO por tools/build_site.py a partir de site/_pages/explorar.html. Não edite aqui. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="assets/identidade/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/identidade/tokens.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/vendor/supabase-2.117.3.js" integrity="sha384-BWcjm9OdFth9TbhCxZPdm+gAOUMAzQy9nmTs12ioXdCcbVnJaPMn+fMUoQCLt60R"></script>
+<title>Explorar bairros · Bairrômetro</title>
+<meta name="description" content="Diga o que importa para você e veja os bairros que mais combinam, com cada nota explicada.">
+<script type="module" src="assets/js/explorar.js"></script>
+</head>
+<body>
+<a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Bairrômetro, página inicial">
+      <img class="logo-light" src="assets/identidade/logo/logo.svg" alt="Bairrômetro" width="258" height="30">
+      <img class="logo-dark" src="assets/identidade/logo/logo-dark.svg" alt="Bairrômetro" width="258" height="30">
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="explorar.html">Explorar bairros</a>
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a class="account" id="account-link" href="entrar.html">Entrar</a>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Mudar tema"></button>
+    </nav>
+  </div>
+</header>
+<main id="conteudo">
+  <div class="page-head">
+    <h1>Explorar bairros</h1>
+    <p class="muted" id="city-line"></p>
+  </div>
+  <p class="notice notice-warning" id="sample-note" hidden></p>
+  <p class="notice notice-info" id="profile-note" hidden></p>
+
+  <section class="toolbar" id="toolbar" aria-label="Seus filtros"></section>
+
+  <div class="results-grid">
+    <section class="card list-card" aria-labelledby="list-title">
+      <div class="list-head">
+        <h2 id="list-title">Bairros</h2>
+        <p class="muted small" id="list-sub"></p>
+        <div class="list-controls">
+          <label class="search">
+            <span class="sr-only">Buscar bairro pelo nome</span>
+            <input type="search" id="search" placeholder="Buscar bairro" autocomplete="off">
+          </label>
+          <label class="sort">
+            <span class="sr-only">Ordenar por</span>
+            <select id="sort">
+              <option value="score">Melhor nota</option>
+              <option value="name">Nome (A–Z)</option>
+              <option value="population">Mais moradores</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <ol class="hood-list" id="list" aria-live="polite"></ol>
+    </section>
+    <section class="card detail-card" id="detail" aria-live="polite"></section>
+  </div>
+
+  <section class="card" id="chart"></section>
+
+  <dialog class="sheet" id="tune" aria-labelledby="tune-title">
+    <form method="dialog" class="sheet-inner">
+      <div class="sheet-head">
+        <h2 id="tune-title">Ajustar prioridades</h2>
+        <button class="icon-btn" value="close" aria-label="Fechar">×</button>
+      </div>
+      <div class="sheet-body" id="tune-body"></div>
+      <div class="sheet-foot">
+        <button class="btn" type="button" id="tune-reset">Restaurar padrão</button>
+        <button class="btn btn-primary" value="close">Ver bairros</button>
+      </div>
+    </form>
+  </dialog>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>Bairrômetro: projeto pessoal de estudo, não comercial. Código aberto (licença MIT).</span>
+    <nav aria-label="Rodapé">
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a href="privacidade.html">Privacidade</a>
+      <a href="https://github.com/Cahffs/bairrometro" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

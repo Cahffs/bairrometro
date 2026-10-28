@@ -1,0 +1,95 @@
+<!doctype html>
+<!-- GERADO por tools/build_site.py a partir de site/_pages/privacidade.html. Não edite aqui. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="assets/identidade/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/identidade/tokens.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/vendor/supabase-2.117.3.js" integrity="sha384-BWcjm9OdFth9TbhCxZPdm+gAOUMAzQy9nmTs12ioXdCcbVnJaPMn+fMUoQCLt60R"></script>
+<title>Política de privacidade · Bairrômetro</title>
+<meta name="description" content="Que dados o Bairrômetro guarda, para quê, onde e como você os baixa ou exclui.">
+<script type="module" src="assets/js/page.js"></script>
+</head>
+<body>
+<a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Bairrômetro, página inicial">
+      <img class="logo-light" src="assets/identidade/logo/logo.svg" alt="Bairrômetro" width="258" height="30">
+      <img class="logo-dark" src="assets/identidade/logo/logo-dark.svg" alt="Bairrômetro" width="258" height="30">
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="explorar.html">Explorar bairros</a>
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a class="account" id="account-link" href="entrar.html">Entrar</a>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Mudar tema"></button>
+    </nav>
+  </div>
+</header>
+<main id="conteudo" class="narrow prose">
+  <h1>Política de privacidade</h1>
+  <p class="muted">Última atualização: 22 de outubro de 2026.</p>
+
+  <p class="card"><strong>Resumo.</strong> O Bairrômetro funciona sem conta. Se você criar uma, guardamos só o seu e-mail, um hash da sua senha, os perfis de busca e os bairros favoritos que você salvar. Nada é vendido nem compartilhado, e você baixa ou exclui tudo quando quiser.</p>
+
+  <h2>Quem é o responsável</h2>
+  <p>O Bairrômetro é um projeto pessoal, de estudo e não comercial, mantido por Caio Assaoka, controlador dos dados nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018). Contato: <a href="mailto:caiofranco.assaoka@gmail.com">caiofranco.assaoka@gmail.com</a>.</p>
+
+  <h2>O que guardamos</h2>
+  <ul>
+    <li><strong>Sem conta:</strong> nada sobre você no nosso banco. Tema, pesos e pontos de partida (como "com filhos" ou "com pet") ficam só no armazenamento do seu navegador.</li>
+    <li><strong>Com conta:</strong> e-mail; senha guardada apenas como hash, uma transformação de mão única que ninguém consegue reverter para ler a senha; perfis de busca (nome, pesos, ênfase, alugar ou comprar, tipos de imóvel); bairros favoritos; dados técnicos da sessão (data de criação, último acesso e tokens de sessão).</li>
+    <li><strong>Nunca pedimos</strong> nome, CPF, telefone, endereço, renda nem dados sensíveis.</li>
+  </ul>
+
+  <h2>Para que usamos</h2>
+  <p>Só para a conta funcionar: entrar, manter a sessão e guardar seus perfis e favoritos. Não usamos seus dados para publicidade nem para traçar perfil de comportamento, e o site não usa ferramentas de análise de visitas.</p>
+
+  <h2>Base legal</h2>
+  <p>Consentimento (art. 7º, I, da LGPD), dado ao criar a conta. Você pode retirá-lo a qualquer momento excluindo a conta.</p>
+
+  <h2>Onde os dados ficam</h2>
+  <p>No Supabase, serviço de banco de dados e autenticação, em servidores na região de São Paulo. O Supabase atua como operador dos dados. O banco aplica regras de segurança por linha (RLS): cada pessoa só consegue ler e alterar os próprios dados.</p>
+  <p>O site é hospedado no GitHub Pages, que pode registrar dados técnicos de acesso (como endereço IP) nos registros próprios dele.</p>
+
+  <h2>Compartilhamento</h2>
+  <p>Não vendemos nem compartilhamos seus dados. O site não carrega fontes, scripts nem rastreadores de terceiros: tudo é servido do próprio site.</p>
+
+  <h2>Cookies e armazenamento do navegador</h2>
+  <p>O site não usa cookies. Usa o armazenamento do navegador para: tema, preferências de busca, sessão da conta (com "manter conectado", fica guardada até você sair; sem essa opção, vale só na aba aberta) e horário do último uso (para a saída automática por inatividade).</p>
+
+  <h2>Por quanto tempo</h2>
+  <p>Enquanto a conta existir. Ao excluir a conta, o e-mail, a senha, os perfis e os favoritos são apagados do banco na hora.</p>
+
+  <h2>Seus direitos</h2>
+  <p>A LGPD (art. 18) garante acesso, correção, exclusão e portabilidade dos seus dados, entre outros direitos. Na página <a href="conta.html">Minha conta</a> você pode baixar seus dados em um arquivo, apagar perfis e favoritos, sair de todos os dispositivos e excluir a conta. Para outros pedidos, use o canal de contato acima.</p>
+
+  <h2>Segurança</h2>
+  <ul>
+    <li>Senha guardada só como hash.</li>
+    <li>Conexão sempre criptografada (HTTPS).</li>
+    <li>Regras de segurança por linha (RLS) em todas as tabelas.</li>
+    <li>A chave administrativa do banco nunca fica no site.</li>
+    <li>Saída automática após 30 minutos sem uso quando "manter conectado" está desligado.</li>
+  </ul>
+
+  <h2>Mudanças</h2>
+  <p>Esta política pode mudar. A data no topo indica a versão em vigor.</p>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>Bairrômetro: projeto pessoal de estudo, não comercial. Código aberto (licença MIT).</span>
+    <nav aria-label="Rodapé">
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a href="privacidade.html">Privacidade</a>
+      <a href="https://github.com/Cahffs/bairrometro" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

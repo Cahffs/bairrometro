@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Explorar bairros · Bairrômetro</title>
+<meta name="description" content="Diga o que importa para você e veja os bairros que mais combinam, com cada nota explicada.">
+<script type="module" src="assets/js/explorar.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo">
+  <div class="page-head">
+    <h1>Explorar bairros</h1>
+    <p class="muted" id="city-line"></p>
+  </div>
+  <p class="notice notice-warning" id="sample-note" hidden></p>
+  <p class="notice notice-info" id="profile-note" hidden></p>
+
+  <section class="toolbar" id="toolbar" aria-label="Seus filtros"></section>
+
+  <div class="results-grid">
+    <section class="card list-card" aria-labelledby="list-title">
+      <div class="list-head">
+        <h2 id="list-title">Bairros</h2>
+        <p class="muted small" id="list-sub"></p>
+        <div class="list-controls">
+          <label class="search">
+            <span class="sr-only">Buscar bairro pelo nome</span>
+            <input type="search" id="search" placeholder="Buscar bairro" autocomplete="off">
+          </label>
+          <label class="sort">
+            <span class="sr-only">Ordenar por</span>
+            <select id="sort">
+              <option value="score">Melhor nota</option>
+              <option value="name">Nome (A–Z)</option>
+              <option value="population">Mais moradores</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <ol class="hood-list" id="list" aria-live="polite"></ol>
+    </section>
+    <section class="card detail-card" id="detail" aria-live="polite"></section>
+  </div>
+
+  <section class="card" id="chart"></section>
+
+  <dialog class="sheet" id="tune" aria-labelledby="tune-title">
+    <form method="dialog" class="sheet-inner">
+      <div class="sheet-head">
+        <h2 id="tune-title">Ajustar prioridades</h2>
+        <button class="icon-btn" value="close" aria-label="Fechar">×</button>
+      </div>
+      <div class="sheet-body" id="tune-body"></div>
+      <div class="sheet-foot">
+        <button class="btn" type="button" id="tune-reset">Restaurar padrão</button>
+        <button class="btn btn-primary" value="close">Ver bairros</button>
+      </div>
+    </form>
+  </dialog>
+</main>
+<!--#include footer-->
+</body>
+</html>

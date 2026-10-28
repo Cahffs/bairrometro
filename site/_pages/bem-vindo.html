@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!--#include head-->
+<title>Bem-vindo · Bairrômetro</title>
+<meta name="robots" content="noindex">
+<script type="module" src="assets/js/bem-vindo.js"></script>
+</head>
+<body>
+<!--#include header-->
+<main id="conteudo" class="narrow">
+  <p id="status" role="status" hidden></p>
+  <section class="card onboarding" id="onboarding" hidden>
+    <p class="eyebrow" id="greeting"></p>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+    <p class="muted small" id="step-count"></p>
+    <div id="step" class="stack"></div>
+    <div class="row onboarding-actions">
+      <button class="btn" id="back" type="button">Voltar</button>
+      <button class="btn btn-primary" id="next" type="button">Continuar</button>
+    </div>
+    <p class="small center"><a href="explorar.html">Pular por enquanto</a></p>
+  </section>
+</main>
+<!--#include footer-->
+</body>
+</html>

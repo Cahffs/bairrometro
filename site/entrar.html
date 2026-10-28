@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- GERADO por tools/build_site.py a partir de site/_pages/entrar.html. Não edite aqui. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="assets/identidade/logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/identidade/tokens.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/config.js"></script>
+<script src="assets/js/vendor/supabase-2.117.3.js" integrity="sha384-BWcjm9OdFth9TbhCxZPdm+gAOUMAzQy9nmTs12ioXdCcbVnJaPMn+fMUoQCLt60R"></script>
+<title>Entrar · Bairrômetro</title>
+<meta name="description" content="Entre ou crie uma conta para salvar perfis de busca e bairros favoritos.">
+<meta name="robots" content="noindex">
+<script type="module" src="assets/js/entrar.js"></script>
+</head>
+<body>
+<a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Bairrômetro, página inicial">
+      <img class="logo-light" src="assets/identidade/logo/logo.svg" alt="Bairrômetro" width="258" height="30">
+      <img class="logo-dark" src="assets/identidade/logo/logo-dark.svg" alt="Bairrômetro" width="258" height="30">
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="explorar.html">Explorar bairros</a>
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a class="account" id="account-link" href="entrar.html">Entrar</a>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Mudar tema"></button>
+    </nav>
+  </div>
+</header>
+<main id="conteudo" class="narrow">
+  <h1>Sua conta</h1>
+  <p class="muted">Opcional: serve para salvar perfis de busca e bairros favoritos. Pedimos só e-mail e senha.</p>
+  <p id="status" role="status" hidden></p>
+  <p id="already" hidden><a class="btn" href="conta.html">Ir para Minha conta</a></p>
+
+  <div class="card">
+    <div class="tabs" role="tablist" id="tabs" aria-label="Opções de conta">
+      <button type="button" role="tab" data-tab="login" aria-controls="panel-login">Entrar</button>
+      <button type="button" role="tab" data-tab="signup" aria-controls="panel-signup">Criar conta</button>
+      <button type="button" role="tab" data-tab="forgot" aria-controls="panel-forgot">Esqueci a senha</button>
+    </div>
+
+    <section role="tabpanel" data-tab="login" id="panel-login">
+      <form id="form-login" novalidate>
+        <label class="field"><span>E-mail</span><input id="login-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Senha</span><input id="login-password" type="password" autocomplete="current-password" required></label>
+        <label class="check"><input id="login-keep" type="checkbox"><span>Manter conectado neste navegador</span></label>
+        <p class="hint">Sem marcar, a sessão vale só nesta aba e termina depois de 30 minutos sem uso. Não marque em computador compartilhado.</p>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section role="tabpanel" data-tab="signup" id="panel-signup" hidden>
+      <form id="form-signup" novalidate>
+        <label class="field"><span>E-mail</span><input id="signup-email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Senha</span><input id="signup-password" type="password" autocomplete="new-password" minlength="10" required aria-describedby="signup-rules"></label>
+        <ul class="rules" id="signup-rules" aria-live="polite"></ul>
+        <label class="field"><span>Repita a senha</span><input id="signup-password2" type="password" autocomplete="new-password" required></label>
+        <label class="check"><input id="signup-consent" type="checkbox" required><span>Li e aceito a <a href="privacidade.html">política de privacidade</a>.</span></label>
+        <button class="btn btn-primary" type="submit">Criar conta</button>
+      </form>
+    </section>
+
+    <section role="tabpanel" data-tab="forgot" id="panel-forgot" hidden>
+      <form id="form-forgot" novalidate>
+        <label class="field"><span>E-mail da conta</span><input id="forgot-email" type="email" autocomplete="email" required></label>
+        <button class="btn btn-primary" type="submit">Enviar link para nova senha</button>
+      </form>
+    </section>
+
+    <section id="panel-recovery" hidden>
+      <h2>Nova senha</h2>
+      <form id="form-recovery" novalidate>
+        <label class="field"><span>Nova senha</span><input id="recovery-password" type="password" autocomplete="new-password" minlength="10" required aria-describedby="recovery-rules"></label>
+        <ul class="rules" id="recovery-rules" aria-live="polite"></ul>
+        <label class="field"><span>Repita a nova senha</span><input id="recovery-password2" type="password" autocomplete="new-password" required></label>
+        <button class="btn btn-primary" type="submit">Salvar nova senha</button>
+      </form>
+    </section>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>Bairrômetro: projeto pessoal de estudo, não comercial. Código aberto (licença MIT).</span>
+    <nav aria-label="Rodapé">
+      <a href="como-calculamos.html">Como calculamos</a>
+      <a href="privacidade.html">Privacidade</a>
+      <a href="https://github.com/Cahffs/bairrometro" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
