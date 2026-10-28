@@ -12,10 +12,10 @@ Decisão D026: contas opcionais com e-mail e senha, no Supabase (plano grátis, 
 1. **Criar a conta** em supabase.com, de preferência com o login do GitHub. **Se pedir cartão de crédito, pare** (regra 2, D002).
 2. **Criar o projeto**: nome `bairrometro`, região **South America (São Paulo)**. A senha do banco vai para um gerenciador de senhas, nunca para o repositório.
 3. **Autenticação** (Authentication → Sign In / Providers e URL Configuration):
-   - Provedor **Email** ligado, com **Confirm email** ligado.
+   - Provedor **Email** ligado, com **Confirm email** desligado (D040: o e-mail padrão do Supabase só chega à equipe do projeto; com um servidor de e-mail próprio, ligar de novo e trocar `emailEnabled` para `true` em `site/assets/js/config.js`).
    - **Minimum password length**: 10; exigir letras e números.
-   - **Site URL**: `http://localhost:8767` por enquanto (depois, o endereço do GitHub Pages).
-   - **Redirect URLs**: `http://localhost:8767/**` (e depois o do GitHub Pages).
+   - **Site URL**: `https://cahffs.github.io/bairrometro/`.
+   - **Redirect URLs**: `https://cahffs.github.io/bairrometro/**` e `http://localhost:8767/**` (desenvolvimento).
    - Sessões: deixar o token de acesso em 3600 s e a rotação de refresh token ligada (padrão).
 4. **Banco**: em SQL Editor, colar e rodar `migrations/20261022000000_contas.sql`.
 5. **Testes** (recomendado, num segundo projeto só para teste): colar e rodar `tests/rls_test.sql`. Todos os 14 precisam aparecer como `ok`.
@@ -32,4 +32,4 @@ Decisão D026: contas opcionais com e-mail e senha, no Supabase (plano grátis, 
 
 - O projeto **pausa após 7 dias sem uso** e precisa ser reativado no painel. O explorador continua funcionando; só as contas param.
 - Passar da cota gera bloqueio, não cobrança.
-- Envio de e-mails (confirmação, nova senha) tem limite baixo por hora no servidor de e-mail padrão.
+- O servidor de e-mail padrão só envia para a equipe do projeto, com limite baixo por hora: por isso não há confirmação de cadastro nem recuperação de senha por e-mail no site (D040).
